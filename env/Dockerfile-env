@@ -5,9 +5,9 @@ FROM ubuntu:16.04 as cloning
 MAINTAINER Gennaro Raiola <gennaro.raiola@iit.it>
 
 # Args
-#ARG SSH_PRIVATE_KEY  
-#ARG SSH_PUBLIC_KEY 
-ARG GITLAB_IP 
+ARG SSH_PRIVATE_KEY  
+ARG SSH_PUBLIC_KEY 
+#ARG GITLAB_IP
 
 # install git
 RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils build-essential git openssh-client
@@ -17,23 +17,21 @@ EXPOSE 22:22
 
 # add credentials on build
 RUN mkdir /root/.ssh/
-ADD id_rsa.pub /root/.ssh/
-ADD id_rsa /root/.ssh/
+#ADD id_rsa.pub /root/.ssh/
+#ADD id_rsa /root/.ssh/
+RUN echo $SSH_PUBLIC_KEY > /root/.ssh/id_rsa.pub
+RUN echo $SSH_PRIVATE_KEY > /root/.ssh/id_rsa
 RUN cat /root/.ssh/id_rsa.pub  >> /root/.ssh/authorized_keys
-#RUN echo "${SSH_PUBLIC_KEY}" > /root/.ssh/id_rsa.pub
-#RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
 RUN chmod 600 /root/.ssh/id_rsa
 RUN chmod 600 /root/.ssh/id_rsa.pub
 
 # make sure your domain is accepted
 RUN touch /root/.ssh/known_hosts
-RUN ssh-keyscan $GITLAB_IP >> /root/.ssh/known_hosts
-#RUN echo "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
+RUN ssh-keyscan gitlab.advr.iit.it >> /root/.ssh/known_hosts
+RUN echo "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
 
 # add here the git clone
-#RUN ssh -Tv git@$GITLAB_IP
-#RUN git clone git@$GITLAB_IP:dls-lab/dls_gitlab_ci.git
-RUN git clone git@$GITLAB_IP:dls-lab/installation_tools.git
+RUN git clone gitlab.advr.iit.it:dls-lab/installation_tools.git
 
 # SECOND BUILD
 FROM ubuntu:16.04
@@ -44,11 +42,3 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils bu
 WORKDIR /root/installation_tools
 RUN bash install_ros.sh
 RUN bash install_dependencies.sh
-
-
-#Does not work --add-host gitlab.advr.iit.it:172.31.1.50
-
-
-
-
-

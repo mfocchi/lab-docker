@@ -24,5 +24,5 @@ CACHE_ON=false
 #docker build --build-arg GITLAB_IP=172.31.1.50 --build-arg SSH_PUBLIC_KEY=$SSH_PUBLIC_KEY --build-arg SSH_PRIVATE_KEY=$SSH_PRIVATE_KEY -t $1 .
 
 
-docker build -f ./env/Dockerfile-env --network=host --build-arg SSH_PRIVATE_KEY="$SSH_PRIVATE_KEY" --build-arg SSH_PUBLIC_KEY="$SSH_PUBLIC_KEY" --build-arg GITLAB_IP=172.31.1.50 -t "dls-env" ./env/
+docker build -f ./env/Dockerfile-env --build-arg SSH_PRIVATE_KEY="$SSH_PRIVATE_KEY" --build-arg SSH_PUBLIC_KEY="$SSH_PUBLIC_KEY" -t "dls-env" ./env/
 

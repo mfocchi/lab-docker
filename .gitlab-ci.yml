@@ -1,5 +1,9 @@
 image: docker:latest
 
+stages:
+   - env
+   - rt
+
 # When using dind, it's wise to use the overlayfs driver for
 # improved performance.
 variables:
@@ -11,8 +15,14 @@ services:
 before_script:
 - apk update && apk add bash
 - docker info
+- export CACHE_ON=false
 
-build:
-  stage: build
+build-env:
+  stage: env
   script:
-  - ./build_docker.sh
+  - ./build_docker.sh $CI_JOB_STAGE $CACHE_ON
+
+build-rt:
+  stage: rt
+  script:
+  - ./build_docker.sh $CI_JOB_STAGE $CACHE_ON

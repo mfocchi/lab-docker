@@ -15,6 +15,7 @@ services:
 before_script:
 - apk update && apk add bash
 - docker info
+- ping server-dev
 - export CACHE_ON=false
 
 build-env:

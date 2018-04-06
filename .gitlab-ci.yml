@@ -1,13 +1,14 @@
 image: docker:latest
 
-stages:
-   - env
-   - rt
-
 # When using dind, it's wise to use the overlayfs driver for
 # improved performance.
 variables:
   DOCKER_DRIVER: overlay2
+  CACHE_ON: "false"
+
+stages:
+- build-env
+- build
 
 services:
 - docker:dind
@@ -15,15 +16,37 @@ services:
 before_script:
 - apk update && apk add bash
 - docker info
-- ping server-dev
-- export CACHE_ON=false
+- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
 
 build-env:
-  stage: env
+  stage: build-env
   script:
-  - ./build_docker.sh $CI_JOB_STAGE $CACHE_ON
+  - export DOCKER_NAME=dls-env
+  - ./build_docker.sh $DOCKER_NAME $CACHE_ON
+  - docker tag $DOCKER_NAME $CI_REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+  - docker push $CI_REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
 
 build-rt:
-  stage: rt
+  stage: build
   script:
-  - ./build_docker.sh $CI_JOB_STAGE $CACHE_ON
+  - export DOCKER_NAME=dls-rt
+  - ./build_docker.sh $DOCKER_NAME $CACHE_ON
+  - docker tag $DOCKER_NAME $CI_REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+  - docker push $CI_REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+
+build-dev:
+  stage: build
+  script:
+  - export DOCKER_NAME=dls-dev
+  - ./build_docker.sh $DOCKER_NAME $CACHE_ON
+  - docker tag $DOCKER_NAME $CI_REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+  - docker push $CI_REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+
+#release:
+#  stage: release
+#  script:
+#  - docker pull 
+#  - docker tag 
+#  - docker push 
+#  only:
+#  - master

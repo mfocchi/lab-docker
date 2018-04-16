@@ -7,8 +7,8 @@ variables:
   CACHE_ON: "false"
 
 stages:
-- build-env
-- build
+- build-preamble
+- build-all
 
 services:
 - docker:dind
@@ -19,7 +19,7 @@ before_script:
 - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
 
 build-env:
-  stage: build-env
+  stage: build-preamble
   script:
   - export DOCKER_NAME=dls-env
   - ./build_docker.sh $DOCKER_NAME $CACHE_ON
@@ -27,7 +27,7 @@ build-env:
   - docker push $CI_REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
 
 build-rt:
-  stage: build
+  stage: build-all
   script:
   - export DOCKER_NAME=dls-rt
   - ./build_docker.sh $DOCKER_NAME $CACHE_ON
@@ -35,7 +35,7 @@ build-rt:
   - docker push $CI_REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
 
 build-dev:
-  stage: build
+  stage: build-all
   script:
   - export DOCKER_NAME=dls-dev
   - ./build_docker.sh $DOCKER_NAME $CACHE_ON

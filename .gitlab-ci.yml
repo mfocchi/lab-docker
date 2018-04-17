@@ -9,6 +9,7 @@ variables:
   REGISTRY: server-dev:5000
 
 stages:
+- build-test
 - build-preamble
 - build-all
 
@@ -17,8 +18,18 @@ services:
 
 before_script:
 - apk update && apk add bash
+- command: ["--insecure-registry=server-dev:5000"]
 - docker info
 #- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+- docker login -u test -p test $REGISTRY
+
+build-test:
+  stage: build-test
+  script:
+  - export DOCKER_NAME=debian
+  - docker pull $DOCKER_NAME
+  - docker tag $DOCKER_NAME $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+  - docker push $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
 
 build-env:
   stage: build-preamble

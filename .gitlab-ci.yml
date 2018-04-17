@@ -5,7 +5,8 @@ image: docker:latest
 variables:
   DOCKER_DRIVER: overlay2
   CACHE_ON: "false"
-  REGISTRY: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+#  REGISTRY: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+  REGISTRY: server-dev:5000
 
 stages:
 - build-preamble
@@ -17,7 +18,7 @@ services:
 before_script:
 - apk update && apk add bash
 - docker info
-- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+#- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
 
 build-env:
   stage: build-preamble

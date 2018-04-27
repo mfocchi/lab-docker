@@ -27,17 +27,23 @@ RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan gitlab.advr.iit.it >> /root/.ssh/known_hosts
 RUN echo "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
 
-# add here the git clone
+# add here the git clones
 #RUN ssh -vT git@gitlab.advr.iit.it #Debug
 RUN git clone git@gitlab.advr.iit.it:dls-lab/installation_tools.git
+RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_gitlab_ci.git
 
 # SECOND BUILD
 FROM ubuntu:16.04
 
+ARG RELEASE
+RUN export INSTALL_DEPS=false
+RUN export INSTALL_EXTRAS=true
+
 # copy the repository form the previous image
 COPY --from=cloning /installation_tools /root/installation_tools
+COPY --from=cloning /dls_gitlab_ci /root/dls_gitlab_ci
 RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils build-essential software-properties-common sudo wget
 WORKDIR /root/installation_tools
 RUN bash install_ros.sh
-RUN bash install_dependencies.sh
+RUN bash install_dependencies.sh $INSTALL_DEPS $INSTALL_EXTRAS $RELEASE
 

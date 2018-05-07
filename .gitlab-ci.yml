@@ -7,53 +7,50 @@ variables:
   CACHE_ON: "false"
 #  REGISTRY: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
   REGISTRY: server-dev:5000
+  RELEASE: latest
+  LOCAL_BUILD: "false"
 
 stages:
-- build-test
-- build-preamble
-- build-all
+  - test
+  - preamble
+  - build-all
 
-services:
-- docker:dind
+services: # Note the hardcoded registry name...
+  - name: docker:dind
+    command: ["--insecure-registry=server-dev:5000"]
 
 before_script:
-- apk update && apk add bash
-- command: ["--insecure-registry=server-dev:5000"]
-- docker info
-#- docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-- docker login -u test -p test $REGISTRY
+  - apk update && apk add bash
+  - docker info
 
-build-test:
-  stage: build-test
+# Test if the registry is up and running
+test:
+  stage: test
   script:
-  - export DOCKER_NAME=debian
-  - docker pull $DOCKER_NAME
-  - docker tag $DOCKER_NAME $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
-  - docker push $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+  - docker pull alpine
+  - docker tag alpine $REGISTRY/alpine:latest
+  - docker push $REGISTRY/alpine:latest
 
 build-env:
-  stage: build-preamble
+  stage: preamble
   script:
   - export DOCKER_NAME=dls-env
-  - ./build_docker.sh $DOCKER_NAME $CACHE_ON
-  - docker tag $DOCKER_NAME $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
-  - docker push $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
+  - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
 build-rt:
   stage: build-all
   script:
   - export DOCKER_NAME=dls-rt
-  - ./build_docker.sh $DOCKER_NAME $CACHE_ON
-  - docker tag $DOCKER_NAME $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
-  - docker push $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
+  - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
-build-dev:
-  stage: build-all
-  script:
-  - export DOCKER_NAME=dls-dev
-  - ./build_docker.sh $DOCKER_NAME $CACHE_ON
-  - docker tag $DOCKER_NAME $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
-  - docker push $REGISTRY/$DOCKER_NAME:$CI_BUILD_REF_NAME
+#build-dev:
+#  stage: build-all
+#  script:
+#  - export DOCKER_NAME=dls-dev
+#  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
+#  - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
 #release:
 #  stage: release

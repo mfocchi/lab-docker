@@ -45,12 +45,12 @@ build-rt:
   - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
   - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
-#build-dev:
-#  stage: build-all
-#  script:
-#  - export DOCKER_NAME=dls-dev
-#  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
-#  - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
+build-dev:
+  stage: build-all
+  script:
+  - export DOCKER_NAME=dls-dev
+  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
+  - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
 #release:
 #  stage: release

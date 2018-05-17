@@ -12,8 +12,9 @@ variables:
 
 stages:
   - test
-  - preamble
-  - build-all
+  - build-start
+  - build-middle
+  - build-final
 
 services: # Note the hardcoded registry name...
   - name: docker:dind
@@ -32,21 +33,21 @@ test:
   - docker push $REGISTRY/alpine:latest
 
 build-env:
-  stage: preamble
+  stage: build-start
   script:
   - export DOCKER_NAME=dls-env
   - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
   - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
 build-rt:
-  stage: build-all
+  stage: build-middle
   script:
   - export DOCKER_NAME=dls-rt
   - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
   - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
 build-dev:
-  stage: build-all
+  stage: build-final
   script:
   - export DOCKER_NAME=dls-dev
   - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 

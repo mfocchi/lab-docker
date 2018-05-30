@@ -7,7 +7,7 @@ variables:
   CACHE_ON: "false"
 #  GIT_STRATEGY: clone
 #  REGISTRY: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-  REGISTRY: 10.255.32.66:5000 #server-dev
+  REGISTRY: server-dev:5000 #server-dev
   RELEASE: latest
   LOCAL_BUILD: "false"
 
@@ -19,7 +19,7 @@ stages:
 
 services: # Note the hardcoded registry name...
   - name: docker:dind
-    command: ["--insecure-registry=10.255.32.66:5000"]
+    command: ["--insecure-registry=server-dev:5000"]
 
 before_script:
   - apk update && apk add bash
@@ -37,21 +37,21 @@ build-env:
   stage: build-start
   script:
   - export DOCKER_NAME=dls-env
-  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
+  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE $LOCAL_BUILD
   - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
 build-rt:
   stage: build-middle
   script:
   - export DOCKER_NAME=dls-rt
-  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
+  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE $LOCAL_BUILD
   - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
 build-dev:
   stage: build-final
   script:
   - export DOCKER_NAME=dls-dev
-  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE 
+  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE $LOCAL_BUILD
   - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
 #release:

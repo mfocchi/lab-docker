@@ -36,8 +36,8 @@ RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_gitlab_ci.git
 FROM ubuntu:16.04
 
 ARG RELEASE
-RUN export INSTALL_DEPS=true
-RUN export INSTALL_EXTRAS=false
+ARG INSTALL_DEPS=true
+ARG INSTALL_EXTRAS=false
 
 # copy the repository form the previous image
 COPY --from=cloning /installation_tools /root/installation_tools

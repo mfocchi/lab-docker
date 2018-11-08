@@ -8,7 +8,7 @@ variables:
 #  GIT_STRATEGY: clone
 #  REGISTRY: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
   REGISTRY: server-dev:5000 #server-dev
-  RELEASE: latest
+  RELEASE: latest #default variable
   LOCAL_BUILD: "false"
 
 stages:

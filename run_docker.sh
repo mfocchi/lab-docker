@@ -18,6 +18,11 @@ set -e
 # Hacky
 xhost +local:docker
 
+if [ `sudo systemctl is-active docker` = "inactive" ]; then
+  echo "Docker inactive.  Starting docker..."
+  sudo systemctl start docker
+fi
+
 # Run the container with shared X11
 #--entrypoint "eval $(/usr/bin/ssh-agent -s) /usr/bin/ssh-add /home/`whoami`/.ssh/id_rsa"
 docker run --user `id -u` --device=/dev/dri:/dev/dri --net=host -e "QT_X11_NO_MITSHM=1" -e SHELL -e DISPLAY -e DOCKER=1 -v "$HOME:$HOME:rw" -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" -v "/etc/passwd:/etc/passwd" -it $IMAGE_NAME $SHELL -c "eval \`/usr/bin/ssh-agent -s\`; /usr/bin/ssh-add /home/`whoami`/.ssh/id_rsa; export HOME=$HOME; cd $HOME; source /opt/ros/dls-distro/setup.bash; exec /bin/bash"

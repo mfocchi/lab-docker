@@ -17,6 +17,12 @@ $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ub
 $ sudo apt-get update
 $ sudo apt-get install docker-ce
 ```
+- Add your user to the docker group (replace "myusername" with the name of your local user name)
+```
+sudo usermod -G docker myusername
+```
+- Log out and log in from the current linux session
+
 - Clone the [repository](https://gitlab.advr.iit.it/dls-lab/dls_docker).
 ```
 $ git clone https://gitlab.advr.iit.it/dls-lab/dls_docker

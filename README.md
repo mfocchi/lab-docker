@@ -1,27 +1,9 @@
 ## Instructions
-- Purge any previous docker instalation
+- Install docker running the script install_docker.sh from the installation tools repo
 ```
-$ sudo apt-get purge docker lxc-docker docker-engine docker.io
+$ ./install_docker.sh
 ```
--Install docker required packages
-```
-$ sudo apt-get install  curl  apt-transport-https ca-certificates software-properties-common
-```
--Setup docker's official GPG keys and enable repository in Ubuntu
-```
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add
-$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-```
-- Install docker
-```
-$ sudo apt-get update
-$ sudo apt-get install docker-ce
-```
-- Add your user to the docker group (replace "myusername" with the name of your local user name)
-```
-sudo usermod -aG docker myusername
-```
-- Log out and log in from the current linux session
+- Reboot your computer
 
 - Clone the [repository](https://gitlab.advr.iit.it/dls-lab/dls_docker).
 ```
@@ -45,3 +27,4 @@ $ join_docker.sh
 - Image forces user to be root
 - Finalizing .bashrc scripts
 - Need to set "export ROS_HOSTNAME=localhost"
+- Fix run_docker.sh script (if statement)

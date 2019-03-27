@@ -19,7 +19,7 @@ $ sudo apt-get install docker-ce
 ```
 - Add your user to the docker group (replace "myusername" with the name of your local user name)
 ```
-sudo usermod -G docker myusername
+sudo usermod -aG docker myusername
 ```
 - Log out and log in from the current linux session
 

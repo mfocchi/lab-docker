@@ -1,19 +1,14 @@
 ## Instructions
-- Install docker running the script install_docker.sh from the installation tools repo
+
+- Install docker running the script install_docker.sh from [installation tools](https://gitlab.advr.iit.it/dls-lab/installation_tools)
 ```
 $ ./install_docker.sh
 ```
 - Reboot your computer
-
 - Clone the [repository](https://gitlab.advr.iit.it/dls-lab/dls_docker).
 ```
 $ git clone https://gitlab.advr.iit.it/dls-lab/dls_docker
 ```
-- Pull all the dls docker images
-```
-$ ./pull_docker.sh
-```
-- Edit .bashrc
 - Run the docker
 ```
 $ ./run_docker.sh

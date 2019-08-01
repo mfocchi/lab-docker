@@ -10,6 +10,7 @@ variables:
   REGISTRY: server-dev:5000 #server-dev
   RELEASE: latest #default variable
   LOCAL_BUILD: "false"
+  DOCKER_TLS_CERTDIR: ""
 
 stages:
   - test

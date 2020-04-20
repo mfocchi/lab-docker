@@ -1,4 +1,5 @@
 image: docker:latest
+tags: dls2
 
 # When using dind, it's wise to use the overlayfs driver for
 # improved performance.
@@ -7,20 +8,17 @@ variables:
   CACHE_ON: "false"
 #  GIT_STRATEGY: clone
 #  REGISTRY: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-  REGISTRY: server-dev:5000 #server-dev
+  REGISTRY: server-gitlab-runner:5000 #server-dev
   RELEASE: latest #default variable
   LOCAL_BUILD: "false"
   DOCKER_TLS_CERTDIR: ""
 
 stages:
   - test
-  - build-start
-  - build-middle
-  - build-final
 
 services: # Note the hardcoded registry name...
   - name: docker:dind
-    command: ["--insecure-registry=server-dev:5000"]
+    command: ["--insecure-registry=server-gitlab-runner:5000"]
 
 before_script:
   - apk update && apk add bash
@@ -34,32 +32,4 @@ test:
   - docker tag alpine $REGISTRY/alpine:latest
   - docker push $REGISTRY/alpine:latest
 
-build-env:
-  stage: build-start
-  script:
-  - export DOCKER_NAME=dls-env
-  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE $LOCAL_BUILD
-  - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
 
-build-rt:
-  stage: build-middle
-  script:
-  - export DOCKER_NAME=dls-rt
-  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE $LOCAL_BUILD
-  - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
-
-build-dev:
-  stage: build-final
-  script:
-  - export DOCKER_NAME=dls-dev
-  - ./build_docker.sh $DOCKER_NAME $CACHE_ON $RELEASE $LOCAL_BUILD
-  - ./push_docker.sh $DOCKER_NAME $REGISTRY $RELEASE
-
-#release:
-#  stage: release
-#  script:
-#  - docker pull 
-#  - docker tag 
-#  - docker push 
-#  only:
-#  - master

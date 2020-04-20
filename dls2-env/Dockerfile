@@ -39,10 +39,10 @@ ARG INSTALL_DEPS=true
 ARG INSTALL_EXTRAS=false
 
 # copy the repository form the previous image
-#COPY --from=cloning /installation_tools /root/installation_tools
+COPY --from=cloning /installation_tools /root/installation_tools
 #COPY --from=cloning /dls_gitlab_ci /root/dls_gitlab_ci
-#RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils build-essential software-properties-common sudo wget git
-#WORKDIR /root/installation_tools
+RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils build-essential software-properties-common sudo wget git
+WORKDIR /root/installation_tools
 #RUN bash install_ros.sh
-#RUN bash install_dependencies.sh $INSTALL_DEPS $INSTALL_EXTRAS $RELEASE
+RUN bash install_dependencies.sh $INSTALL_DEPS $INSTALL_EXTRAS $RELEASE
 

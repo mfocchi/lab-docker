@@ -7,14 +7,15 @@ variables:
   CACHE_ON: "false"
 #  GIT_STRATEGY: clone
 #  REGISTRY: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-  REGISTRY: server-gitlab-runner:5000 #server-dev
-  RELEASE: latest #default variable
+  REGISTRY: server-gitlab-runner:5000 
+  RELEASE: latest
   LOCAL_BUILD: "false"
   DOCKER_TLS_CERTDIR: ""
 
 stages:
   - test
   - build-start
+  - build-middle
 
 services: # Note the hardcoded registry name...
   - name: docker:dind
@@ -39,5 +40,12 @@ build-env:
   script:
   - ./build_docker.sh dls2-env $CACHE_ON $RELEASE $LOCAL_BUILD
   - ./push_docker.sh dls2-env $REGISTRY $RELEASE
+
+build-xenomai:
+  stage: build-middle
+  script:
+  - ./build_docker.sh dls2-xenomai $CACHE_ON $RELEASE $LOCAL_BUILD
+  - ./push_docker.sh dls2-xenomai $REGISTRY $RELEASE
+
 
 

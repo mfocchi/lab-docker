@@ -28,7 +28,7 @@ RUN ssh-keyscan gitlab.advr.iit.it >> /root/.ssh/known_hosts
 RUN echo "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
 
 # add here the git clones
-#RUN git clone git@gitlab.advr.iit.it:dls-lab/installation_tools.git
+RUN git clone git@gitlab.advr.iit.it:dls-lab/installation_tools.git -b dls2
 #RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_gitlab_ci.git
 
 # SECOND BUILD

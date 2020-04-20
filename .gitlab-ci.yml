@@ -26,7 +26,8 @@ before_script:
 # Test if the registry is up and running
 test:
   stage: test
-  tags: dls2
+  tags:
+    - dls2
   script:
   - docker pull alpine
   - docker tag alpine $REGISTRY/alpine:latest

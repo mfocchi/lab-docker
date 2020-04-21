@@ -32,8 +32,8 @@ fi
 
 if $CACHE_ON; then
 	echo "CACHE ON"
-	docker build -f ./dockerfiles/$NAME/Dockerfile --network=host --build-arg RELEASE="$RELEASE" --build-arg SSH_PRIVATE_KEY="$SSH_PRIVATE_KEY" --build-arg SSH_PUBLIC_KEY="$SSH_PUBLIC_KEY" -t $NAME ./$NAME/
+	docker build -f ./dockerfiles/$NAME/Dockerfile --network=host --build-arg RELEASE="$RELEASE" --build-arg SSH_PRIVATE_KEY="$SSH_PRIVATE_KEY" --build-arg SSH_PUBLIC_KEY="$SSH_PUBLIC_KEY" -t $NAME ./dockerfiles/$NAME/
 else
 	echo "CACHE OFF"
-	docker build -f ./dockerfiles/$NAME/Dockerfile --network=host --no-cache --build-arg RELEASE="$RELEASE" --build-arg SSH_PRIVATE_KEY="$SSH_PRIVATE_KEY" --build-arg SSH_PUBLIC_KEY="$SSH_PUBLIC_KEY" -t $NAME ./$NAME/
+	docker build -f ./dockerfiles/$NAME/Dockerfile --network=host --no-cache --build-arg RELEASE="$RELEASE" --build-arg SSH_PRIVATE_KEY="$SSH_PRIVATE_KEY" --build-arg SSH_PUBLIC_KEY="$SSH_PUBLIC_KEY" -t $NAME ./dockerfiles/$NAME/
 fi

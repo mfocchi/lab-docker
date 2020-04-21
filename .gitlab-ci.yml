@@ -40,12 +40,16 @@ build-env:
   script:
   - ./build_docker.sh dls2-env $CACHE_ON $RELEASE $LOCAL_BUILD
   - ./push_docker.sh dls2-env $REGISTRY $RELEASE
+  tags:
+    - dls2
 
 build-xenomai:
   stage: build-middle
   script:
   - ./build_docker.sh dls2-xenomai $CACHE_ON $RELEASE $LOCAL_BUILD
   - ./push_docker.sh dls2-xenomai $REGISTRY $RELEASE
+  tags:
+    - dls2
 
 
 

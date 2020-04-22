@@ -5,8 +5,8 @@ FROM ubuntu:16.04 as cloning
 MAINTAINER Gennaro Raiola <gennaro.raiola@iit.it>
 
 # Args
-ARG SSH_PRIVATE_KEY  
-ARG SSH_PUBLIC_KEY 
+ARG SSH_PRIVATE_KEY
+ARG SSH_PUBLIC_KEY
 
 # install git
 RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils build-essential git openssh-client
@@ -44,6 +44,5 @@ COPY --from=cloning /installation_tools /root/installation_tools
 COPY --from=cloning /dls_gitlab_ci /root/dls_gitlab_ci
 RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils build-essential software-properties-common sudo wget git
 WORKDIR /root/installation_tools
-RUN bash install_ros.sh
-RUN bash install_dependencies.sh $INSTALL_DEPS $INSTALL_EXTRAS $RELEASE
-
+RUN bash install_scripts/install_ros.sh
+RUN bash install_scripts/install_dependencies.sh $INSTALL_DEPS $INSTALL_EXTRAS $RELEASE

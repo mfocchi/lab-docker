@@ -4,4 +4,4 @@ ARG RELEASE
 WORKDIR /root
 RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get update
-RUN apt-get install ros-kinetic-desktop-full
+RUN apt-get install -y ros-kinetic-desktop-full

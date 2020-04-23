@@ -30,6 +30,7 @@ RUN echo "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
 # add here the git clones
 RUN git clone git@gitlab.advr.iit.it:dls-lab/installation_tools.git -b dls2
 RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_gitlab_ci.git -b dls2
+RUN git clone git@gitlab.adve.iit.it:dls-lab/dls_docker.git -b dls2
 
 # SECOND BUILD
 FROM ubuntu:16.04
@@ -41,7 +42,13 @@ ARG INSTALL_EXTRAS=false
 # copy the repository form the previous image
 COPY --from=cloning /installation_tools /root/installation_tools
 COPY --from=cloning /dls_gitlab_ci /root/dls_gitlab_ci
+COPY --from=cloning /dls_docker /root/dls_docker
 RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils build-essential software-properties-common sudo wget git apt-transport-https
+WORKDIR /root/dls_docker/scripts
+RUN bash install_fastrtps.sh
+RUN bash install_ros.sh
+RUN bash install_dls2.sh
+RUN bash install_dls-plugins.sh
 WORKDIR /root/installation_tools
 RUN bash install_scripts/install_ros.sh
 RUN bash install_scripts/install_dependencies.sh $INSTALL_DEPS $INSTALL_EXTRAS $RELEASE

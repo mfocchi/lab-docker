@@ -1,7 +1,7 @@
 #!/bin/bash
 
-$FOLDER=package_lists
-$LIST=linux_tools.txt
+FOLDER=package_lists
+LIST=linux_tools.txt
 
 PKGS=`cat $FOLDER/$LIST | grep -v \#`
 

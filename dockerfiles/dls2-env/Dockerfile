@@ -46,6 +46,7 @@ COPY --from=cloning /dls_docker /root/dls_docker
 RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils software-properties-common apt-transport-https
 WORKDIR /root/dls_docker/scripts
 RUN bash install_linux_tools.sh
+RUN bash install_java.sh
 RUN bash install_fastrtps.sh
 RUN bash install_ros.sh
 RUN bash install_dls2.sh

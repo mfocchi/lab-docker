@@ -13,6 +13,11 @@ terminator
 screen
 libboost-thread-dev
 libeigen3-dev
+sudo
+wget
+build-essential
+pandoc
+doxygen
 #freeglut3
 #freeglut3-dev
 #ncurses-dev

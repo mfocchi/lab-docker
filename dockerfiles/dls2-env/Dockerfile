@@ -30,7 +30,7 @@ RUN echo "Host *\n\tStrictHostKeyChecking no\n\n" > /root/.ssh/config
 # add here the git clones
 RUN git clone git@gitlab.advr.iit.it:dls-lab/installation_tools.git -b dls2
 RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_gitlab_ci.git -b dls2
-RUN git clone git@gitlab.adve.iit.it:dls-lab/dls_docker.git -b dls2
+RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_docker.git -b dls2
 
 # SECOND BUILD
 FROM ubuntu:16.04

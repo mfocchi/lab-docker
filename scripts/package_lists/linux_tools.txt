@@ -5,7 +5,6 @@ cmake-data
 wget
 lsb-base
 checkinstall
-software-properties-common
 openssh-cient
 openssh-server
 libgtest-dev
@@ -18,6 +17,7 @@ wget
 build-essential
 pandoc
 doxygen
+
 #freeglut3
 #freeglut3-dev
 #ncurses-dev

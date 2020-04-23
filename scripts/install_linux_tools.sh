@@ -10,4 +10,5 @@ for PKG in $PKGS; do
     sudo apt-get -y install $PKG
   else
     echo ERROR: $PKG does not exist!
+  fi
 done

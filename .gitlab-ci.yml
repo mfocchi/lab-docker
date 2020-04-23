@@ -7,7 +7,7 @@ variables:
   CACHE_ON: "false"
 #  GIT_STRATEGY: clone
 #  REGISTRY: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-  REGISTRY: server-gitlab-runner:5000 
+  REGISTRY: server-gitlab-runner:5000
   RELEASE: latest
   LOCAL_BUILD: "false"
   DOCKER_TLS_CERTDIR: ""
@@ -43,6 +43,14 @@ build-env:
   tags:
     - dls2
 
+build-framework-dev:
+  stage: build-middle
+  script:
+  - ./build_docker.sh dls2-framework-dev $CACHE_ON $RELEASE $LOCAL_BUILD
+  - ./push_docker.sh dls2-framework-dev $REGISTRY $RELEASE
+  tags:
+    - dls2
+
 build-xenomai:
   stage: build-middle
   script:
@@ -50,6 +58,3 @@ build-xenomai:
   - ./push_docker.sh dls2-xenomai $REGISTRY $RELEASE
   tags:
     - dls2
-
-
-

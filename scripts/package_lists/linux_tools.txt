@@ -18,6 +18,13 @@ wget
 build-essential
 pandoc
 doxygen
+nano
+unzip
+htop
+vim
+curl
+tmux
+ranger
 
 #freeglut3
 #freeglut3-dev

@@ -16,6 +16,7 @@ stages:
   - test
   - build-start
   - build-middle
+  - build-end
 
 services: # Note the hardcoded registry name...
   - name: docker:dind
@@ -43,18 +44,40 @@ build-env:
   tags:
     - dls2
 
-build-framework-dev:
+build-dev:
   stage: build-middle
+  script:
+  - ./build_docker.sh dls2-dev $CACHE_ON $RELEASE $LOCAL_BUILD
+  - ./push_docker.sh dls2-dev $REGISTRY $RELEASE
+  tags:
+    - dls2
+
+build-framework-dev:
+  stage: build-end
   script:
   - ./build_docker.sh dls2-framework-dev $CACHE_ON $RELEASE $LOCAL_BUILD
   - ./push_docker.sh dls2-framework-dev $REGISTRY $RELEASE
   tags:
     - dls2
 
-build-xenomai:
-  stage: build-middle
+build-plugin-dev:
+  stage: build-end
   script:
-  - ./build_docker.sh dls2-xenomai $CACHE_ON $RELEASE $LOCAL_BUILD
-  - ./push_docker.sh dls2-xenomai $REGISTRY $RELEASE
+    - echo "Skipping build"
   tags:
     - dls2
+
+build-hal-dev:
+  stage: build-end
+  script:
+    - echo "Skipping build"
+  tags:
+    - dls2
+
+#build-xenomai:
+#  stage: build-middle
+#  script:
+#  - ./build_docker.sh dls2-xenomai $CACHE_ON $RELEASE $LOCAL_BUILD
+#  - ./push_docker.sh dls2-xenomai $REGISTRY $RELEASE
+#  tags:
+#    - dls2

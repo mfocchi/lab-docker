@@ -36,5 +36,7 @@ echo "========================================================================="
 git clone --recursive https://github.com/eProsima/Fast-RTPS-Gen.git
 cd Fast-RTPS-Gen
 gradle assemble
+mkdir /usr/local/bin/../share/fastrtpsgen/java/
+cp /root/dls_docker/scripts/Fast-RTPS-Gen/share/fastrtpsgen/java/fastrtpsgen.jar /usr/local/bin/../share/fastrtpsgen/java
 cp scripts/fastrtpsgen /usr/local/bin/fastrtpsgen
 cd ..

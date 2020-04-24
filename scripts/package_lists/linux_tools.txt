@@ -1,3 +1,4 @@
+dash
 iputils-ping
 git
 cmake

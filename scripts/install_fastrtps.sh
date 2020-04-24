@@ -36,6 +36,6 @@ echo "========================================================================="
 git clone --recursive https://github.com/eProsima/Fast-RTPS-Gen.git
 cd Fast-RTPS-Gen
 gradle assemble
-cp share/fastrtpsgen /usr/local/share/fastrtpsgen
-cp scripts/fastrtpsgen /usr/local/bin/fastrtpsgen
+cp -r share/* /usr/local/share
+cp -r scripts/* /usr/local/bin
 cd ..

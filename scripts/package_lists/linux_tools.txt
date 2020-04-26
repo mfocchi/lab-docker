@@ -25,6 +25,11 @@ vim
 curl
 tmux
 ranger
+libfontconfig1
+libreadline-dev
+mesa-utils
+mesa-common-dev
+libglu1-mesa-dev
 
 #freeglut3
 #freeglut3-dev
@@ -34,12 +39,9 @@ ranger
 #libglib2.0-dev
 #gtk-doc-tools
 #liggtkmm-2.4
-#mesa-common-dev
 #libgtk-3-dev
 #lib-gl1-mesa-dev
 #libqwt-dev
 #libv4l-dev
 #libjs-mathjax
-#oracle-java8-installer
 #libopencv-nonfree-dev
-#libreadline-dev

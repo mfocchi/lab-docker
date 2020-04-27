@@ -4,8 +4,9 @@ RELEASE="latest"
 PKGS_FOLDER=/root/dls_docker/scripts/package_lists
 
 
-add-apt-repository --yes "deb [trusted=yes] http://server-ubuntu18/repo/ stable/"
-add-apt-repository --yes "deb [trusted=yes] http://server-ubuntu18/repo/ latest/"
+echo "deb [trusted=yes] http://server-ubuntu18/repo/ stable/" > /etc/apt/sources.list.d/dls-stable.list
+echo "deb [trusted=yes] http://server-ubuntu18/repo/ latest/" > /etc/apt/sources.list.d/dls-latest.list
+
 
 add-apt-repository --yes ppa:danielrichter2007/grub-customizer
 
@@ -41,5 +42,9 @@ PKGS=`cat $PKGS_FOLDER/dls2_ext_dependencies_list.txt | grep -v \#`
 
 for PKG in $PKGS
 do
-	check_for_package_and_install $PKG
+	if apt-cache show $PKG 1>/dev/null 2>&1; then
+    apt-get -y install $PKG
+  else
+    echo ERROR: $PKG does not exist!
+  fi
 done

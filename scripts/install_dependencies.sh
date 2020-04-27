@@ -1,7 +1,7 @@
 #!/bin/bash
 
 RELEASE="latest"
-PKGS_FOLDER="/root/dls_docker/pkgs_list"
+PKGS_FOLDER=/root/dls_docker/scripts/package_lists
 
 
 add-apt-repository --yes "deb [trusted=yes] http://server-ubuntu18/repo/ stable/"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FOLDER=package_lists
+FOLDER=/root/dls_docker/scripts/package_lists
 LIST=linux_tools.txt
 
 PKGS=`cat $FOLDER/$LIST | grep -v \#`

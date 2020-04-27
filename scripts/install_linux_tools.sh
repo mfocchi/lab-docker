@@ -12,3 +12,12 @@ for PKG in $PKGS; do
     echo ERROR: $PKG does not exist!
   fi
 done
+
+
+# Install gtest
+if [ -d "/usr/src/gtest" ]; then
+	cd /usr/src/gtest
+	cmake CMakeLists.txt
+	make
+	cp *.a /usr/lib
+fi

@@ -1,0 +1,95 @@
+# System tools
+iputils-ping
+git
+#cmake=3.17.1-0kitware1
+#cmake=3.5.1-1ubuntu3
+#cmake-data=3.5.1-1ubuntu3
+wget
+lsb-base=9.20160110ubuntu0.2
+lsb-core=9.20160110ubuntu0.2
+libreadline-dev=6.3-8ubuntu2
+checkinstall=1.6.2-4ubuntu1
+software-properties-common
+openssh-client
+openssh-server
+libgtest-dev=1.7.0-4ubuntu1
+terminator=0.98-1
+
+# Python
+#python-dev=2.7.12-1~16.04
+#python-pip=8.1.1-2ubuntu0.4
+#python-pygame=1.9.1release+dfsg-10
+#python-gtk2=2.24.0-4
+#python-catkin-tools=0.4.5-1
+
+# Extra lib
+freeglut3=2.8.1-2
+freeglut3-dev=2.8.1-2
+#ncurses-dev
+screen=4.3.1-2build1
+#cowsay=3.03+dfsg1-15
+#sl=3.03-17build1
+#fortune
+#libjpeg-dev
+libglib2.0-dev=2.48.2-0ubuntu4.6
+#gtk-doc-tools
+libgtkmm-2.4-dev=1:2.24.4-2
+#libtinyxml-dev
+libgtk-3-dev
+#mesa-common-dev
+#libgl1-mesa-dev
+libglu1-mesa-dev=9.0.0-2.1
+libqwt-dev=6.1.2-5
+libv4l-dev=1.10.0-1
+libjs-mathjax=2.6.1-1
+
+# Realsense
+librealsense2=2.25.0-0~realsense0.1331
+librealsense2-dev=2.25.0-0~realsense0.1331
+librealsense2-dbg=2.25.0-0~realsense0.1331
+librealsense2-gl=2.25.0-0~realsense0.1331
+librealsense2-utils=2.25.0-0~realsense0.1331
+
+# Boost
+libboost-thread-dev=1.58.0.1ubuntu1
+
+# OpenCV
+#libopencv-nonfree-dev
+
+# Eigen stable
+libeigen3-dev=3.3.2-1~ubuntu16.04.1~ppa1
+
+# legacy-pods related
+#lcm-1.3.1
+#dls-legacy-pods
+#dls-libnabo
+#dls-libpointmatcher
+#dls-aicp
+
+# DLS deps
+#dls-politopix
+#dls-glpk
+#dls-ctkpythonconsole
+#kindr
+#gtsm
+
+# DLS ROS made
+#ros-kinetic-kindr-ros
+#ros-kinetic-dwl
+#ros-kinetic-dwl-msgs
+#ros-kinetic-terrain-server
+#ros-kinetic-wb-state-publisher
+#ros-kinetic-dwl-rviz-plugin
+#ros-kinetic-xpp-opt
+#ros-kinetic-dls-mixer
+#ros-kinetic-clmclogger
+#ros-kinetic-signal-scope
+#ros-kinetic-dwl-lcmtypes
+#ros-kinetic-locomotion-viewer
+#ros-kinetic-rviz-visual-tools
+
+# DLS-Distro
+#dls-distro
+
+# ADVR (NOTE: you need to source the setup.bash in order to use it)
+# advr-superbuild

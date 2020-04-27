@@ -44,10 +44,12 @@ COPY --from=cloning /installation_tools /root/installation_tools
 COPY --from=cloning /dls_gitlab_ci /root/dls_gitlab_ci
 COPY --from=cloning /dls_docker /root/dls_docker
 RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils software-properties-common apt-transport-https \
-  && bash /root/dls_docker/scripts/install_linux_tools.sh \
-  && bash /root/dls_docker/scripts/install_java.sh \
-  && bash /root/dls_docker/scripts/install_fastrtps.sh \
-  && bash /root/dls_docker/scripts/install_ros.sh \
-  && bash /root/dls_docker/scripts/install_dls2.sh \
-  && bash /root/dls_docker/scripts/install_dls-plugins.sh \
-  && bash /root/installation_tools/install_scripts/install_dependencies.sh $INSTALL_DEPS $INSTALL_EXTRAS $RELEASE
+  && bash  -c " \
+    /root/dls_docker/scripts/install_linux_tools.sh ; \
+    /root/dls_docker/scripts/install_java.sh ; \
+    /root/dls_docker/scripts/install_fastrtps.sh ; \
+    /root/dls_docker/scripts/install_ros.sh ; \
+    /root/dls_docker/scripts/install_dls2.sh ; \
+    /root/dls_docker/scripts/install_dls-plugins.sh ; \
+    /root/installation_tools/install_scripts/install_dependencies.sh $INSTALL_DEPS $INSTALL_EXTRAS $RELEASE ; \
+    "

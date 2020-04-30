@@ -63,7 +63,8 @@ build-framework-dev:
 build-plugin-dev:
   stage: build-end
   script:
-    - echo "Skipping build"
+  - ./build_docker.sh dls2-plugin-dev $CACHE_ON $RELEASE $LOCAL_BUILD
+  - ./push_docker.sh dls2-plugin-dev $REGISTRY $RELEASE
   tags:
     - dls2
 

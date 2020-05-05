@@ -25,7 +25,7 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ECD154D280FEB8
 add-apt-repository --yes ppa:nschloe/eigen-backports
 
 # Add CMake PPA
-wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add -
+wget -O - http://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add -
 apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
 
 # Remove apt cache and update the sources

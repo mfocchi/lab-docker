@@ -76,13 +76,13 @@ build-hal-dev:
   tags:
     - dls2
 
-  build-operator:
-    stage: build-four
-    script:
-      - ./build_docker.sh dls2-operator $CACHE_ON $RELEASE $LOCAL_BUILD
-      - ./push_docker.sh dls2-operator $REGISTRY $RELEASE
-    tags:
-      - dls2
+build-operator:
+  stage: build-four
+  script:
+    - ./build_docker.sh dls2-operator $CACHE_ON $RELEASE $LOCAL_BUILD
+    - ./push_docker.sh dls2-operator $REGISTRY $RELEASE
+  tags:
+    - dls2
 
 #build-xenomai:
 #  stage: build-two

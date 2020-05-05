@@ -26,7 +26,7 @@ add-apt-repository --yes ppa:nschloe/eigen-backports
 
 # Add CMake PPA
 wget -O - http://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add -
-apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+apt-add-repository 'deb http://apt.kitware.com/ubuntu/ bionic main'
 
 # Remove apt cache and update the sources
 rm -rf /var/lib/apt/lists/*

@@ -38,7 +38,7 @@ test:
   - docker push $REGISTRY/alpine:latest
  except:
    variables:
-     - '$CI_COMMIT_MESSAGE =~ /\[skip test\]/'
+     - $CI_COMMIT_MESSAGE =~ "/\[skip test\]/"
 
 build-env:
   stage: build-one
@@ -49,7 +49,7 @@ build-env:
     - dls2
  except:
    variables:
-     - '$CI_COMMIT_MESSAGE =~ /\[skip one\]/'
+     - $CI_COMMIT_MESSAGE =~ "/\[skip one\]/"
 
 build-dev:
   stage: build-two
@@ -60,7 +60,7 @@ build-dev:
     - dls2
  except:
    variables:
-     - '$CI_COMMIT_MESSAGE =~ /\[skip two\]/'
+     - $CI_COMMIT_MESSAGE =~ "/\[skip two\]/"
 
 build-framework-dev:
   stage: build-three
@@ -71,7 +71,7 @@ build-framework-dev:
     - dls2
  except:
    variables:
-     - '$CI_COMMIT_MESSAGE =~ /\[skip three\]/'
+     - $CI_COMMIT_MESSAGE =~ "/\[skip three\]/"
 
 build-plugin-dev:
   stage: build-three
@@ -82,7 +82,7 @@ build-plugin-dev:
     - dls2
  except:
    variables:
-     - '$CI_COMMIT_MESSAGE =~ /\[skip three\]/'
+     - $CI_COMMIT_MESSAGE =~ "/\[skip three\]/"
 
 build-hal-dev:
   stage: build-three
@@ -92,7 +92,7 @@ build-hal-dev:
     - dls2
  except:
    variables:
-     - '$CI_COMMIT_MESSAGE =~ /\[skip three\]/'
+     - $CI_COMMIT_MESSAGE =~ "/\[skip three\]/"
 
 build-operator:
   stage: build-four
@@ -103,7 +103,7 @@ build-operator:
     - dls2
  except:
    variables:
-     - '$CI_COMMIT_MESSAGE =~ /\[skip four\]/'
+     - $CI_COMMIT_MESSAGE =~ "/\[skip four\]/"
 
 #build-xenomai:
 #  stage: build-two

@@ -9,6 +9,7 @@ ARG SSH_PRIVATE_KEY
 ARG SSH_PUBLIC_KEY
 
 RUN echo 'Acquire::http { Proxy "http://server-ubuntu18:3142"; }' | tee -a /etc/apt/apt.conf.d/proxy
+RUN echo 'Acquire::HTTP::Proxy::server-ubuntu18 "DIRECT";' | tee -a /etc/apt/apt.conf.d/proxy
 
 # install git
 RUN apt-get -y update && apt-get install -y --no-install-recommends apt-utils build-essential git openssh-client apt-transport-https
@@ -41,6 +42,7 @@ FROM ubuntu:16.04
 COPY --from=cloning /dls_gitlab_ci /root/dls_gitlab_ci
 COPY --from=cloning /dls_docker /root/dls_docker
 RUN echo 'Acquire::http { Proxy "http://server-ubuntu18:3142"; }' | tee -a /etc/apt/apt.conf.d/proxy \
+  && RUN echo 'Acquire::HTTP::Proxy::server-ubuntu18 "DIRECT";' | tee -a /etc/apt/apt.conf.d/proxy \
   && apt-get -y update && apt-get install -y --no-install-recommends apt-utils software-properties-common apt-transport-https \
   && bash  -c " \
     /root/dls_docker/scripts/install_linux_tools.sh ; \

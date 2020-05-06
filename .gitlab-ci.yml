@@ -69,6 +69,9 @@ build-framework-dev:
     - ./push_docker.sh dls2-framework-dev $REGISTRY $RELEASE
   tags:
     - dls2
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /[skip three]/    
 
 build-plugin-dev:
   stage: build-three

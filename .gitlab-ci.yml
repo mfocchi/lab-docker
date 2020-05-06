@@ -36,9 +36,9 @@ test:
   - docker pull alpine
   - docker tag alpine $REGISTRY/alpine:latest
   - docker push $REGISTRY/alpine:latest
- except:
-   variables:
-     - $CI_COMMIT_MESSAGE =~ /skip test/
+# except:
+#   variables:
+#     - $CI_COMMIT_MESSAGE =~ /skip test/
 
 build-env:
   stage: build-one
@@ -47,9 +47,9 @@ build-env:
     - ./push_docker.sh dls2-env $REGISTRY $RELEASE
   tags:
     - dls2
- except:
-   variables:
-     - $CI_COMMIT_MESSAGE =~ /skip one/
+# except:
+#   variables:
+#     - $CI_COMMIT_MESSAGE =~ /skip one/
 
 build-dev:
   stage: build-two
@@ -58,9 +58,9 @@ build-dev:
     - ./push_docker.sh dls2-dev $REGISTRY $RELEASE
   tags:
     - dls2
- except:
-   variables:
-     - $CI_COMMIT_MESSAGE =~ /skip two/
+# except:
+#   variables:
+#     - $CI_COMMIT_MESSAGE =~ /skip two/
 
 build-framework-dev:
   stage: build-three
@@ -69,9 +69,9 @@ build-framework-dev:
     - ./push_docker.sh dls2-framework-dev $REGISTRY $RELEASE
   tags:
     - dls2
- except:
-   variables:
-     - $CI_COMMIT_MESSAGE =~ /skip three/
+# except:
+#   variables:
+#     - $CI_COMMIT_MESSAGE =~ /skip three/
 
 build-plugin-dev:
   stage: build-three
@@ -80,9 +80,9 @@ build-plugin-dev:
     - ./push_docker.sh dls2-plugin-dev $REGISTRY $RELEASE
   tags:
     - dls2
- except:
-   variables:
-     - $CI_COMMIT_MESSAGE =~ /skip three/
+# except:
+#   variables:
+#     - $CI_COMMIT_MESSAGE =~ /skip three/
 
 build-hal-dev:
   stage: build-three
@@ -90,9 +90,9 @@ build-hal-dev:
     - echo "Skipping build"
   tags:
     - dls2
- except:
-   variables:
-     - $CI_COMMIT_MESSAGE =~ /skip three/
+# except:
+#   variables:
+#     - $CI_COMMIT_MESSAGE =~ /skip three/
 
 build-operator:
   stage: build-four
@@ -101,9 +101,9 @@ build-operator:
     - ./push_docker.sh dls2-operator $REGISTRY $RELEASE
   tags:
     - dls2
- except:
-   variables:
-     - $CI_COMMIT_MESSAGE =~ /skip four/
+# except:
+#   variables:
+#     - $CI_COMMIT_MESSAGE =~ /skip four/
 
 #build-xenomai:
 #  stage: build-two

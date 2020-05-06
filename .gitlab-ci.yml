@@ -38,7 +38,7 @@ test:
   - docker push $REGISTRY/alpine:latest
  except:
    variables:
-     - $CI_COMMIT_MESSAGE =~ /\[skip test\]/
+     - '$CI_COMMIT_MESSAGE =~ /\[skip test\]/'
 
 build-env:
   stage: build-one

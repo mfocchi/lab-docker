@@ -30,6 +30,7 @@ libreadline-dev
 mesa-utils
 mesa-common-dev
 libglu1-mesa-dev
+locate
 
 #freeglut3
 #freeglut3-dev

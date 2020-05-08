@@ -19,4 +19,4 @@ wget https://atom.io/download/deb
 dpkg -i deb
 rm deb
 
-apt-get install -y meld gitg gitk gedit
+apt-get install -y meld gitg gitk gedit adwaita-icon-theme-full

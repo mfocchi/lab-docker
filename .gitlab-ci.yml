@@ -51,11 +51,33 @@ build-env:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-one\]/
 
+build-env-nvidia:
+  stage: build-one
+  script:
+    - ./build_docker.sh dls2-env-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
+    - ./push_docker.sh dls2-env-nvidia $REGISTRY $RELEASE
+  tags:
+    - dls2
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[skip-one\]/
+
 build-dev:
   stage: build-two
   script:
     - ./build_docker.sh dls2-dev $CACHE_ON $RELEASE $LOCAL_BUILD
     - ./push_docker.sh dls2-dev $REGISTRY $RELEASE
+  tags:
+    - dls2
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[skip-two\]/
+
+build-dev-nvidia:
+  stage: build-two
+  script:
+    - ./build_docker.sh dls2-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
+    - ./push_docker.sh dls2-dev-nvidia $REGISTRY $RELEASE
   tags:
     - dls2
   except:

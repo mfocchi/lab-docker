@@ -17,7 +17,6 @@ stages:
   - build-one
   - build-two
   - build-three
-  - build-threeA
   - build-four
 
 services: # Note the hardcoded registry name...
@@ -118,7 +117,7 @@ build-hal-dev:
       - $CI_COMMIT_MESSAGE =~ /\[skip-three\]/
 
 build-trunk:
-  stage: build-threeA
+  stage: build-four
   script:
     - ./build_docker.sh dls2-plugin-trunk-dev $CACHE_ON $RELEASE $LOCAL_BUILD
     - ./push_docker.sh dls2-plugin-trunk-dev $REGISTRY $RELEASE
@@ -126,7 +125,7 @@ build-trunk:
     - dls2
   except:
     variables:
-      - $CI_COMMIT_MESSAGE =~ /\[skip-threeA\]/
+      - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
 
 build-operator:
   stage: build-four

@@ -149,7 +149,7 @@ build-trunk:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
 
-build-trunk:
+build-trunk-nvidia:
   stage: build-four
   script:
     - ./build_docker.sh dls2-plugin-trunk-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
@@ -171,7 +171,7 @@ build-operator:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
 
-build-operator:
+build-operator-nvidia:
   stage: build-four
   script:
     - ./build_docker.sh dls2-operator-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD

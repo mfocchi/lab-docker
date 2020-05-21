@@ -17,7 +17,7 @@ else
 	CACHE_ON=$3
 fi
 if [ "$#" -lt 2 ]; then
-	NAMES="dls-env dls-rt dls-dev"
+	NAMES="dls2-env dls2-dev"
 else
 	NAMES=$2
 fi

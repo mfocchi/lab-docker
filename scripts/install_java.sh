@@ -12,6 +12,9 @@ wget http://server-ubuntu18/java/jdk-11.0.7_linux-x64_bin.tar.gz
 echo "oracle-java11-installer-local shared/accepted-oracle-license-v1-2 select true" | debconf-set-selections
 echo "oracle-java11-installer shared/accepted-oracle-license-v1-2 select true" | debconf-set-selections
 
-apt-get -y install oracle-java11-installer-local
-apt-get -y install oracle-java11-set-default-local
-apt-get -y install gradle
+apt-get -y install --no-install-recommends oracle-java11-installer-local
+apt-get -y install --no-install-recommends oracle-java11-set-default-local
+apt-get -y install --no-install-recommends gradle
+
+rm -rf /var/cache/oracle-jdk11-installer-local/jdk-11.0.7_linux-x64_bin.tar.gz
+rm -rf /var/lib/apt/lists/*

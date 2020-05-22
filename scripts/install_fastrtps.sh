@@ -4,7 +4,8 @@
 
 echo "Install fastrtps base dependencies"
 echo "========================================================================="
-apt-get install -y libasio-dev libtinyxml2-dev cmake
+apt-get update
+apt-get install -y --no-install-recommends libasio-dev libtinyxml2-dev cmake
 
 echo "Install FastCDR"
 echo "========================================================================="
@@ -39,3 +40,11 @@ cd Fast-RTPS-Gen
 gradle assemble
 cp -r /root/Fast-RTPS-Gen/share/* /usr/local/share
 cp -r /root/Fast-RTPS-Gen/scripts/* /usr/local/bin
+
+cd /root
+rm -rf Fast-CDR
+rm -rf Fast-RTPS
+rm -rf Fast-RTPS-Gen
+rm -rf foonathan_memory_vendor
+rm -rf /var/lib/apt/lists/*
+

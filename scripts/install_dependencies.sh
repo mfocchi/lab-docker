@@ -32,7 +32,7 @@ apt-add-repository 'deb http://apt.kitware.com/ubuntu/ bionic main'
 rm -rf /var/lib/apt/lists/*
 apt-get update
 
-apt-get install -y cmake-data=3.17.1-0kitware1 cmake=3.17.1-0kitware1 cmake-curses-gui=3.17.1-0kitware1 cmake-qt-gui=3.17.1-0kitware1
+apt-get install --no-install-recommends -y cmake-data=3.17.1-0kitware1 cmake=3.17.1-0kitware1 cmake-curses-gui=3.17.1-0kitware1 cmake-qt-gui=3.17.1-0kitware1
 
 # Install external deps
 # cat $PKGS_FOLDER/ext_dependencies_list.txt | grep -v \# | xargs sudo apt-get install -y --allow-downgrades
@@ -43,8 +43,10 @@ PKGS=`cat $PKGS_FOLDER/dls2_ext_dependencies_list.txt | grep -v \#`
 for PKG in $PKGS
 do
 	if apt-cache show $PKG 1>/dev/null 2>&1; then
-    apt-get -y install $PKG
+    apt-get -y install --no-install-recommends $PKG
   else
     echo ERROR: $PKG does not exist!
   fi
 done
+
+rm -rf /var/lib/apt/lists/*

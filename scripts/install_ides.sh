@@ -9,14 +9,15 @@ echo "deb http://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sour
 rm -rf /var/lib/apt/lists/*
 apt-get update
 
-apt-get install -y qt5-default qtcreator build-essential qt5-doc qt5-doc-html qtbase5-doc-html qtbase5-examples libfontconfig1 mesa-common-dev libglu1-mesa-dev
+apt-get install -y --no-install-recommends qt5-default qtcreator build-essential qt5-doc qt5-doc-html qtbase5-doc-html qtbase5-examples libfontconfig1 mesa-common-dev libglu1-mesa-dev
 
-apt-get install -y sublime-text
+apt-get install -y --no-install-recommends sublime-text
 
-apt-get install -y libgconf-2-4 libnss3 gvfs-bin xdg-utils libxss1 libxkbfile1 libcurl3
+apt-get install -y --no-install-recommends libgconf-2-4 libnss3 gvfs-bin xdg-utils libxss1 libxkbfile1 libcurl3 libasound2
 cd /root
 wget https://atom.io/download/deb
 dpkg -i deb
 rm deb
 
-apt-get install -y meld gitg gitk gedit adwaita-icon-theme-full
+apt-get install -y --no-install-recommends meld gitg gitk gedit adwaita-icon-theme-full
+rm -rf /var/lib/apt/lists/*

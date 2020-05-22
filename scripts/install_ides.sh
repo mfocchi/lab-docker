@@ -13,7 +13,7 @@ apt-get install -y --no-install-recommends qt5-default qtcreator build-essential
 
 apt-get install -y --no-install-recommends sublime-text
 
-apt-get install -y --no-install-recommends libgconf-2-4 libnss3 gvfs-bin xdg-utils libxss1 libxkbfile1 libcurl3 libasound2
+apt-get install -y --no-install-recommends libgconf-2-4 libnss3 gvfs-bin xdg-utils libxss1 libxkbfile1 libcurl3 libasound2 policykit-1
 cd /root
 wget https://atom.io/download/deb
 dpkg -i deb

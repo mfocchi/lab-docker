@@ -6,7 +6,7 @@ cmake-data
 wget
 lsb-base
 checkinstall
-openssh-cient
+openssh-client
 openssh-server
 libgtest-dev
 terminator

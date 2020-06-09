@@ -73,16 +73,16 @@ build-dev:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-two\]/
 
-#build-dev-nvidia:
-#  stage: build-two
-#  script:
-#    - ./build_docker.sh dls2-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-#    - ./push_docker.sh dls2-dev-nvidia $REGISTRY $RELEASE
-#  tags:
-#    - dls2
-#  except:
-#    variables:
-#      - $CI_COMMIT_MESSAGE =~ /\[skip-two\]/
+build-dev-nvidia:
+  stage: build-two
+  script:
+    - ./build_docker.sh dls2-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
+    - ./push_docker.sh dls2-dev-nvidia $REGISTRY $RELEASE
+  tags:
+    - dls2
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[skip-two\]/
 
 build-framework-dev:
   stage: build-three

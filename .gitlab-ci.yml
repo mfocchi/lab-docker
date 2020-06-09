@@ -95,16 +95,16 @@ build-framework-dev:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-three\]/
 
-#build-framework-dev-nvidia:
-#  stage: build-three
-#  script:
-#    - ./build_docker.sh dls2-framework-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-#    - ./push_docker.sh dls2-framework-dev-nvidia $REGISTRY $RELEASE
-#  tags:
-#    - dls2
-#  except:
-#    variables:
-#      - $CI_COMMIT_MESSAGE =~ /\[skip-three\]/
+build-framework-dev-nvidia:
+  stage: build-three
+  script:
+    - ./build_docker.sh dls2-framework-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
+    - ./push_docker.sh dls2-framework-dev-nvidia $REGISTRY $RELEASE
+  tags:
+    - dls2
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[skip-three\]/
 
 build-plugin-dev:
   stage: build-three
@@ -117,16 +117,16 @@ build-plugin-dev:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-three\]/
 
-#build-plugin-dev-nvidia:
-#  stage: build-three
-#  script:
-#    - ./build_docker.sh dls2-plugin-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-#    - ./push_docker.sh dls2-plugin-dev-nvidia $REGISTRY $RELEASE
-#  tags:
-#    - dls2
-#  except:
-#    variables:
-#      - $CI_COMMIT_MESSAGE =~ /\[skip-three\]/
+build-plugin-dev-nvidia:
+  stage: build-three
+  script:
+    - ./build_docker.sh dls2-plugin-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
+    - ./push_docker.sh dls2-plugin-dev-nvidia $REGISTRY $RELEASE
+  tags:
+    - dls2
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[skip-three\]/
 
 build-hal-dev:
   stage: build-three

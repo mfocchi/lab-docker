@@ -149,16 +149,16 @@ build-trunk:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
 
-#build-trunk-nvidia:
-#  stage: build-four
-#  script:
-#    - ./build_docker.sh dls2-plugin-trunk-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-#    - ./push_docker.sh dls2-plugin-trunk-dev-nvidia $REGISTRY $RELEASE
-#  tags:
-#    - dls2
-#  except:
-#    variables:
-#      - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
+build-trunk-nvidia:
+  stage: build-four
+  script:
+    - ./build_docker.sh dls2-plugin-trunk-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
+    - ./push_docker.sh dls2-plugin-trunk-dev-nvidia $REGISTRY $RELEASE
+  tags:
+    - dls2
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
 
 build-operator:
   stage: build-four
@@ -171,16 +171,16 @@ build-operator:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
 
-#build-operator-nvidia:
-#  stage: build-four
-#  script:
-#    - ./build_docker.sh dls2-operator-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-#    - ./push_docker.sh dls2-operator-nvidia $REGISTRY $RELEASE
-#  tags:
-#    - dls2
-#  except:
-#    variables:
-#      - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
+build-operator-nvidia:
+  stage: build-four
+  script:
+    - ./build_docker.sh dls2-operator-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
+    - ./push_docker.sh dls2-operator-nvidia $REGISTRY $RELEASE
+  tags:
+    - dls2
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
 
 #build-xenomai:
 #  stage: build-two

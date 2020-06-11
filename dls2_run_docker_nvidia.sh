@@ -2,11 +2,11 @@
 
 # Check args
 if [ "$#" -gt 1 ]; then
-	echo "usage: ./run.sh [IMAGE_NAME=server-gitlab-runner:5000/dls2-operator:latest]"
+	echo "usage: ./run.sh [IMAGE_NAME=server-gitlab-runner:5000/dls2-operator-nvidia:latest]"
 	exit 1
 elif [ "$#" -eq 0 ]; then
-  echo "IMAGE_NAME=server-gitlab-runner:5000/dls2-operator:latest"
-  IMAGE_NAME="server-gitlab-runner:5000/dls2-operator:latest"
+  echo "IMAGE_NAME=server-gitlab-runner:5000/dls2-operator-nvidia:latest"
+  IMAGE_NAME="server-gitlab-runner:5000/dls2-operator-nvidia:latest"
 else
   IMAGE_NAME=$1
 fi
@@ -61,10 +61,6 @@ docker run \
 	-v "$HOME/dls_ws_home:$HOME/" \
 	-dit $IMAGE_NAME
 
-#docker exec -u root -it dls_container rm /etc/ros/rosdep/sources.list.d/20-default.list
-#docker exec -u root -it dls_container chown `id -u` /etc/ros/rosdep/sources.list.d/
-#docker exec -it dls_container rosdep init && rosdep update
-
 email=`git config --global user.email`
 name=`git config --global user.name`
 docker exec -w / -it dls_container git config --global user.email $email
@@ -73,19 +69,4 @@ docker exec -w / -it dls_container git config --global user.name $name
 
 docker exec -w $HOME -it dls_container bash
 
-	# -it $IMAGE_NAME $SHELL \
-	# -c "\
-	# 	eval \`/usr/bin/ssh-agent -s\`; \
-	# 	/usr/bin/ssh-add $HOME/.ssh/id_rsa; \
-	# 	export HOME=$HOME; \
-	# 	cd $HOME; \
-	# 	source /opt/ros/kinetic/setup.bash; \
-	# 	exec /bin/bash \
-	# 	"
 
-
-#mesa-utils
-
-#mount -t cgroup -o none,name=systemcd cgroup systemd/
-
-#docker run -i -t --net=host --env="DISPLAY" --device=/dev/dri:/dev/dri server-gitlab-runner:5000/dls2-framework-dev:latest bash

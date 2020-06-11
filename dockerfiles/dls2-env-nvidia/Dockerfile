@@ -36,7 +36,7 @@ RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_gitlab_ci.git -b dls2
 RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_docker.git -b dls2
 
 # SECOND BUILD
-FROM nvidia/cuda:10.2-base-ubuntu16.04
+FROM nvidia/cudagl:10.2-base-ubuntu16.04
 
 
 # copy the repository form the previous image

@@ -27,9 +27,6 @@ tmux
 ranger
 libfontconfig1
 libreadline-dev
-mesa-utils
-mesa-common-dev
-libglu1-mesa-dev
 locate
 p7zip-full
 

@@ -1,7 +1,7 @@
 # Docker multi-stage build to get rid of the ssh keys
 # FIRST BUILD
 # this is our first build stage, it will not persist in the final image
-FROM nvidia/cuda:10.2-base-ubuntu16.04 as cloning
+FROM nvidia/cudagl:10.2-base-ubuntu16.04 as cloning
 MAINTAINER Geoff Fink <geoff.fink@iit.it>
 
 # Args

@@ -1,7 +1,7 @@
 # Docker multi-stage build to get rid of the ssh keys
 # FIRST BUILD
 # this is our first build stage, it will not persist in the final image
-FROM nvidia/opengl:base-ubuntu16.04 as cloning
+FROM nvidia/opengl:1.1-glvnd-runtime-ubuntu16.04 as cloning
 MAINTAINER Geoff Fink <geoff.fink@iit.it>
 
 # Args
@@ -36,7 +36,7 @@ RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_gitlab_ci.git -b dls2
 RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_docker.git -b dls2
 
 # SECOND BUILD
-FROM nvidia/opengl:base-ubuntu16.04
+FROM nvidia/opengl:1.1-glvnd-runtime-ubuntu16.04
 
 
 # copy the repository form the previous image

@@ -29,6 +29,7 @@ libfontconfig1
 libreadline-dev
 locate
 p7zip-full
+mesa-utils
 
 #freeglut3
 #freeglut3-dev

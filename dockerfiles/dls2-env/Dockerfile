@@ -48,7 +48,7 @@ RUN echo 'Acquire::http { Proxy "http://server-ubuntu18:3142"; }' | tee -a /etc/
     /root/dls_docker/scripts/install_linux_tools.sh ; \
     /root/dls_docker/scripts/install_mesa.sh ; \
     /root/dls_docker/scripts/install_java.sh ; \
-    /root/dls_docker/scripts/install_fastrtps.sh ; \
+    /root/dls_docker/scripts/install_fast_dds.sh ; \
     /root/dls_docker/scripts/install_ros.sh ; \
     /root/dls_docker/scripts/install_dls2.sh ; \
     /root/dls_docker/scripts/install_dls-plugins.sh ; \

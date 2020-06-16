@@ -2,12 +2,12 @@
 
 # Inlcude common functions
 
-echo "Install fastrtps base dependencies"
+echo "Install Fast DDS base dependencies"
 echo "========================================================================="
 apt-get update
 apt-get install -y --no-install-recommends libasio-dev libtinyxml2-dev cmake
 
-echo "Install FastCDR"
+echo "Install Fast CDR"
 echo "========================================================================="
 cd /root
 git clone https://github.com/eProsima/Fast-CDR.git
@@ -15,7 +15,7 @@ mkdir Fast-CDR/build && cd Fast-CDR/build
 cmake ..
 cmake --build . --target install
 
-echo "Install foonathan memory"
+echo "Install Foonathan Memory"
 echo "========================================================================="
 cd /root
 git clone https://github.com/eProsima/foonathan_memory_vendor.git
@@ -24,27 +24,27 @@ mkdir build && cd build
 cmake ..
 cmake --build . --target install
 
-echo "Instal FastRTPS"
+echo "Instal Fast DDS"
 echo "========================================================================="
 cd /root
-git clone https://github.com/eProsima/Fast-RTPS.git
-mkdir Fast-RTPS/build && cd Fast-RTPS/build
+git clone https://github.com/eProsima/Fast-DDS.git
+mkdir Fast-DDS/build && cd Fast-DDS/build
 cmake ..
 cmake --build . --target install
 
-echo "Install fastrtpsgen"
+echo "Install Fast DDS Gen"
 echo "========================================================================="
 cd /root
-git clone --recursive https://github.com/eProsima/Fast-RTPS-Gen.git
-cd Fast-RTPS-Gen
+git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git
+cd Fast-DDS-Gen
 gradle assemble
-cp -r /root/Fast-RTPS-Gen/share/* /usr/local/share
-cp -r /root/Fast-RTPS-Gen/scripts/* /usr/local/bin
+cp -r /root/Fast-DDS-Gen/share/* /usr/local/share
+cp -r /root/Fast-DDS-Gen/scripts/* /usr/local/bin
 
 cd /root
 rm -rf Fast-CDR
-rm -rf Fast-RTPS
-rm -rf Fast-RTPS-Gen
+rm -rf Fast-DDS
+rm -rf Fast-DDS-Gen
 rm -rf foonathan_memory_vendor
 rm -rf /var/lib/apt/lists/*
 

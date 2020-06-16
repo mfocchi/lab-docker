@@ -56,4 +56,3 @@ RUN echo 'Acquire::http { Proxy "http://server-ubuntu18:3142"; }' | tee -a /etc/
     /root/dls_docker/scripts/install_dependencies.sh ; \
     " \
   && rm -rf /var/lib/apt/lists/*
-

@@ -1,1 +1,1 @@
-docker exec -w /root -u root -it dls_container /bin/bash
+docker exec -w $HOME -u root -it dls_container /bin/bash

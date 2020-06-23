@@ -51,6 +51,21 @@ if ! mountpoint -q "$dir" ; then
 	sudo mount -t cgroup -o none,name=systemcd cgroup $dir
 fi
 
+if [ -d "$HOME/dls_ws_home" ]; then
+	echo "dls_ws_home exists"
+else
+	echo "dls_ws_home doesn't exist"
+	mkdir $HOME/dls_ws_home
+fi
+
+
+if [ -f "$HOME/dls_ws_home/.bashrc" ]; then
+	echo "bashrc exists"
+else
+	echo "bashrc doesn't exsist."
+	cp /etc/skel/.bashrc $HOME/dls_ws_home/.bashrc
+fi
+
 docker rm -f dls_container > /dev/null 2>&1
 
 OPTIONS="--hostname docker"

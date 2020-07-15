@@ -19,5 +19,5 @@ wget https://atom.io/download/deb
 dpkg -i deb
 rm deb
 
-apt-get install -y --no-install-recommends meld gitg gitk gedit adwaita-icon-theme-full
+apt-get install -y --no-install-recommends meld gitg gitk git-cola gedit adwaita-icon-theme-full
 rm -rf /var/lib/apt/lists/*

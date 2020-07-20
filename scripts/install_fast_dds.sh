@@ -35,8 +35,10 @@ cmake --build . --target install
 echo "Install Fast DDS Gen"
 echo "========================================================================="
 cd /root
-git clone --branch v1.0.4 --recursive https://github.com/eProsima/Fast-DDS-Gen.git
+#git clone --branch v2.0.0 --recursive https://github.com/eProsima/Fast-DDS-Gen.git
+git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git
 cd Fast-DDS-Gen
+git checkout 1895c994416ae5ce63ed7c3e5a912f36a03aeceb
 gradle assemble
 cp -r /root/Fast-DDS-Gen/share/* /usr/local/share
 cp -r /root/Fast-DDS-Gen/scripts/* /usr/local/bin

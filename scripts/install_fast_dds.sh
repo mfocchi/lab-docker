@@ -27,7 +27,7 @@ cmake --build . --target install
 echo "Instal Fast DDS"
 echo "========================================================================="
 cd /root
-git clone --branch v2.0.0 https://github.com/eProsima/Fast-DDS.git
+git clone --branch v2.0.1 https://github.com/eProsima/Fast-DDS.git
 mkdir Fast-DDS/build && cd Fast-DDS/build
 cmake ..
 cmake --build . --target install

@@ -30,6 +30,7 @@ libreadline-dev
 locate
 p7zip-full
 mesa-utils
+clang-tidy-8
 
 #freeglut3
 #freeglut3-dev

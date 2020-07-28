@@ -48,6 +48,7 @@ RUN echo 'Acquire::http { Proxy "http://server-ubuntu18:3142"; }' | tee -a /etc/
   && apt-get -y update && apt-get install -y --no-install-recommends apt-utils software-properties-common apt-transport-https \
   && bash  -c " \
     /root/dls_docker/scripts/install_linux_tools.sh ; \
+    /root/dls_docker/scripts/install_gcc.sh ; \
     /root/dls_docker/scripts/install_java.sh ; \
     /root/dls_docker/scripts/install_fast_dds.sh ; \
     /root/dls_docker/scripts/install_ros.sh ; \

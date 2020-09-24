@@ -19,20 +19,9 @@ else
 	add-apt-repository "$AMAZON_DEB_SERVER"
 fi
 
-#Add Eigen backport PPA
-export LANG=C.UTF-8
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ECD154D280FEB8AC
-add-apt-repository --yes ppa:nschloe/eigen-backports
-
-# Add CMake PPA
-wget -O - http://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add -
-apt-add-repository 'deb http://apt.kitware.com/ubuntu/ bionic main'
-
 # Remove apt cache and update the sources
 rm -rf /var/lib/apt/lists/*
 apt-get update
-
-apt-get install --no-install-recommends -y cmake-data=3.18.0-0kitware1 cmake=3.18.0-0kitware1 cmake-curses-gui=3.18.0-0kitware1 cmake-qt-gui=3.18.0-0kitware1
 
 # Install external deps
 # cat $PKGS_FOLDER/ext_dependencies_list.txt | grep -v \# | xargs sudo apt-get install -y --allow-downgrades

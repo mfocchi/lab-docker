@@ -49,7 +49,10 @@ RUN echo 'Acquire::http { Proxy "http://server-ubuntu18:3142"; }' | tee -a /etc/
   && bash  -c " \
     /root/dls_docker/scripts/install_linux_tools.sh ; \
     /root/dls_docker/scripts/install_gcc.sh ; \
+    /root/dls_docker/scripts/install_cmake.sh ; \
     /root/dls_docker/scripts/install_java.sh ; \
+    /root/dls_docker/scripts/install_qt.sh ; \
+    /root/dls_docker/scripts/install_eigen.sh ; \
     /root/dls_docker/scripts/install_fast_dds.sh ; \
     /root/dls_docker/scripts/install_ros.sh ; \
     /root/dls_docker/scripts/install_dls2.sh ; \

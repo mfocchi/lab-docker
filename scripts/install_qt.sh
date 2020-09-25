@@ -14,4 +14,11 @@ cd build
 ../configure -opensource -confirm-license -opengl desktop -prefix /opt/qt515
 make -j8
 make install
+
+#Set custom qt as default
+echo $'/opt/qt515/bin\n/opt/qt515/lib' > /usr/share/qtchooser/qt515.conf
+ln -s /usr/share/qtchooser/qt515.conf /usr/lib/x86_64-linux-gnu/qtchooser/
+rm -f /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
+cp /usr/lib/x86_64-linux-gnu/qtchooser/qt515.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
+
 rm -rf /tmp/qt-everywhere-src-5.15.1

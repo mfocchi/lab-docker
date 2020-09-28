@@ -11,6 +11,7 @@ cd qt-everywhere-src-5.15.1
 mkdir build
 cd build
 ../configure -opensource -confirm-license -opengl desktop -prefix /opt/qt515
+#-no-feature-webengine-system-libwebp is needed if there is a different version of libwebp installed
 make -j8
 make install
 

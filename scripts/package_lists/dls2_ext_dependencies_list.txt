@@ -15,6 +15,7 @@ openssh-server
 libgtest-dev=1.7.0-4ubuntu1
 terminator=0.98-1
 liburdf-dev
+liburdfdom-dev
 
 # Python
 #python-dev=2.7.12-1~16.04

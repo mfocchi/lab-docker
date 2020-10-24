@@ -7,7 +7,7 @@ variables:
   CACHE_ON: "false"
 #  GIT_STRATEGY: clone
 #  REGISTRY: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-  REGISTRY: server-gitlab-runner:5000
+  REGISTRY: server-harbor:80
   RELEASE: latest
   LOCAL_BUILD: "false"
   DOCKER_TLS_CERTDIR: ""
@@ -21,10 +21,11 @@ stages:
 
 services: # Note the hardcoded registry name...
   - name: docker:dind
-    command: ["--insecure-registry=server-gitlab-runner:5000"]
+    command: ["--insecure-registry=server-harbor:80"]
 
 before_script:
   - apk update && apk add bash
+  - echo -n $DLS2_HARBOR_TOKEN | docker login -u robot$gitlab --password-stdin $REGISTRY
   - docker info
 
 # Test if the registry is up and running
@@ -34,8 +35,8 @@ test:
     - dls2
   script:
   - docker pull alpine
-  - docker tag alpine $REGISTRY/alpine:latest
-  - docker push $REGISTRY/alpine:latest
+  - docker tag alpine $REGISTRY/dls2/alpine:$RELEASE
+  - docker push $REGISTRY/dls2/alpine:$RELEASE
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-test\]/
@@ -44,7 +45,8 @@ build-env:
   stage: build-one
   script:
     - ./build_docker.sh dls2-env $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-env $REGISTRY $RELEASE
+    - docker tag dls2-env $REGISTRY/dls2/dls2-env:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-env:$RELEASE
   tags:
     - dls2
   except:
@@ -55,7 +57,8 @@ build-env-nvidia:
   stage: build-one
   script:
     - ./build_docker.sh dls2-env-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-env-nvidia $REGISTRY $RELEASE
+    - docker tag dls2-env-nvidia $REGISTRY/dls2/dls2-env-nvidia:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-env-nvidia:$RELEASE
   tags:
     - dls2
   except:
@@ -66,7 +69,8 @@ build-dev:
   stage: build-two
   script:
     - ./build_docker.sh dls2-dev $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-dev $REGISTRY $RELEASE
+    - docker tag dls2-dev $REGISTRY/dls2/dls2-dev:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-dev:$RELEASE
   tags:
     - dls2
   except:
@@ -77,7 +81,8 @@ build-dev-nvidia:
   stage: build-two
   script:
     - ./build_docker.sh dls2-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-dev-nvidia $REGISTRY $RELEASE
+    - docker tag dls2-dev-nvidia $REGISTRY/dls2/dls2-dev-nvidia:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-dev-nvidia:$RELEASE
   tags:
     - dls2
   except:
@@ -88,7 +93,8 @@ build-framework-dev:
   stage: build-three
   script:
     - ./build_docker.sh dls2-framework-dev $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-framework-dev $REGISTRY $RELEASE
+    - docker tag dls2-framework-dev $REGISTRY/dls2/dls2-framework-dev:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-framework-dev:$RELEASE
   tags:
     - dls2
   except:
@@ -99,7 +105,8 @@ build-framework-dev-nvidia:
   stage: build-three
   script:
     - ./build_docker.sh dls2-framework-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-framework-dev-nvidia $REGISTRY $RELEASE
+    - docker tag dls2-framework-dev-nvidia $REGISTRY/dls2/dls2-framework-dev-nvidia:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-framework-dev-nvidia:$RELEASE
   tags:
     - dls2
   except:
@@ -110,7 +117,8 @@ build-plugin-dev:
   stage: build-three
   script:
     - ./build_docker.sh dls2-plugin-dev $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-plugin-dev $REGISTRY $RELEASE
+    - docker tag dls2-plugin-dev $REGISTRY/dls2/dls2-plugin-dev:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-plugin-dev:$RELEASE
   tags:
     - dls2
   except:
@@ -121,7 +129,8 @@ build-plugin-dev-nvidia:
   stage: build-three
   script:
     - ./build_docker.sh dls2-plugin-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-plugin-dev-nvidia $REGISTRY $RELEASE
+    - docker tag dls2-plugin-dev-nvidia $REGISTRY/dls2/dls2-plugin-dev-nvidia:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-plugin-dev-nvidia:$RELEASE
   tags:
     - dls2
   except:
@@ -142,7 +151,8 @@ build-trunk:
   stage: build-four
   script:
     - ./build_docker.sh dls2-plugin-trunk-dev $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-plugin-trunk-dev $REGISTRY $RELEASE
+    - docker tag dls2-plugin-trunk-dev $REGISTRY/dls2/dls2-plugin-trunk-dev:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-plugin-trunk-dev:$RELEASE
   tags:
     - dls2
   except:
@@ -153,7 +163,8 @@ build-trunk-nvidia:
   stage: build-four
   script:
     - ./build_docker.sh dls2-plugin-trunk-dev-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-plugin-trunk-dev-nvidia $REGISTRY $RELEASE
+    - docker tag dls2-plugin-trunk-dev-nvidia $REGISTRY/dls2/dls2-plugin-trunk-dev-nvidia:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-plugin-trunk-dev-nvidia:$RELEASE
   tags:
     - dls2
   except:
@@ -164,7 +175,8 @@ build-operator:
   stage: build-four
   script:
     - ./build_docker.sh dls2-operator $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-operator $REGISTRY $RELEASE
+    - docker tag dls2-operator $REGISTRY/dls2/dls2-operator:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-operator:$RELEASE
   tags:
     - dls2
   except:
@@ -175,7 +187,8 @@ build-operator-nvidia:
   stage: build-four
   script:
     - ./build_docker.sh dls2-operator-nvidia $CACHE_ON $RELEASE $LOCAL_BUILD
-    - ./push_docker.sh dls2-operator-nvidia $REGISTRY $RELEASE
+    - docker tag dls2-operator-nvidia $REGISTRY/dls2/dls2-operator-nvidia:$RELEASE
+    - docker push $REGISTRY/dls2/dls2-operator-nvidia:$RELEASE
   tags:
     - dls2
   except:

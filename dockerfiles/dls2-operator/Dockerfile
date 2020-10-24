@@ -1,5 +1,5 @@
 ARG RELEASE
-FROM server-gitlab-runner:5000/dls2-plugin-dev:$RELEASE
+FROM server-harbor:80/dls2/dls2-plugin-dev:$RELEASE
 ARG RELEASE
 RUN rm -rf /var/lib/apt/lists/* \
   && apt-get update \

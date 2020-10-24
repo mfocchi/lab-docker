@@ -1,5 +1,5 @@
 ARG RELEASE
-FROM server-dev:5000/dls-rt:$RELEASE
+FROM server-harbor:80/dls2/dls-rt:$RELEASE
 ARG RELEASE
 ARG INSTALL_DEPS=true
 ARG INSTALL_EXTRAS=true

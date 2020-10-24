@@ -1,5 +1,5 @@
 ARG RELEASE
-FROM server-gitlab-runner:5000/dls2-env:$RELEASE
+FROM server-harbor:80/dls2/dls2-env:$RELEASE
 ARG RELEASE
 WORKDIR /root
 RUN rm -rf /var/lib/apt/lists/* \

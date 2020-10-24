@@ -25,7 +25,7 @@ services: # Note the hardcoded registry name...
 
 before_script:
   - apk update && apk add bash
-  - echo -n $DLS2_HARBOR_TOKEN | docker login -u robot$gitlab --password-stdin $REGISTRY
+  - echo -n $DLS2_HARBOR_TOKEN | docker login -u 'robot$gitlab' --password-stdin $REGISTRY
   - docker info
 
 # Test if the registry is up and running

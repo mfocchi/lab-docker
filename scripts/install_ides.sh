@@ -26,6 +26,7 @@ export LD_LIBRARY_PATH=/opt/qt515/lib:$LD_LIBRARY_PATH
 cd /tmp
 wget http://server-ubuntu18/qt/qt-creator-opensource-src-4.13.1.tar.gz
 tar xvf qt-creator-opensource-src-4.13.1.tar.gz
+rm qt-creator-opensource-src-4.13.1.tar.gz
 cd qt-creator-opensource-src-4.13.1
 mkdir qt-creator-build
 cd qt-creator-build

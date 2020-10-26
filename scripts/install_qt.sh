@@ -7,6 +7,7 @@ apt-get --no-install-recommends -y install build-essential libgl1-mesa-dev libgl
 cd /tmp
 wget http://server-ubuntu18/qt/qt-everywhere-src-5.15.1.tar.xz
 tar xvf qt-everywhere-src-5.15.1.tar.xz
+rm qt-everywhere-src-5.15.1.tar.xz
 cd qt-everywhere-src-5.15.1
 mkdir build
 cd build

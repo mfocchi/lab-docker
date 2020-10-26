@@ -194,11 +194,3 @@ build-operator-nvidia:
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /\[skip-four\]/
-
-#build-xenomai:
-#  stage: build-two
-#  script:
-#  - ./build_docker.sh dls2-xenomai $CACHE_ON $RELEASE $LOCAL_BUILD
-#  - ./push_docker.sh dls2-xenomai $REGISTRY $RELEASE
-#  tags:
-#    - dls2

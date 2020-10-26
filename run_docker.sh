@@ -1,12 +1,39 @@
 #!/usr/bin/env bash
 
 # Check args
-if [ "$#" -ne 1 ]; then
-  echo "usage: ./run.sh [IMAGE_NAME=server-dev:5000/dls-dev:latest]"
-  IMAGE_NAME="server-dev:5000/dls-dev:latest"
+if [ "$#" -gt 2 ]; then
+	echo "usage: $0 [--nivida] [IMAGE_NAME] "
+	echo ""
+	echo "  IMAGE_NAME=dls/dls-dev"
+	echo "  --nvidia : Use the nvidia image instead of intel/mesa"
+	exit 1
+elif [ $# -eq 2 ]; then
+	if [ "$1" = "--nvidia" ]; then
+		NVIDIA=true
+		IMAGE_NAME="server-harbor:80/dls/$2-nvidia:latest"
+	elif [ "$2" = "--nvidia" ]; then
+		NVIDIA=true
+		IMAGE_NAME="server-harbor:80/dls/$1-nvidia:latest"
+	else
+		echo "usage: $0 [--nivida] [IMAGE_NAME] "
+		echo ""
+		echo "  IMAGE_NAME=dls/dls-dev"
+		echo "  --nvidia : Use the nvidia image instead of intel/mesa"
+		exit 1
+	fi
+elif [ $# -eq 1 ]; then
+	if [ "$1" = "--nvidia" ]; then
+		NVIDIA=true
+		IMAGE_NAME="server-harbor:80/dls/dls-dev-nvidia:latest"
+	else
+		NVIDIA=false
+		IMAGE_NAME="server-harbor:80/$1:latest"
+	fi
 else
-  IMAGE_NAME=$1	
+	NVIDIA=false
+	IMAGE_NAME="server-harbor:80/dls/dls-dev:latest"
 fi
+
 
 # Get this script's path
 pushd `dirname $0` > /dev/null
@@ -16,17 +43,65 @@ popd > /dev/null
 set -e
 
 # Hacky
-xhost +local:docker
+if [ `xhost | grep -c "access control enabled"` -eq 1 ]; then
+	xhost +
+fi
 
-if [ `sudo systemctl is-active docker` = "inactive" ]; then
+if [ `systemctl is-active docker` = "inactive" ]; then
   echo "Docker inactive.  Starting docker..."
   sudo systemctl start docker
 fi
 
-if [ ! "$(docker container inspect dls_container > /dev/null 2>&1)" ]; then
-	docker rm dls_container
+dir=/sys/fs/cgroup/systemd
+if ! mountpoint -q "$dir" ; then
+	sudo mkdir -p $dir
+	sudo mount -t cgroup -o none,name=systemcd cgroup $dir
 fi
 
-# Run the container with shared X11
-#--entrypoint "eval $(/usr/bin/ssh-agent -s) /usr/bin/ssh-add /home/`whoami`/.ssh/id_rsa"
-docker run --user `id -u`:sudo --hostname "docker" --device=/dev/dri:/dev/dri --net=host -e "QT_X11_NO_MITSHM=1" -e SHELL -e DISPLAY -e DOCKER=1 --name dls_container -v "$HOME/dls_ws:$HOME/dls_ws:rw" -v "$HOME/.ssh:$HOME/.ssh" -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" -v "/etc/passwd:/etc/passwd" -v "$HOME/.ros:$HOME/.ros" -v "$HOME/.bashrc:$HOME/.bashrc" -it $IMAGE_NAME $SHELL -c "eval \`/usr/bin/ssh-agent -s\`; /usr/bin/ssh-add /home/`whoami`/.ssh/id_rsa; export HOME=$HOME; cd $HOME; source /opt/ros/dls-distro/setup.bash; exec /bin/bash"
+if [ -d "$HOME/dls_ws_home" ]; then
+	echo "dls_ws_home exists"
+else
+	echo "dls_ws_home doesn't exist"
+	mkdir $HOME/dls_ws_home
+fi
+
+if [ -f "$HOME/dls_ws_home/.bashrc" ]; then
+	echo "bashrc exists"
+else
+	echo "bashrc doesn't exsist."
+	cp /etc/skel/.bashrc $HOME/dls_ws_home/.bashrc
+fi
+
+docker rm -f dls_container > /dev/null 2>&1
+
+OPTIONS="--hostname docker"
+OPTIONS="--name dls_container $OPTIONS"
+OPTIONS="--device=/dev/dri:/dev/dri $OPTIONS"
+OPTIONS="--net=host $OPTIONS"
+OPTIONS="--user `id -u`:users $OPTIONS"
+OPTIONS="-e QT_X11_NO_MITSHM=1 $OPTIONS"
+OPTIONS="-e SHELL $OPTIONS"
+OPTIONS="-e DISPLAY $OPTIONS"
+OPTIONS="-e DOCKER=1 $OPTIONS"
+OPTIONS="-v /tmp/.X11-unix:/tmp/.X11-unix:rw $OPTIONS"
+OPTIONS="-v /etc/passwd:/etc/passwd $OPTIONS"
+OPTIONS="-v $HOME/.ssh:$HOME/.ssh:rw $OPTIONS"
+OPTIONS="-v $HOME/dls_ws_home:$HOME/ $OPTIONS"
+
+if [ $NVIDIA ]; then
+	echo "Using nvidia ..."
+	OPTIONS="--gpus all $OPTIONS"
+fi
+
+echo docker run $OPTIONS -dit $IMAGE_NAME
+docker run $OPTIONS -dit $IMAGE_NAME
+
+email=`git config --global user.email`
+name=`git config --global user.name`
+docker exec -w / -it dls_container git config --global user.email $email
+docker exec -w / -it dls_container git config --global user.name $name
+
+#docker exec -w /root -u root -it dls_container /root/dls_docker/scripts/timeout.sh 0.1 0.1
+
+
+docker exec -w $HOME -it dls_container bash

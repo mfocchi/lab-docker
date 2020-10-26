@@ -2,7 +2,7 @@
 
 # Check args
 if [ "$#" -lt 5 ]; then
-	REGISTRY=server-dev:5000
+	REGISTRY=server-harbor:80
 else
 	REGISTRY=$5
 fi
@@ -17,7 +17,7 @@ else
 	CACHE_ON=$3
 fi
 if [ "$#" -lt 2 ]; then
-	NAMES="dls2-env dls2-dev"
+	NAMES="dls2/dls2-env dls2/dls2-dev"
 else
 	NAMES=$2
 fi
@@ -27,14 +27,6 @@ if [ "$#" -lt 1 ]; then
 else
 	RELEASE=$1
 fi
-
-# loop on them
-#NAMES="dls-env dls-rt dls-dev"
-# This has to be scheduled
-#RELEASE=$1
-#CACHE_ON=false
-#REGISTRY=server-dev:5000
-#LOCAL_BUILD=true # Are you building directly on the development server?
 
 for NAME in $NAMES
 

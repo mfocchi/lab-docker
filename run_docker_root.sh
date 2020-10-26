@@ -2,8 +2,8 @@
 
 # Check args
 if [ "$#" -ne 1 ]; then
-  echo "usage: ./run.sh [IMAGE_NAME=server-dev:5000/dls-dev:latest]"
-  IMAGE_NAME="server-dev:5000/dls-dev:latest"
+  echo "usage: ./run.sh [IMAGE_NAME=server-harbor:80/dls/dls-dev:latest]"
+  IMAGE_NAME="server-harbor:80/dls/dls-dev:latest"
 else
   IMAGE_NAME=$1	
 fi

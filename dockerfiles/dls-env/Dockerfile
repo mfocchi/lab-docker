@@ -2,7 +2,7 @@
 # FIRST BUILD
 # this is our first build stage, it will not persist in the final image
 FROM ubuntu:16.04 as cloning
-MAINTAINER Gennaro Raiola <gennaro.raiola@iit.it>
+MAINTAINER Geoff <geoff.fink@iit.it>
 
 # Args
 ARG SSH_PRIVATE_KEY

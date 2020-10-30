@@ -4,8 +4,8 @@ RELEASE="latest"
 PKGS_FOLDER=/root/dls_docker/scripts/package_lists
 
 
-echo "deb [trusted=yes] http://server-ubuntu18/repo/ stable/" > /etc/apt/sources.list.d/dls-stable.list
-echo "deb [trusted=yes] http://server-ubuntu18/repo/ latest/" > /etc/apt/sources.list.d/dls-latest.list
+echo "deb [trusted=yes] http://server-apt/repo/ stable/" > /etc/apt/sources.list.d/dls-stable.list
+echo "deb [trusted=yes] http://server-apt/repo/ latest/" > /etc/apt/sources.list.d/dls-latest.list
 
 
 add-apt-repository --yes ppa:danielrichter2007/grub-customizer

@@ -137,9 +137,7 @@ if not args.api:
 	result=container.exec_run(['git','config','--global','user.email',git_email])
 	result=container.exec_run(['git','config','--global','user.name',git_name])
 	#Handy script for killing gazebo timeouts
-	result=container.exec_run(['/bin/bash','-c','touch abc'])
-	print('good bye')
-	result=container.exec_run(['/bin/bash','-c','/root/dls_docker/scripts/timeout.sh 0.1 0.1 && echo hi'],user='root')
+	result=container.exec_run(['/root/dls_docker/scripts/timeout.sh','0.1','0.1'],user='root')
 	#Start qtcreator
 	if args.qtcreator:
 		result=container.exec_run(['/bin/bash','-c','source .bashrc && qtcreator'],user=container_user,detach=True)

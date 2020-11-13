@@ -62,9 +62,6 @@ container_user=id+':users'
 container_environment=['QT_X11_NO_MITSHM=1','SHELL='+shell,'DISPLAY='+display,'DOCKER=1','NVIDIA_VISIBLE_DEVICES=all']
 if len(args.env)>0:
 	container_environment.extend(args.env)
-	
-print(container_environment)	
-	
 container_volumes=['/tmp/.X11-unix:/tmp/.X11-unix:rw','/etc/passwd:/etc/passwd',home+'/.ssh:'+home+'/.ssh:rw',dls_dir+':'+home]
 container_working_dir=home
 container_image=args.server+':'+args.port+'/'+args.project+'/'+args.image

@@ -24,7 +24,7 @@ parser = argparse.ArgumentParser(description='Process command line arguments.')
 parser.add_argument('-nv','--nvidia', action='store_true', help='use the nvidia driver')
 parser.add_argument('-qt', '--qtcreator', action='store_true', help='start qt creator')
 parser.add_argument('-api','--api',action='store_true',help='use the python docker sdk low level api')
-parser.add_argument('-e','--env',help='extra environment to pass to the container')
+parser.add_argument('-e','--env',default=[],action='append',help='extra environment to pass to the container')
 parser.add_argument('-i','--image', default='dls2-operator', help='docker image to run')
 parser.add_argument('-j','--project',default='dls2',help='docker image repo project')
 parser.add_argument('-t','--tag',default='latest',help='docker image tag')
@@ -60,8 +60,11 @@ container_devices=['/dev/dri:/dev/dri']
 container_network_mode='host'
 container_user=id+':users'
 container_environment=['QT_X11_NO_MITSHM=1','SHELL='+shell,'DISPLAY='+display,'DOCKER=1','NVIDIA_VISIBLE_DEVICES=all']
-if args.env:
-	container_environment=container_environment+[args.env]
+if len(args.env)>0:
+	container_environment.extend(args.env)
+	
+print(container_environment)	
+	
 container_volumes=['/tmp/.X11-unix:/tmp/.X11-unix:rw','/etc/passwd:/etc/passwd',home+'/.ssh:'+home+'/.ssh:rw',dls_dir+':'+home]
 container_working_dir=home
 container_image=args.server+':'+args.port+'/'+args.project+'/'+args.image

@@ -1,5 +1,3 @@
-image: docker:latest
-
 # When using dind, it's wise to use the overlayfs driver for
 # improved performance.
 variables:
@@ -12,6 +10,8 @@ variables:
   LOCAL_BUILD: "false"
   DOCKER_TLS_CERTDIR: ""
 
+image: $REGISTRY/dls2/docker:latest
+
 stages:
   - test
   - build-one
@@ -20,7 +20,7 @@ stages:
   - build-four
 
 services: # Note the hardcoded registry name...
-  - name: docker:dind
+  - name: $REGISTRY/dls2/docker:dind
     command: ["--insecure-registry=server-harbor:80"]
 
 before_script:

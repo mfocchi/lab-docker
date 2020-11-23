@@ -35,7 +35,7 @@ test:
     - dls2
   script:
   - docker pull $REGISTRY/clones/alpine
-  - docker tag alpine $REGISTRY/dls2/alpine:$RELEASE
+  - docker tag $REGISTRY/clones/alpine $REGISTRY/dls2/alpine:$RELEASE
   - docker push $REGISTRY/dls2/alpine:$RELEASE
   except:
     variables:

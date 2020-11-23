@@ -16,9 +16,12 @@ try:
 	import shutil
 	import docker
 	import dockerpty
+	import NetworkManager
 except ImportError as e:
 	print(e)
 	sys.exit()
+	
+
 	
 parser = argparse.ArgumentParser(description='Process command line arguments.')
 parser.add_argument('-nv','--nvidia', action='store_true', help='use the nvidia driver')
@@ -30,6 +33,7 @@ parser.add_argument('-j','--project',default='dls2',help='docker image repo proj
 parser.add_argument('-t','--tag',default='latest',help='docker image tag')
 parser.add_argument('-s','--server',default='server-harbor', help='image repo server')
 parser.add_argument('-p','--port',default='80', help='image repo port')
+parser.add_argument('-d','--dns',action='store_true',help='use host dns instead of iit dns')
 parser.add_argument('-f','--force',action='store_true',help='start container even if another container with the same name exists (it will be deleted)')
 args = parser.parse_args()
 
@@ -38,6 +42,15 @@ args = parser.parse_args()
 home=os.environ['HOME']
 display=os.environ['DISPLAY']
 shell=os.environ['SHELL']
+
+host_dns_servers=[]
+host_dns_searches=[]
+for conn in NetworkManager.NetworkManager.ActiveConnections:
+	for dev in conn.Devices:
+		host_dns_servers=host_dns_servers+dev.Ip4Config.Nameservers
+		host_dns_searches=host_dns_searches+dev.Ip4Config.Searches
+iit_dns_servers=['10.255.8.30','10.255.8.31'] #IIT
+iit_dns_searches=['dls.local','iit.local']
 result=subprocess.run(['whoami'],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 user=result.stdout.decode('utf-8').strip()
 result=subprocess.run(['id','-u'],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -53,11 +66,16 @@ git_name=result.stdout.decode('utf-8').strip()
 ## Config
 dls_dir=home+'/dls_ws_home'
 bashrc=dls_dir+'/.bashrc'
-
 container_hostname='docker'
 container_name='dls_container'
 container_devices=['/dev/dri:/dev/dri']
 container_network_mode='host'
+if args.dns:
+	container_dns=host_dns_servers
+	container_dns_search=host_dns_searches
+else:
+	container_dns=iit_dns_servers
+	container_dns_search=iit_dns_searches
 container_user=id+':users'
 container_environment=['QT_X11_NO_MITSHM=1','SHELL='+shell,'DISPLAY='+display,'DOCKER=1','NVIDIA_VISIBLE_DEVICES=all']
 if len(args.env)>0:
@@ -134,6 +152,8 @@ if not args.api:
 		working_dir=container_working_dir,
 		runtime=container_runtime,
 		stdin_open=True,
+		dns=container_dns,
+		dns_search=container_dns_search,		
 		tty=True,
 		)
 	#Set git config
@@ -163,6 +183,8 @@ else:
 			binds=container_volumes,
 			devices=container_devices,
 			device_requests=container_device_requests,
+			dns=container_dns,
+			dns_search=container_dns_search,
 		),
 		working_dir=container_working_dir,
 		runtime=container_runtime,

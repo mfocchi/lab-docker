@@ -1,7 +1,7 @@
 # Docker multi-stage build to get rid of the ssh keys
 # FIRST BUILD
 # this is our first build stage, it will not persist in the final image
-FROM ubuntu:16.04 as cloning
+FROM server-harbor:80/clones/ubuntu:16.04 as cloning
 MAINTAINER Geoff <geoff.fink@iit.it>
 
 # Args
@@ -33,7 +33,7 @@ RUN git clone git@gitlab.advr.iit.it:dls-lab/installation_tools.git
 RUN git clone git@gitlab.advr.iit.it:dls-lab/dls_gitlab_ci.git
 
 # SECOND BUILD
-FROM ubuntu:16.04
+FROM server-harbor:80/clones/ubuntu:16.04
 
 ARG RELEASE
 ARG INSTALL_DEPS=true

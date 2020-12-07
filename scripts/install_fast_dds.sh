@@ -65,11 +65,10 @@ touch src/soss/packages/websocket-test/COLCON_IGNORE
 touch src/soss-dds/examples/common/ros2_std_msgs/COLCON_IGNORE
 
 source /opt/ros/kinetic/setup.bash
-alias gcc=/usr/bin/gcc-9
-alias g++=/usr/bin/g++-9
+export PREVIOUS=$(update-alternatives --query gcc | grep "Best:" | cut -d ":" -f2)
+update-alternatives --set gcc /usr/bin/gcc-9
 colcon build  --cmake-args -DCMAKE_BUILD_TYPE=RELEASE
-unalias gcc
-unalias g++
+update-alternatives --set gcc $PREVIOUS
 
 cd /root
 rm -rf Fast-CDR

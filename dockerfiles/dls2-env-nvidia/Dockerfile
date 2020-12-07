@@ -53,8 +53,8 @@ RUN echo 'Acquire::http { Proxy "http://server-apt:3142"; }' | tee -a /etc/apt/a
     /root/dls_docker/scripts/install_java.sh ; \
     /root/dls_docker/scripts/install_qt.sh ; \
     /root/dls_docker/scripts/install_eigen.sh ; \
+    /root/dls_docker/scripts/install_ros.sh ; \    
     /root/dls_docker/scripts/install_fast_dds.sh ; \
-    /root/dls_docker/scripts/install_ros.sh ; \
     /root/dls_docker/scripts/install_dls2.sh ; \
     /root/dls_docker/scripts/install_dls-plugins.sh ; \
     /root/dls_docker/scripts/install_dependencies.sh ; \

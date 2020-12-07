@@ -2,7 +2,7 @@
 
 
 # Add CMake PPA
-echo 'Acquire::HTTPS::Proxy::apt.kitware.com "DIRECT";' | tee -a /etc/apt/apt.conf.d/proxy \
+echo 'Acquire::HTTPS::Proxy::apt.kitware.com "DIRECT";' | tee -a /etc/apt/apt.conf.d/proxy 
 wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add -
 apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main'
 rm -rf /var/lib/apt/lists/*

@@ -68,7 +68,8 @@ source /opt/ros/kinetic/setup.bash
 export PREVIOUS=$(update-alternatives --query gcc | grep "Best:" | cut -d ":" -f2)
 update-alternatives --set gcc /usr/bin/gcc-9
 colcon build  --cmake-args -DCMAKE_BUILD_TYPE=RELEASE
-update-alternatives --set gcc $PREVIOUS
+echo $PREVIOUS
+update-alternatives --set gcc /usr/bin/gcc-5
 
 cd /root
 rm -rf Fast-CDR

@@ -10,7 +10,7 @@ apt-get install -y --no-install-recommends libasio-dev libtinyxml2-dev cmake pyt
 echo "Install Fast CDR"
 echo "========================================================================="
 cd /root
-git clone --branch v1.0.14 https://github.com/eProsima/Fast-CDR.git
+git clone --branch v1.0.17 https://github.com/eProsima/Fast-CDR.git
 mkdir Fast-CDR/build && cd Fast-CDR/build
 cmake ..
 cmake --build . --target install
@@ -27,7 +27,7 @@ cmake --build . --target install
 echo "Instal Fast DDS"
 echo "========================================================================="
 cd /root
-git clone --branch v2.0.1 https://github.com/eProsima/Fast-DDS.git
+git clone --branch v2.1.0 https://github.com/eProsima/Fast-DDS.git
 mkdir Fast-DDS/build && cd Fast-DDS/build
 cmake ..
 cmake --build . --target install
@@ -38,7 +38,7 @@ cd /root
 #git clone --branch v2.0.0 --recursive https://github.com/eProsima/Fast-DDS-Gen.git
 git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git
 cd Fast-DDS-Gen
-git checkout 1895c994416ae5ce63ed7c3e5a912f36a03aeceb
+git checkout c020ffdb593bb53483e3e95cc79b9c506c3c5144
 gradle assemble
 cp -r /root/Fast-DDS-Gen/share/* /usr/local/share
 cp -r /root/Fast-DDS-Gen/scripts/* /usr/local/bin

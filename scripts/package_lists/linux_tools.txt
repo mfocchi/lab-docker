@@ -31,6 +31,7 @@ locate
 p7zip-full
 mesa-utils
 clang-tidy-8
+gdb
 
 #freeglut3
 #freeglut3-dev

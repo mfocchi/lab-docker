@@ -29,7 +29,7 @@ echo "========================================================================="
 cd /root
 git clone --branch v2.1.0 https://github.com/eProsima/Fast-DDS.git
 mkdir Fast-DDS/build && cd Fast-DDS/build
-cmake ..
+cmake -DSHM_TRANSPORT_DEFAULT=OFF .. # IMPORTANT TODO fix shm
 cmake --build . --target install
 
 echo "Install Fast DDS Gen"

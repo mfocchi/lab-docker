@@ -9,6 +9,7 @@ checkinstall
 openssh-client
 openssh-server
 libgtest-dev
+google-mock
 terminator
 screen
 libboost-thread-dev

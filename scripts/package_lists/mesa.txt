@@ -1,3 +1,0 @@
-libglu1-mesa-dev=9.0.0-2.1
-mesa-common-dev
-libglu1-mesa-dev

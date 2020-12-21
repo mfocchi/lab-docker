@@ -18,7 +18,6 @@ try:
 	import docker
 	import dockerpty
 	import NetworkManager
-	import json
 	import argcomplete
 except ImportError as e:
 	print(e)

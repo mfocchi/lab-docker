@@ -1,13 +1,14 @@
 #! /usr/bin/python3
+# PYTHON_ARGCOMPLETE_OK
 # Important notes to self:
 # python docker sdk does not have the '--gpu' option (yet) so its done 'manually' below
 # I had some issues in the beginning so I made both the high level and api versions
 
 import sys
 
-if not sys.version_info[0] == (3):
-	print('Please use python 3')
-	sys.exit()
+#if not sys.version_info[0] == (3):
+#	print('Please use python 3')
+#	sys.exit()
 
 try:
 	import argparse
@@ -18,6 +19,7 @@ try:
 	import dockerpty
 	import NetworkManager
 	import json
+	import argcomplete
 except ImportError as e:
 	print(e)
 	sys.exit()
@@ -378,6 +380,7 @@ def make_parser():
 def main():
 	parser = make_parser()
 	debug=True
+	argcomplete.autocomplete(parser)
 	try:
 		args = parser.parse_args()
 		debug=args.debug

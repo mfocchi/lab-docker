@@ -227,17 +227,19 @@ def rm(args):
 	subprocess.run(['docker','rm','-f',args.name],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
 def attach(args):
-	print('Sorry not implemented yet. Run:')
-	if not args.root:
-		cmd = ['docker','exec','-w','$HOME','-it',args.name,'/bin/bash']
-	else:
-		cmd = ['docker','exec','-w','$HOME','-u','root','-it',args.name,'/bin/bash']
-	subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-	str=''
-	for ele in cmd:
-		str+=' '+ele
-	print(str)
+	client = docker.from_env()
+	container_list = client.containers.list()
+	for container in container_list:
+		if container.name=='dls_container':
+			if not args.root:
+				dockerpty.exec_command(client.api,container.id,['/bin/bash'])
+			else:
+				exec_id = client.api.exec_create(container.id, ['/bin/bash'], tty=True, stdin=True,user='root')
+				operation = dockerpty.pty.ExecOperation(client.api,exec_id,interactive=True, stdout=None, stderr=None, stdin=None)
+				dockerpty.pty.PseudoTerminal(client.api, operation).start()
+				
 
+		
 def pull(args):
 	print('Sorry not implement yet. Run:')
 	if args.all:

@@ -260,7 +260,7 @@ def combine_image_name(server,port,project,image,nvidia,tag):
 	return image
 		
 def run2(args):
-	image=combine_image_name(server,port,project,image,nvidia,tag)
+	image=combine_image_name(args.server,args.port,args.project,args.image,args.nvidia,args.tag)
 	run_container(args,image)
 
 
@@ -290,7 +290,7 @@ def attach(args):
 				dockerpty.pty.PseudoTerminal(client.api, operation).start()
 				
 def pull2(args):
-	image = combine_image_name(server,port,project,image,nvidia,tag)
+	image = combine_image_name(args.server,args.port,args.project,args.image,args.nvidia,args.tag)
 	pull_base(image)
 
 def pull(args):

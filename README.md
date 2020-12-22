@@ -1,37 +1,114 @@
-## Instructions to run docker on a personal pc
+## Installation Instructions
 
-- Install docker running the script install_docker.sh from [installation tools](https://gitlab.advr.iit.it/dls-lab/installation_tools)
+- Install docker (See the [wiki](https://gitlab.advr.iit.it/Wiki/DLS_Lab_wiki/-/wikis/Docker)
+- Install python3 packages needed by script
 ```
-$ ./install_docker.sh
+$ pip3 install argparse docker dockerpty python-networkmanager argcomplete
 ```
-- Reboot your computer
-- Clone the [repository](https://gitlab.advr.iit.it/dls-lab/dls_docker).
+- Add the following lines to the end of your .bashrc. Make sure to correct the path to where you cloned the code.
 ```
-$ git clone https://gitlab.advr.iit.it/dls-lab/dls_docker
-```
-- Run the docker image
-```
-$ ./run_docker.sh
-```
-- Attach a second terminal to the docker image
-```
-$ ./join_docker.sh
+DLS_DOCKER_PATH="/home/USER/PATH/dls_docker"
+eval "$(register-python-argcomplete dls-docker.py)"
+export PATH=$DLS_DOCKER_PATH:$PATH
+alias dls1="dls-docker.py run2 -f -nv -e DLS=1 -j dls -i dls-dev"
+alias dls2="dls-docker.py run2 -f -nv -e DLS=2 -j dls2 -i dls2-operator"
 ```
 
-## Scripts to use on the server
+## Usuage
+- dls-docker.py is a wrapper around docker to make it easier to use the DLS environment.
+- After successfully running the script once it will create the folder ~/dls_ws_home on your host computer.  Inside of all of the docker images this folder is mapper to $HOME.  This means that any files you place in your home folder will survice the stop/starting of a new docker container.  All other files / installed programs will disappear on the next run
 
-The following scripts are used by the server-docker and should not be modified or used on your personal pc:
+### DLS1 - User
+- Run the alias 'dls1'.  You should see your terminal change form user@hostname to user@docker.
+- Launch the framework
+```
+$ source /opt/ros/kinetic/setup.bash
+$ source /opt/ros/dls-distro/setup.bash
+$ hyqgreen_launch_sim
+```
 
-- build_docker.sh
-- clean_docker.sh
-- create_registry.sh
-- preamble.sh
-- push_docker.sh 
+### DLS2 - User
+- Run the alias 'dls2'.  You should see your terminal change form user@hostname to user@docker.
+- Launch the framework
+```
+$ source /opt/ros/kinetic/setup.bash
+$ source /opt/ros/dls2/setup.bash
+$ source /opt/is-workspace/install/setup.bash
+$ export LD_LIBRARY_PATH=/usr/lib/dls2:$LD_LIBRARY_PATH
+$ export LD_LIBRARY_PATH=/usr/lib/dls2/gait_generators:$LD_LIBRARY_PATH
+$ export LD_LIBRARY_PATH=/usr/lib/dls2/controllers:$LD_LIBRARY_PATH
+$ export LD_LIBRARY_PATH=/usr/lib/dls2/estimators:$LD_LIBRARY_PATH
+$ export LD_LIBRARY_PATH=/usr/lib/dls2/messages:$LD_LIBRARY_PATH
+$ dls -c -r hyq
+```
 
-## Issues
-- Image forces user to be root
-- Finalizing .bashrc scripts
-- Need to set "export ROS_HOSTNAME=localhost"
-- Fix run_docker.sh script (if statement)
-- Fix pull_docker.sh (missing env variable REPOSITORY)
-- Fix docker_bashrc.sh (hardcoded home directory)
+### DLS1 - Developer
+- Run the alias 'dls1'
+- Prepare workspace
+```
+$ source /opt/ros/kinetic/setup.bash
+$ mkdir -p ~/dls_ws/src
+$ cd ~/dls_ws/
+$ catkin_make
+$ cd src
+$ git clone git@gitlab.advr.iit.it:dls-lab/dls-distro.git
+$ cd dls-distro
+$ git submodule update --init --recursive
+$ export ROS_WORKSPACE_NAME=dls_ws
+$ source ~/dls_ws/src/dls-distro/dls_core/scripts/dls_bashrc.sh $ROS_WORKSPACE_NAME
+$ hyqmake
+$ hyqgreen_launch_sim
+```
+- Launch the framework
+```
+$ hyqgreen_launch_sim
+```
+
+### DLS2 - Framework Developer
+- Run the alias 'dls2'
+- Prepare workspace
+```
+$ source /opt/ros/kinetic/setup.bash
+$ git clone git@gitlab.advr.iit.it:dls-lab/dls2.git
+$ cd dls2
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make -j8
+```
+- Build the new debians
+```
+$ make package
+```
+- Install the new debians.  In a new terminal run 'dls-docker.py attach --root'
+```
+$ cd ~/dls2/build
+$ dpkg -i *.deb
+```
+- Launch the framework
+```
+$ dls -c -r hyq
+```
+
+### Suggested bashrc
+Inside docker. Remeber ~/dls_ws_home/.bashrc = ~/.bashrc
+```
+if [[ $DLS -eq 1 ]]; then
+  source /opt/ros/kinetic/setup.bash
+  export ROS_WORKSPACE_NAME=dls_ws
+  source ~/dls_ws/src/dls-distro/dls_core/scripts/dls_bashrc.sh $ROS_WORKSPACE_NAME
+elif [[ $DLS -eq 2 ]]; then
+  source /opt/ros/kinetic/setup.bash
+  source /opt/ros/dls2/setup.bash
+  source /opt/is-workspace/install/setup.bash
+  export LD_LIBRARY_PATH=/usr/lib/dls2:$LD_LIBRARY_PATH
+  export LD_LIBRARY_PATH=/usr/lib/dls2/gait_generators:$LD_LIBRARY_PATH
+  export LD_LIBRARY_PATH=/usr/lib/dls2/controllers:$LD_LIBRARY_PATH
+  export LD_LIBRARY_PATH=/usr/lib/dls2/estimators:$LD_LIBRARY_PATH
+  export LD_LIBRARY_PATH=/usr/lib/dls2/messages:$LD_LIBRARY_PATH
+  export PATH=/opt/qt515/bin:$PATH
+  export LD_LIBRARY_PATH=/opt/qt515/lib:$LD_LIBRARY_PATH
+  export PATH=/opt/qtcreator/bin:$PATH
+  export LD_LIBRARY_PATH=/opt/qtcreator/lib:$LD_LIBRARY_PATH
+fi
+```

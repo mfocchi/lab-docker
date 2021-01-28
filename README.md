@@ -10,8 +10,8 @@ $ pip3 install argparse docker dockerpty python-networkmanager argcomplete
 DLS_DOCKER_PATH="/home/USER/PATH/dls_docker"
 eval "$(register-python-argcomplete dls-docker.py)"
 export PATH=$DLS_DOCKER_PATH:$PATH
-alias dls1="dls-docker.py run2 -f -nv -e DLS=1 -j dls -i dls-dev"
-alias dls2="dls-docker.py run2 -f -nv -e DLS=2 -j dls2 -i dls2-operator"
+alias dls1="dls-docker.py --api run2 -f -nv -e DLS=1 -j dls -i dls-dev"
+alias dls2="dls-docker.py --api run2 -f -nv -e DLS=2 -j dls2 -i dls2-operator"
 ```
 
 ## Usuage

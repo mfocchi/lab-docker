@@ -135,7 +135,10 @@ def pull_base(image):
 			):
 				print('   '+line['id']+': '+line["status"]+' '+str(line['progressDetail']['current'])+'/'+str(line['progressDetail']['total'])+' '+line['progress'])
 			else:
-				print('   '+line['id']+': '+line["status"])
+				if(bool(line.get('id'))):
+					print('   '+line['id']+': '+line["status"])
+				else:
+					print('   '+line["status"])
 			prev = line
 	except docker.errors.APIError as err:
 		print(err)	

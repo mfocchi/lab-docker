@@ -17,6 +17,8 @@ try:
 	import shutil
 	import docker
 	import dockerpty
+	from dbus.mainloop.glib import DBusGMainLoop
+	DBusGMainLoop(set_as_default=True)
 	import NetworkManager
 	import argcomplete
 except ImportError as e:

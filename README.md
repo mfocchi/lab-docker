@@ -1,6 +1,6 @@
 ## Installation Instructions
 
-- Install docker (See the [wiki](https://gitlab.advr.iit.it/Wiki/DLS_Lab_wiki/-/wikis/Docker)
+- Install docker (See the [wiki](https://gitlab.advr.iit.it/Wiki/DLS_Lab_wiki/-/wikis/Docker))
 - Install python3 packages needed by script
 ```
 $ pip3 install argparse docker dockerpty python-networkmanager argcomplete
@@ -112,3 +112,6 @@ elif [[ $DLS -eq 2 ]]; then
   export LD_LIBRARY_PATH=/opt/qtcreator/lib:$LD_LIBRARY_PATH
 fi
 ```
+
+### Important Notes
+- If you are oustide of IIT and NOT connected to the vpn you need you will have dns issues.  Please run "dls1 --dns" or "dls2 --dns" to fix the problem

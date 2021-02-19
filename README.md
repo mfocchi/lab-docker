@@ -2,10 +2,14 @@
 
 - Install docker (See the [wiki](https://gitlab.advr.iit.it/Wiki/DLS_Lab_wiki/-/wikis/Docker))
 - Install python3 packages needed by script
+
 ```
 $ pip3 install argparse docker dockerpty python-networkmanager argcomplete
 ```
-- Add the following lines to the end of your .bashrc. Make sure to correct the path to where you cloned the code.
+
+- Add the following lines to the end of your `.bashrc`. Make sure to correct the
+  path to where you cloned the code.
+
 ```
 DLS_DOCKER_PATH="/home/USER/PATH/dls_docker"
 eval "$(register-python-argcomplete dls-docker.py)"
@@ -15,12 +19,21 @@ alias dls2="dls-docker.py --api run2 -f -nv -e DLS=2 -j dls2 -i dls2-operator"
 ```
 
 ## Usuage
-- dls-docker.py is a wrapper around docker to make it easier to use the DLS environment.
-- After successfully running the script once it will create the folder ~/dls_ws_home on your host computer.  Inside of all of the docker images this folder is mapper to $HOME.  This means that any files you place in your home folder will survice the stop/starting of a new docker container.  All other files / installed programs will disappear on the next run
+
+- `dls-docker.py` is a wrapper around docker to make it easier to use the DLS
+  environment.
+- After successfully running the script once it will create the folder
+  `~/dls_ws_home` on your host computer.  Inside of all of the docker images this
+  folder is mapped to `$HOME`.  This means that any files you place in your home
+  folder will survive the stop/starting of a new docker container.  All other
+  files / installed programs will disappear on the next run.
 
 ### DLS1 - User
-- Run the alias 'dls1'.  You should see your terminal change form user@hostname to user@docker.
+
+- Run the alias `dls1`.  You should see your terminal change form
+  `user@hostname` to `user@docker`.
 - Launch the framework
+
 ```
 $ source /opt/ros/kinetic/setup.bash
 $ source /opt/ros/dls-distro/setup.bash
@@ -28,8 +41,10 @@ $ hyqgreen_launch_sim
 ```
 
 ### DLS2 - User
-- Run the alias 'dls2'.  You should see your terminal change form user@hostname to user@docker.
+- Run the alias `dls2`.  You should see your terminal change form
+  `user@hostname` to `user@docker`.
 - Launch the framework
+
 ```
 $ source /opt/ros/kinetic/setup.bash
 $ source /opt/ros/dls2/setup.bash
@@ -43,8 +58,10 @@ $ dls -c -r hyq
 ```
 
 ### DLS1 - Developer
-- Run the alias 'dls1'
+
+- Run the alias `dls1`
 - Prepare workspace
+
 ```
 $ source /opt/ros/kinetic/setup.bash
 $ mkdir -p ~/dls_ws/src
@@ -59,14 +76,18 @@ $ source ~/dls_ws/src/dls-distro/dls_core/scripts/dls_bashrc.sh $ROS_WORKSPACE_N
 $ hyqmake
 $ hyqgreen_launch_sim
 ```
+
 - Launch the framework
+
 ```
 $ hyqgreen_launch_sim
 ```
 
 ### DLS2 - Framework Developer
-- Run the alias 'dls2'
+
+- Run the alias `dls2`
 - Prepare workspace
+
 ```
 $ source /opt/ros/kinetic/setup.bash
 $ git clone git@gitlab.advr.iit.it:dls-lab/dls2.git
@@ -76,22 +97,29 @@ $ cd build
 $ cmake ..
 $ make -j8
 ```
+
 - Build the new debians
+
 ```
 $ make package
 ```
-- Install the new debians.  In a new terminal run 'dls-docker.py attach --root'
+
+- Install the new debians.  In a new terminal run `dls-docker.py attach --root`
+
 ```
 $ cd ~/dls2/build
 $ dpkg -i *.deb
 ```
 - Launch the framework
+
 ```
 $ dls -c -r hyq
 ```
 
-### Suggested bashrc
-Inside docker. Remeber ~/dls_ws_home/.bashrc = ~/.bashrc
+### Suggested `bashrc`
+
+Inside docker. Remember `~/dls_ws_home/.bashrc` = `~/.bashrc`
+
 ```
 if [[ $DLS -eq 1 ]]; then
   source /opt/ros/kinetic/setup.bash
@@ -114,4 +142,6 @@ fi
 ```
 
 ### Important Notes
-- If you are oustide of IIT and NOT connected to the vpn you need you will have dns issues.  Please run "dls1 --dns" or "dls2 --dns" to fix the problem
+
+- If you are oustide of IIT and NOT connected to the vpn you need you will have
+  dns issues.  Please run `dls1 --dns` or `dls2 --dns` to fix the problem

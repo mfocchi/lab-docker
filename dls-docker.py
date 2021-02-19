@@ -94,10 +94,10 @@ def disable_access_control():
 		subprocess.run(['xhost +'])
 
 def ensure_docker_is_running():
-	result = subprocess.run(['systemctl','is-active docker'],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	result = subprocess.run(['systemctl','is-active','docker'],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	docker_inactive = (result.stdout.decode('utf-8').find('inactive'))==1
 	if docker_inactive:
-		result = subprocess.run(['sudo', 'systemctl status docker'],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		result = subprocess.run(['sudo', 'systemctl','status', 'docker'],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 def mount_systemd(environment_config):
 	result = subprocess.run(['mountpoint','-q',environment_config.systemd_dir],stdout=subprocess.PIPE,stderr=subprocess.PIPE)

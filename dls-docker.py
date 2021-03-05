@@ -61,7 +61,7 @@ class ContainerConfig:
 	def __init__(self,environment_config,dls_config,image):
 		self.hostname='docker'
 		self.name='dls_container'
-		self.devices=['/dev/dri:/dev/dri']
+		self.devices=['/dev/dri:/dev/dri','/dev/input:/dev/input']
 		self.network_mode='host'
 		self.dns=environment_config.dns_servers
 		self.dns_search=environment_config.dns_searches

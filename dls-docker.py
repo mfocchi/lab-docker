@@ -72,6 +72,7 @@ class ContainerConfig:
 		self.volumes=['/tmp/.X11-unix:/tmp/.X11-unix:rw','/etc/passwd:/etc/passwd',environment_config.home+'/.ssh:'+environment_config.home+'/.ssh:rw',dls_config.dls_dir+':'+environment_config.home]
 		self.working_dir=environment_config.home
 		self.image=image
+		self.security_opt=['apparmor:unconfined']
 		
 class Dls1Images:
 	images=['dls-env','dls-dev']
@@ -161,6 +162,7 @@ def run_container_high_level_api(client,container_config,environment_config,dls_
 		dns=container_config.dns,
 		dns_search=container_config.dns_search,		
 		tty=True,
+		security_opt=container_config.security_opt,
 		)
 	#Set git config
 	result=container.exec_run(['git','config','--global','user.email',environment_config.git_email])
@@ -192,6 +194,7 @@ def run_container_low_level_api(client,container_config,environment_config,dls_c
 			device_requests=container_config.device_requests,
 			dns=container_config.dns,
 			dns_search=container_config.dns_search,
+			security_opt=container_config.security_opt,
 		),
 		working_dir=container_config.working_dir,
 		runtime=container_config.runtime,

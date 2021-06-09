@@ -145,3 +145,6 @@ fi
 
 - If you are oustide of IIT and NOT connected to the vpn you need you will have
   dns issues.  Please run `dls1 --dns` or `dls2 --dns` to fix the problem
+
+- If you install something inside the docker (e.g. using apt), when you stop the container these changes won't be saved. If you want to save whatever you have inside the container, you need to do 
+`docker commit`. https://docs.docker.com/engine/reference/commandline/commit/

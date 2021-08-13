@@ -179,7 +179,7 @@ def pull_base(image):
         print(err)
 
 
-def run_container_high_level_api(client, container_config, environment_config, dls_config):
+def run_container_high_level_api(client, container_config, environment_config, dls_config, no_attach=True):
     container = client.containers.run(
         container_config.image,
         command='/bin/bash',
@@ -208,10 +208,12 @@ def run_container_high_level_api(client, container_config, environment_config, d
     if dls_config.run_qt:
         result = container.exec_run(['/bin/bash', '-c', 'source .bashrc && qtcreator'],
                                     user=container_config.user, detach=True)
-    dockerpty.exec_command(client.api, container.id, ['/bin/bash'])
+
+    if not no_attach:
+        dockerpty.exec_command(client.api, container.id, ['/bin/bash'])
 
 
-def run_container_low_level_api(client, container_config, environment_config, dls_config):
+def run_container_low_level_api(client, container_config, environment_config, dls_config, no_attach=False):
     container = client.api.create_container(
         container_config.image,
         command='/bin/bash',
@@ -252,8 +254,9 @@ def run_container_low_level_api(client, container_config, environment_config, dl
         result = client.api.exec_create(container, ['/bin/bash', '-c', 'source .bashrc && qtcreator'], user=container_config.user)  # noqa: E501
         result = client.api.exec_start(result, detach=True)
 
-    # dockerpty.start(client.api, container.get('Id'))
-    dockerpty.exec_command(client.api, container, ['/bin/bash'])
+    if not no_attach:
+        # dockerpty.start(client.api, container.get('Id'))
+        dockerpty.exec_command(client.api, container, ['/bin/bash'])
 
 
 def check_exists(image):
@@ -294,9 +297,9 @@ def run_container(args, image):
     if not check_exists(image):
         pull_base(image)
     if args.api:
-        run_container_low_level_api(client, container_config, environment_config, dls_config)
+        run_container_low_level_api(client, container_config, environment_config, dls_config, args.noattach)
     else:
-        run_container_high_level_api(client, container_config, environment_config, dls_config)
+        run_container_high_level_api(client, container_config, environment_config, dls_config, args.noattach)
 
 
 def combine_image_name(server, port, project, image, nvidia, tag):
@@ -401,12 +404,15 @@ def make_parser():
     parser_run2.add_argument('-f', '--force', action='store_true', help='start container even if another container with the same name exists (it will be deleted)')  # noqa: E501
     parser_run2.add_argument('-e', '--env', default=[], action='append', help='extra environment to pass to the container')  # noqa: E501
     parser_run2.add_argument('-d', '--dns', action='store_true', help='use host dns instead of iit dns')  # noqa: E501
+    parser_run2.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
+
     parser_run.add_argument('name', default='ubuntu:16.04', nargs='?', help='docker image to run')
     parser_run.add_argument('-nv', '--nvidia', action='store_true', help='use the nvidia driver')
     parser_run.add_argument('-qt', '--qtcreator', action='store_true', help='start qt creator')
     parser_run.add_argument('-f', '--force', action='store_true', help='start container even if another container with the same name exists (it will be deleted)')  # noqa: E501
     parser_run.add_argument('-e', '--env', default=[], action='append', help='extra environment to pass to the container')  # noqa: E501
     parser_run.add_argument('-d', '--dns', action='store_true', help='use host dns instead of iit dns')
+    parser_run.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
 
     parser_kill.add_argument('name', default='dls_container', nargs='?', help='docker container to kill')
     parser_stop.add_argument('name', default='dls_container', nargs='?', help='docker container to stop')

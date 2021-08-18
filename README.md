@@ -1,6 +1,6 @@
 ## Installation Instructions
 
-- Install docker (See the [wiki](https://gitlab.advr.iit.it/Wiki/DLS_Lab_wiki/-/wikis/Docker))
+- Install docker (See the [wiki](https://gitlab.advr.iit.it/dls-lab/new-wiki/-/wikis/software/docker/docker))
 - Install python3 packages needed by script
 
 ```

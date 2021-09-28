@@ -58,8 +58,8 @@ class EnvironmentConfig:
 
 
 class DlsConfig:
-    def __init__(self, environment_config, run_qt=False):
-        self.dls_dir = environment_config.home + '/dls_ws_home'
+    def __init__(self, environment_config, run_qt=False, code_dir_name='home'):
+        self.dls_dir = environment_config.home + '/dls_ws_'+code_dir_name
         self.bashrc = self.dls_dir+'/.bashrc'
         self.run_qt = run_qt
 
@@ -271,7 +271,8 @@ def check_exists(image):
 
 def run_container(args, image):
     environment_config = EnvironmentConfig(use_iit_dns=not args.dns)
-    dls_config = DlsConfig(environment_config, run_qt=args.qtcreator)
+    dls_config = DlsConfig(environment_config, run_qt=args.qtcreator, code_dir_name=args.codedir)
+
     container_config = ContainerConfig(environment_config, dls_config, image)
     if len(args.env) > 0:
         container_config.environment.extend(args.env)
@@ -405,6 +406,7 @@ def make_parser():
     parser_run2.add_argument('-e', '--env', default=[], action='append', help='extra environment to pass to the container')  # noqa: E501
     parser_run2.add_argument('-d', '--dns', action='store_true', help='use host dns instead of iit dns')  # noqa: E501
     parser_run2.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
+    parser_run2.add_argument('-codedir', '--codedir', default='home', help='specify home folder in dls_ws_*')
 
     parser_run.add_argument('name', default='ubuntu:16.04', nargs='?', help='docker image to run')
     parser_run.add_argument('-nv', '--nvidia', action='store_true', help='use the nvidia driver')
@@ -413,6 +415,7 @@ def make_parser():
     parser_run.add_argument('-e', '--env', default=[], action='append', help='extra environment to pass to the container')  # noqa: E501
     parser_run.add_argument('-d', '--dns', action='store_true', help='use host dns instead of iit dns')
     parser_run.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
+    parser_run.add_argument('-codedir', '--codedir', default='home', help='specify home folder in dls_ws_*')
 
     parser_kill.add_argument('name', default='dls_container', nargs='?', help='docker container to kill')
     parser_stop.add_argument('name', default='dls_container', nargs='?', help='docker container to stop')
@@ -431,6 +434,7 @@ def make_parser():
     parser_pull2.add_argument('-nv', '--nvidia', action='store_true', help='use the nvidia driver')
 
     parser_pull_all.add_argument('-nv', '--nvidia', action='store_true', help='pull the images with the nvidia driver')
+   
     pull_all_group = parser_pull_all.add_mutually_exclusive_group()
     pull_all_group.add_argument('-d1', '--dls1', action='store_true', help='just pull the dls1 images')
     pull_all_group.add_argument('-d2', '--dls2', action='store_true', help='just pull the dls2 images')

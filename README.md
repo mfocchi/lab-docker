@@ -93,8 +93,7 @@ $ make package
 - Install the new debians.  Open a new terminal, go to `dls_docker` and run `dls-docker.py attach --root`.\
   The command:
     - `dls-docker.py attach` allows you to open another session of the same docker image without closing the original one
-    - the one with `--root` gives you root permissions to do some changes and installations in the image. You will loose them when you will close the image if you don't do a docker 
-      commit.
+    - the one with `--root` gives you root permissions to install something in the docker image.
 
   From the terminal with root permissions, run:
 
@@ -163,8 +162,5 @@ fi
 
 ### Important Notes
 
-- If you are oustide of IIT and NOT connected to the vpn you need you will have
-  dns issues.  Please run `dls1 --dns` or `dls2 --dns` to fix the problem
-
-- If you install something inside the docker (e.g. using apt), when you stop the container these changes won't be saved. If you want to save whatever you have inside the container, you need to do 
-`docker commit`. https://docs.docker.com/engine/reference/commandline/commit/
+- If you are oustide of IIT and not connected to the vpn you will have DNS issues. Please run `dls1 --dns` or `dls2 --dns` to fix the problem or [configure your VPN connection](https://gitlab.advr.iit.it/dls-lab/new-wiki/-/wikis/software/new_pc_with_Ubuntu_20_04_3/new_pc_with_Ubuntu_20_04_3#configuring-iit-vpn).
+- If you install something inside the docker (e.g. using apt), when you stop the container these changes won't be saved. If you want to save whatever you have inside the container, you need to do `docker commit`. https://docs.docker.com/engine/reference/commandline/commit/

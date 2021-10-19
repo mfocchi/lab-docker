@@ -65,6 +65,13 @@ $ source /opt/ros/dls-distro/setup.bash
 $ hyqgreen_launch_sim
 ```
 
+It can happen that you see this annoying message in the terminal when you use DLS1:
+```
+bash: __git_ps1: command not found
+```
+This happens because when you clone the [dls_distro](https://gitlab.advr.iit.it/dls-lab/dls-distro) repository, the `dls_bashrc.sh` file on the `master` branch contains a line that is responsible for this. Look at the [Docker issues](https://gitlab.advr.iit.it/dls-lab/new-wiki/-/wikis/software/docker/docker#docker-issues) section for solving this issue.
+
+
 ### Configure DLS2
 
 - Open a terminal and run the alias for `DLS2`:

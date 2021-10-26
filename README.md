@@ -172,7 +172,7 @@ fi
 
 To properly run the robots simulations with Gazebo, you need to complete a last step, that is downloading the Gazebo models. To do this, you can:
 
-* create the Gazebo `models` folder and a script in `dls_ws_home` folder. From your home directory run:
+* create the Gazebo `models` folder and a script in `dls_ws_home` folder. From your home directory (outside Docker) run:
 ```
 $ cd dls_ws_home/.gazebo
 $ mkdir models

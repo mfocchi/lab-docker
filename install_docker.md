@@ -11,7 +11,44 @@ This section of the wiki gives information on how to use the docker.
 
 3. [Committing a docker image (Making changes permanent)](#docker_commit)
 
-   
+
+Installing NVIDIA drivers
+--------------
+
+If your PC is provided with an NVIDIA graphics card, you can install its drivers in Ubuntu by following these steps:
+* open the _Software & Updates_ application
+* go to "Additional Drivers" and select the latest driver with "proprietary, tested" description
+* press on "Apply Changes".
+
+You can verify if the drivers are installed by opening a terminal and running:
+```
+nvidia-smi
+```
+If this does not work, and you are sure you correctly installed the drivers, you might need to deactivate the "safe boot" feature from your BIOS, that usually prevents to load the driver. 
+
+Installing Git and SSH key
+--------------
+
+To install Git you can open a terminal and run:
+```
+sudo apt install git
+```
+After that, you can check the version installed and configure the credentials with:
+```
+$ git --version
+$ git config --global user.name <"GitLab Account Username">
+$ git config --global user.email <"GitLab Account Email">
+```
+After this, if you don't have an SSH key for GitLab ADVR, you need to create a new one to use the repositories:
+* go to [Settings/SSH Keys](https://gitlab.advr.iit.it/profile/keys)
+* open a terminal and run these commands:
+  ```
+  $ ssh-keygen -t ed25519 -C "Your GitLab ADVR email"
+  $ cd ~/.ssh/
+  $ cat <new_ssh_key>.pub
+  ```
+Copy the content of your public SSH into the box at the link before and press "Add key". You can now clone the GitLab ADVR repositories with SSH.
+ 
 
 Docker Install
 --------------------------------------------------------------------------------
@@ -19,7 +56,7 @@ Docker Install
 Instructions:
 - Make sure you have:
   - configured Git and SSH key
-  - [configured the NVIDIA drivers](https://gitlab.advr.iit.it/dls-lab/new-wiki/-/wikis/software/new_pc_with_Ubuntu_20_04_3/new_pc_with_Ubuntu_20_04_3#installing-nvidia-drivers).
+  - configured the NVIDIA drivers
 
 Then you can run:
 ```

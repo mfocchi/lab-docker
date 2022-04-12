@@ -1,7 +1,7 @@
 ## Installation Instructions
 
 This guide allows you to configure the lab docker images and to download the Gazebo models for properly running the robots simulations.
-- Make sure you have [installed Docker](https://gitlab.advr.iit.it/dls-lab/new-wiki/-/wikis/software/docker/docker#docker-install) from the Wiki.
+- Make sure you have [installed Docker](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
 - Open the `bashrc` file from your home folder:
 ```
 $ gedit ~/.bashrc

@@ -67,7 +67,7 @@ class DlsConfig:
 class ContainerConfig:
     def __init__(self, environment_config, dls_config, image):
         self.hostname = 'docker'
-        self.name = 'dls_container'
+        self.name = 'docker_container'
         self.devices = ['/dev/dri:/dev/dri', '/dev/input:/dev/input']
         self.network_mode = 'host'
         self.dns = environment_config.dns_servers
@@ -339,7 +339,7 @@ def attach(args):
     client = docker.from_env()
     container_list = client.containers.list()
     for container in container_list:
-        if container.name == 'dls_container':
+        if container.name == 'docker_container':
             if not args.root:
                 dockerpty.exec_command(client.api, container.id, ['/bin/bash'])
             else:
@@ -419,10 +419,10 @@ def make_parser():
     parser_run.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
     parser_run.add_argument('-codedir', '--codedir', default='home', help='specify home folder in dls_ws_*')
 
-    parser_kill.add_argument('name', default='dls_container', nargs='?', help='docker container to kill')
-    parser_stop.add_argument('name', default='dls_container', nargs='?', help='docker container to stop')
-    parser_rm.add_argument('name', default='dls_container', nargs='?', help='docker container to remove')
-    parser_attach.add_argument('name', default='dls_container', nargs='?', help='docker container to attach')
+    parser_kill.add_argument('name', default='docker_container', nargs='?', help='docker container to kill')
+    parser_stop.add_argument('name', default='docker_container', nargs='?', help='docker container to stop')
+    parser_rm.add_argument('name', default='docker_container', nargs='?', help='docker container to remove')
+    parser_attach.add_argument('name', default='docker_container', nargs='?', help='docker container to attach')
     parser_attach.add_argument('-r', '--root', action='store_true', help='attach the root user to the container')
 
     parser_pull.add_argument('-a', '--all', action='store_true', help='pull all docker images currently on localhost')

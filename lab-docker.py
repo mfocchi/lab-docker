@@ -59,7 +59,7 @@ class EnvironmentConfig:
 
 class DlsConfig:
     def __init__(self, environment_config, run_qt=False, code_dir_name='home'):
-        self.dls_dir = environment_config.home + '/dls_ws_'+code_dir_name
+        self.dls_dir = environment_config.home + '/lab_ws_'+code_dir_name
         self.bashrc = self.dls_dir+'/.bashrc'
         self.run_qt = run_qt
 

@@ -408,7 +408,7 @@ def make_parser():
     parser_run2.add_argument('-e', '--env', default=[], action='append', help='extra environment to pass to the container')  # noqa: E501
     parser_run2.add_argument('-d', '--dns', action='store_true', help='use host dns instead of iit dns')  # noqa: E501
     parser_run2.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
-    parser_run2.add_argument('-codedir', '--codedir', default='home', help='specify home folder in dls_ws_*')
+    parser_run2.add_argument('-codedir', '--codedir', default='home', help='specify home folder in lab_ws_*')
 
     parser_run.add_argument('name', default='ubuntu:16.04', nargs='?', help='docker image to run')
     parser_run.add_argument('-nv', '--nvidia', action='store_true', help='use the nvidia driver')

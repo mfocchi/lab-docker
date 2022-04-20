@@ -66,7 +66,7 @@ $ glxinfo | grep NVIDIA
 ```
 - Clone in the $HOME folder (that is "home/USERNAME") the lab-docker repository:
 ```
-$ git clone git@gitlab.advr.iit.it:dls-lab/dls_docker.git -b user
+$ git clone git@github.com:mfocchi/lab-docker.git
 ```
 - Run the script install_docker.sh:
 ```
@@ -89,6 +89,7 @@ $ sudo apt install python3-argcomplete
 Docker Issues
 --------------------------------------------------------------------------------
 <a name="docker_issues"></a>
+
 - When installing docker using ./installation_tools/install_docker.sh you may have a pip3 syntax error. 
 
 You could try to solve it in this way:
@@ -166,7 +167,7 @@ $ docker ps
 This will display the running containers as follows:
 ```
 CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS          PORTS     NAMES 
-f04e33199e13   6e17561dfdca   "/bin/bash"   51 minutes ago   Up 51 minutes             dls_container
+f04e33199e13   6e17561dfdca   "/bin/bash"   51 minutes ago   Up 51 minutes             lab_container
 
 ```
 2. Copy the `CONTAINER ID` and type the following in the same terminal

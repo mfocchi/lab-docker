@@ -36,18 +36,18 @@ sudo apt install git
 After that, you can check the version installed and configure the credentials with:
 ```
 $ git --version
-$ git config --global user.name <"GitLab Account Username">
-$ git config --global user.email <"GitLab Account Email">
+$ git config --global user.name <"name surnace">
+$ git config --global user.email <"youremail@yourdomain.it">
 ```
-After this, if you don't have an SSH key for GitLab ADVR, you need to create a new one to use the repositories:
-* go to Settings/SSH Keys
+After this, if you don't have an SSH key for your Github account, you need to create a new one to use the repositories:
+* go to Settings/SSH  and GPG Keys
 * open a terminal and run these commands:
   ```
-  $ ssh-keygen -t ed25519 -C "Your GitLab ADVR email"
+  $ ssh-keygen 
   $ cd ~/.ssh/
   $ cat <new_ssh_key>.pub
   ```
-Copy the content of your public SSH into the box at the link before and press "Add key". You can now clone the GitLab ADVR repositories with SSH.
+Copy the content of your public SSH into the box at the link before and press "New SSH key". You can now clone the  repositories with SSH.
 
 
 Docker Install

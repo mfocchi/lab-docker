@@ -1,7 +1,7 @@
 ## Installation Instructions
 
 This guide allows you to configure the lab docker images and to download the Gazebo models for properly running the robots simulations.
-- Make sure you have [installed Docker](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
+- Make sure you have [installed Docker](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md), SSH keys and nvidia drivers.
 
 - Download the docker image from here: 
 
@@ -22,7 +22,10 @@ alias lab='lab-docker.py --api run   -f -nv --dns mfocchi/trento_lab_framework:i
 alias dock-other='lab-docker.py attach'
 alias dock-root='lab-docker.py attach --root'
 ```
+**Important!** If you are running in issues ([see docker issues](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md)), with your Nvidia card you can run without the Nvidia drivers removing the tag -nv from the lab alias. 
+
 Make sure to edit the `LAB_DOCKER_PATH` variable with the path to where you cloned the `lab_docker` repository.
+
 - `lab-docker.py` is a wrapper around docker to make it easier to use the trentolab environment.
 - the `lab-docker.py` script will create the folder `~/trento_lab_home` on your host computer. Inside of all of the docker images this folder is mapped to `$HOME`.\
 This means that any files you place in your home folder will survive the stop/starting of a new docker container. All other files and installed programs will disappear on the next
@@ -108,9 +111,11 @@ Once the download is complete, you can go inside `models` folder and verify that
 
 ### Launch the framework
 
-1) Install pycharm-community inside the docker 
+1) Install [pycharm-community](https://www.jetbrains.com/pycharm/download/#section=linux)  *inside* the docker (e.g. copy it inside the `~/trento_lab_home` folder)
 
-2) launch one of the labs in locosim/robot_control
+2) remenber to run pycharm-community from the terminal otherwise it does not load the environment variables loaded inside the .bashrc.
+
+3) launch one of the labs in locosim/robot_control
 
 ### Important Notes
 

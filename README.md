@@ -18,7 +18,7 @@ and add the following lines at the bottom of the file:
 LAB_DOCKER_PATH="/home/USER/PATH/lab_docker"
 eval "$(register-python-argcomplete3 lab-docker.py)"
 export PATH=$LAB_DOCKER_PATH:$PATH
-alias lab="lab-docker.py --api run --dns  -f -nv  server-harbor:80/ant/ant_iit:tsid
+alias lab='lab-docker.py --api run   -f -nv --dns mfocchi/trento_lab_framework:introrob'
 alias dock-other='lab-docker.py attach'
 alias dock-root='lab-docker.py attach --root'
 ```

@@ -46,7 +46,7 @@ $ git clone git@github.com:mfocchi/locosim.git
 $ cd locosim
 $ git submodule update --init --recursive
 $ cd  ~/ros_ws/
-$ catkin_make
+$ catkin_make install
 ```
 
 ### Configure Docker `bashrc`

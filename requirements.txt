@@ -1,0 +1,5 @@
+docker
+dockerpty
+dbus-python
+python-networkmanager
+argcomplete

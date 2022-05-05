@@ -7,7 +7,7 @@ This guide allows you to configure the lab docker images and to download the Gaz
 
 ```
 $ docker pull mfocchi/trento_lab_framework:introrob
-```   
+```
 In newer versions of Ubuntu the installation of the following dependencies is required
 
 - Open a terminal and run the following command
@@ -54,9 +54,7 @@ $ lab
 $ source /opt/ros/noetic/setup.bash
 $ mkdir -p ~/ros_ws/src
 $ cd ~/ros_ws/src
-$ git clone git@github.com:mfocchi/locosim.git
-$ cd locosim
-$ git submodule update --init --recursive
+$ git clone git@github.com:mfocchi/locosim.git --recursive
 $ cd  ~/ros_ws/
 $ catkin_make install
 ```

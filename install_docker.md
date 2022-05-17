@@ -81,10 +81,10 @@ and add the following line:
 ```
 127.0.0.1	docker
 ```
-- Before pulling the docker images you have to download some dependencies:
+- Before pulling the docker images you have to download some dependencies (if you have :
 ```
-$ pip3 install python-networkmanager argcomplete argparse docker dockerpty
-$ sudo apt install python3-argcomplete
+$ pip3 install argcomplete argparse docker dockerpty
+$ sudo apt install python3-argcomplete python3-networkmanager (or python-networkmanager)
 ```
 Docker Issues
 --------------------------------------------------------------------------------

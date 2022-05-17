@@ -5,16 +5,28 @@ This guide allows you to configure the lab docker images and to download the Gaz
 
 - Download the docker image from here: 
 
-  ```
-  $ docker pull mfocchi/trento_lab_framework:introrob
-  ```
+```
+$ docker pull mfocchi/trento_lab_framework:introrob
+```
+In newer versions of Ubuntu the installation of the following dependencies is required
+
+- Open a terminal and run the following command
+
+```
+$ sudo apt-get install python3-argcomplete libglib2.0-dev libdbus-1-dev build-essential cmake
+```
+- Using pip to install the required package
+```
+$ pip3 install -r requirements.txt
+```
+Once the dependencies are satisfied, the bash environment can be configured
 
 - Open the `bashrc` file from your home folder:
 ```
 $ gedit ~/.bashrc
 ```
 and add the following lines at the bottom of the file:
-```
+```bash
 LAB_DOCKER_PATH="/home/USER/PATH/lab_docker"
 eval "$(register-python-argcomplete3 lab-docker.py)"
 export PATH=$LAB_DOCKER_PATH:$PATH
@@ -42,9 +54,7 @@ $ lab
 $ source /opt/ros/noetic/setup.bash
 $ mkdir -p ~/ros_ws/src
 $ cd ~/ros_ws/src
-$ git clone git@github.com:mfocchi/locosim.git
-$ cd locosim
-$ git submodule update --init --recursive
+$ git clone git@github.com:mfocchi/locosim.git --recursive
 $ cd  ~/ros_ws/
 $ catkin_make install
 ```
@@ -58,7 +68,7 @@ So, from your home folder outside Docker, you can open:
 $ gedit ~/trento_lab_home/.bashrc
 ```
 and add the following lines at the bottom of the file:
-```
+```bash
 source /opt/ros/noetic/setup.bash
 source $HOME/ros_ws/install/setup.bash
 export PATH=/opt/openrobots/bin:$PATH
@@ -80,7 +90,7 @@ $ touch download_gazebo_models.sh
 $ chmod +x download_gazebo_models.sh
 ```
 * copy these lines below in your new script:
-```
+```bash
 #!/bin/sh
 
 # Download all model archive files

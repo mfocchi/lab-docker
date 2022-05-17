@@ -6,7 +6,7 @@ This guide allows you to configure the lab docker images and to download the Gaz
 - Download the docker image from here: 
 
 ```
-$ docker pull mfocchi/trento_lab_framework:introrob
+$ docker pull mfocchi/trento_lab_framework:iit
 ```
 In newer versions of Ubuntu the installation of the following dependencies is required
 
@@ -30,7 +30,7 @@ and add the following lines at the bottom of the file:
 LAB_DOCKER_PATH="/home/USER/PATH/lab_docker"
 eval "$(register-python-argcomplete3 lab-docker.py)"
 export PATH=$LAB_DOCKER_PATH:$PATH
-alias lab='lab-docker.py --api run   -f -nv --dns mfocchi/trento_lab_framework:introrob'
+alias lab='lab-docker.py --api run   -f -nv --dns mfocchi/trento_lab_framework:iit'
 alias dock-other='lab-docker.py attach'
 alias dock-root='lab-docker.py attach --root'
 ```
@@ -70,11 +70,7 @@ $ gedit ~/trento_lab_home/.bashrc
 and add the following lines at the bottom of the file:
 ```bash
 source /opt/ros/noetic/setup.bash
-source $HOME/ros_ws/install/setup.bash
-export PATH=/opt/openrobots/bin:$PATH
-export LOCOSIM_DIR=$HOME/ros_ws/src/locosim
-export PYTHONPATH=/opt/openrobots/lib/python3.8/site-packages:$LOCOSIM_DIR/robot_control:$PYTHONPATH
-export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:/opt/openrobots/share/
+source /opt/ros/dls-distro/setup.bash
 ```
 
 ### Download Gazebo models
@@ -123,9 +119,21 @@ Once the download is complete, you can go inside `models` folder and verify that
 
 1) Install [pycharm-community](https://www.jetbrains.com/pycharm/download/#section=linux)  *inside* the docker (e.g. copy it inside the `~/trento_lab_home` folder)
 
-2) remenber to run pycharm-community from the terminal otherwise it does not load the environment variables loaded inside the .bashrc.
+2) in a terminal call "lab"
 
-3) launch one of the labs in locosim/robot_control
+3) in the same terminal call:
+
+roslaunch dls_supervisor operator.launch gazebo:=true throttle:=false robot_name:=hyq osc:=false default_contr:=RCFController
+
+4) open another terminal and type "dock-other"
+
+5) in the same terminal run pycharm-community 
+
+6) run read_joints.py
+
+
+
+
 
 ### Important Notes
 

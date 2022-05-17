@@ -78,7 +78,7 @@ class ContainerConfig:
         self.environment = [
             'QT_X11_NO_MITSHM=1',
             'SHELL=' + environment_config.shell,
-            'DISPLAY=' + environment_config.display,
+            'DISPLAY=:0.0',
             'DOCKER=1', 'NVIDIA_VISIBLE_DEVICES=all'
         ]
         self.volumes = [

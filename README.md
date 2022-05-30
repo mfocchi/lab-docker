@@ -54,7 +54,7 @@ $ lab
 $ source /opt/ros/noetic/setup.bash
 $ mkdir -p ~/ros_ws/src
 $ cd ~/ros_ws/src
-$ git clone git@github.com:mfocchi/locosim.git --recursive
+$ git clone git@bitbucket.org:disi-ai-robotics/trento_lab_framework.git --recursive
 $ cd  ~/ros_ws/
 $ catkin_make install
 ```
@@ -125,7 +125,7 @@ Once the download is complete, you can go inside `models` folder and verify that
 
 2) remenber to run pycharm-community from the terminal otherwise it does not load the environment variables loaded inside the .bashrc.
 
-3) launch one of the labs in locosim/robot_control
+3) launch one of the labs in locosim/robot_control/base_controllers/gripper_test.py
 
 ### Important Notes
 

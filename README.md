@@ -40,8 +40,32 @@ Make sure to edit the `LAB_DOCKER_PATH` variable with the path to where you clon
 
 - `lab-docker.py` is a wrapper around docker to make it easier to use the trentolab environment.
 - the `lab-docker.py` script will create the folder `~/trento_lab_home` on your host computer. Inside of all of the docker images this folder is mapped to `$HOME`.\
-This means that any files you place in your home folder will survive the stop/starting of a new docker container. All other files and installed programs will disappear on the next
-run.
+  This means that any files you place in your home folder will survive the stop/starting of a new docker container. All other files and installed programs will disappear on the next run.
+
+**Note:** you can install new packages on your docker image by accessing with the alias dock-root run in another terminal. IMPORTANT! You will have to install the packages **without** sudo. There is not password to put. If you close the container **all your changes will be lost**. To make the changes permanent in your image you need to commit the image. To do so get the ash of the image:
+
+```
+$ docker ps
+```
+
+you should get something like this:
+
+```
+CONTAINER ID   IMAGE                                   COMMAND                  CREATED        STATUS             
+a9ca7fe9affb   mfocchi/trento_lab_framework:introrob   "/opt/entrypoint.bas…"   20 hours ago   Up 20 hours            
+```
+
+the ash is a9ca7fe9affb in this case. 
+
+Then to commit the image type: 
+
+```
+$ docker commit a9ca7fe9affb mfocchi/trento_lab_framework:introrob
+```
+
+the next time you will start the container you will have your packages already installed.
+
+
 
 ### Configure CODE
 

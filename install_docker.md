@@ -90,6 +90,27 @@ Docker Issues
 --------------------------------------------------------------------------------
 <a name="docker_issues"></a>
 
+- When launching any graphical interface inside docker (e.g. pycharm or gedit) you get this error:
+
+```
+No protocol specified
+Unable to init server: Could not connect: Connection refused
+
+(gedit:97): Gtk-WARNING **: 08:21:29.767: cannot open display: :0.0
+```
+
+It means that docker is not copying properly the value of you DISPLAY environment variable, you could try to solve it in this way, in a terminal **outside docker** launch:
+
+```
+echo $DISPLAY
+```
+
+and you will obtain a **value**  (e.g. :0) if you run the same command in a docker terminal the value will be different, then in the .bashrc inside the docker add the following line:
+
+```
+export DISPLAY=value
+```
+
 - When installing docker using ./installation_tools/install_docker.sh you may have a pip3 syntax error. 
 
 You could try to solve it in this way:

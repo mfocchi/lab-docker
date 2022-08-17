@@ -27,13 +27,15 @@ $ gedit ~/.bashrc
 ```
 and add the following lines at the bottom of the file:
 ```bash
-LAB_DOCKER_PATH="/home/USER/PATH/lab_docker"
+LAB_DOCKER_PATH="/home/USER/PATH/lab-docker"
 eval "$(register-python-argcomplete3 lab-docker.py)"
 export PATH=$LAB_DOCKER_PATH:$PATH
 alias lab='lab-docker.py --api run   -f -nv --dns mfocchi/trento_lab_framework:iit'
 alias dock-other='lab-docker.py attach'
 alias dock-root='lab-docker.py attach --root'
 ```
+where "/home/USER/PATH" is the folder you cloned the lab-docker repository.
+
 **Important!** If you are running in issues ([see docker issues](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md)), with your Nvidia card you can run without the Nvidia drivers removing the tag -nv from the lab alias. 
 
 Make sure to edit the `LAB_DOCKER_PATH` variable with the path to where you cloned the `lab_docker` repository.

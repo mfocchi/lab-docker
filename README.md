@@ -145,13 +145,25 @@ $ ./download_gazebo_models
 
 Once the download is complete, you can go inside `models` folder and verify that it now contains the Gazebo models. 
 
-### Launch the framework
 
-1) Install [pycharm-community](https://www.jetbrains.com/pycharm/download/#section=linux)  *inside* the docker (e.g. copy it inside the `~/trento_lab_home` folder)
 
-2) remenber to run pycharm-community from the terminal otherwise it does not load the environment variables loaded inside the .bashrc.
+### **Running the software** from Python IDE: Pycharm  
 
-3) launch one of the labs in locosim/robot_control/base_controllers/gripper_test.py
+With Pycharm you just need to download and unzip the program here https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=linux&code=PCC and unzip it  *inside* the docker (e.g. copy it inside the `~/trento_lab_home` folder). 
+
+1) To run type: 
+
+```
+pycharm_folder/bin/pycharm.sh
+```
+
+2) remember to run pycharm-community from the terminal otherwise it does not load the environment variables loaded inside the .bashrc.
+
+3) launch one of the labs in locosim/robot_control or in locosim/robot_control/base_controllers  (e.g. base_controller_fixed.py)
+
+**IMPORTANT!** To be able to keep the plots **alive** at the end of the program and to have access to variables,  you need to "Edit Configurations..." and tick "Run with Python Console". Otherwise the plot will immediately close.
+
+
 
 ### Important Notes
 

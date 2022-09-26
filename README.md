@@ -149,7 +149,13 @@ Once the download is complete, you can go inside `models` folder and verify that
 
 ### **Running the software** from Python IDE: Pycharm  
 
-With Pycharm you just need to download and unzip the program here https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=linux&code=PCC and unzip it  *inside* the docker (e.g. copy it inside the `~/trento_lab_home` folder). 
+With Pycharm community you just need to download and unzip the program here
+
+https://download.jetbrains.com/python/pycharm-community-2021.1.1.tar.gz
+
+**NOTE!** I ask you to download this specific version (2021.1.1) that I am sure it works, because the newer ones seem to be failing to load environment variables! 
+
+ and unzip it  *inside* the docker (e.g. copy it inside the `~/trento_lab_home` folder). 
 
 1) To run type: 
 
@@ -157,7 +163,7 @@ With Pycharm you just need to download and unzip the program here https://www.je
 pycharm_folder/bin/pycharm.sh
 ```
 
-2) remember to run pycharm-community from the terminal otherwise it does not load the environment variables loaded inside the .bashrc.
+2) remember to run **pycharm-community** from the terminal otherwise it does not load the environment variables loaded inside the .bashrc.
 
 3) launch one of the labs in locosim/robot_control or in locosim/robot_control/base_controllers  (e.g. base_controller_fixed.py)
 

@@ -16,8 +16,35 @@ Installing NVIDIA drivers
 --------------
 
 If your PC is provided with an NVIDIA graphics card, you can install its drivers in Ubuntu by following these steps:
+
+add the repository
+
+```
+sudo add-apt-repository ppa:graphics-drivers/ppa
+```
+
+update the repository list:
+
+```
+sudo apt-get update
+```
+
+Install the driver, note that for Ubuntu 16.04 is recommended the 430 version (X=410) while for Ubuntu 20.04 the 515 version (X=515):
+
+```
+sudo apt-get install nvidia-X
+```
+
+The reboot the system
+
+```
+sudo reboot
+```
+
+Now tell the system to use that driver:
+
 * open the _Software & Updates_ application
-* go to "Additional Drivers" and select the latest driver with "proprietary, tested" description
+* go to "Additional Drivers" and select the latest driver you just installed with "proprietary, tested" description
 * press on "Apply Changes".
 
 You can verify if the drivers are installed by opening a terminal and running:
@@ -172,29 +199,5 @@ $ sudo service docker restart
 
 
 
-Committing a docker image
---------------------------------------------------------------------------------
-<a name="docker_commit"></a>
 
-If you install something inside the docker (e.g. using apt), when you stop the container (e.g., `docker stop <container_name>`) these changes won't be saved. If you want to save whatever you have inside the container, you need to do 
-`docker commit` (https://docs.docker.com/engine/reference/commandline/commit/). Note if you are just changing the code (ie adding / removing files to the home folder) you do NOT need to update the docker image.
-
-For example, let's say you loaded the lab_docker image `image_name:tag` and you installed the ros topic plotting tool `PlotJuggler` (i.e., in an attached root terminal you wrote `apt install ros-noetic-plotjuggler`). If you were to stop the container, the next time you run the container `PlotJuggler` will not be there. In order to keep this changes do the following. 
-
-1. When you decide to commit the image, run in a terminal not attached to the docker the following command:
-```
-$ docker ps
-```
-This will display the running containers as follows:
-```
-CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS          PORTS     NAMES 
-f04e33199e13   6e17561dfdca   "/bin/bash"   51 minutes ago   Up 51 minutes             lab_container
-
-```
-2. Copy the `CONTAINER ID` and type the following in the same terminal
-```
-docker commit f04e33199e13 image_name:tag
-```
-
-Note that this will replace the previous image. In case you want to create a different image, change the name and/or tag `image_name:new_tag` for a different name, eg., `image_name:new_tag`
 

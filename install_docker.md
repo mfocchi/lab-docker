@@ -117,6 +117,8 @@ Docker Issues
 --------------------------------------------------------------------------------
 <a name="docker_issues"></a>
 
+Check this section only if you had any issues in running the docker!
+
 - When launching any graphical interface inside docker (e.g. pycharm or gedit) you get this error:
 
 ```
@@ -179,20 +181,6 @@ In this case, the message shown in the terminal when launching the simulation wi
 
 ![model_gazebo_missing](uploads/2895e3900d60de8b82cb6fa0196a2207/model_gazebo_missing.jpeg)
 
-
-
-- If updating docker may break the daemon.json file, you will get this error
-
-![Screenshot_from_2021-02-03_17-15-50](uploads/3eff494091f99450a862cc06d485f724/Screenshot_from_2021-02-03_17-15-50.png)
-
-To solve it, first do 
-```
-$ sudo sh -c 'echo { \"insecure-registries\":[\"server-harbor:80\", \"server-harbor:443\"] } > /etc/docker/daemon.json'
-```
-then do not forget to do 
-```
-$ sudo service docker restart
-```
 
 
 - Ubuntu 18 has install problems of python-networkmanager with a weird dbus error.  Installing libdbus-1-dev libdbus-glib-1-dev seemed to be the fix.

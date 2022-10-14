@@ -1,8 +1,10 @@
 ## Installation Instructions
 
 This guide allows you to configure the lab docker images and to download the Gazebo models for properly running the robots simulations.
-- Make sure you have [installed Docker](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md), SSH keys and nvidia drivers.
-- nvidia Drivers
+- First, make sure you have installed Docker, and the  SSH keys in your Github account and the Nvidia drivers. The procedures are described  [here](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
+
+  **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.  
+
 - Download the docker image from here: 
 
 ```

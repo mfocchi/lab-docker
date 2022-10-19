@@ -56,7 +56,7 @@ class ContainerConfig:
     def __init__(self, environment_config, dls_config, image):
         self.hostname = 'docker'
         self.name = 'docker_container'
-        self.devices = ['/dev/dri:/dev/dri', '/dev/input:/dev/input']
+        self.devices = []
         self.network_mode = 'host'
 
         self.runtime = 'runc'
@@ -234,7 +234,8 @@ def run_container(args, image):
     disable_access_control()
     # TODO find an alternative of   systemctl that works for MAC  
     # ensure_docker_is_running()
-    mount_systemd(environment_config)  # Need to use non-privileged containers
+    # Not working for MAC
+    #mount_systemd(environment_config)  # Need to use non-privileged containers
     check_dls_home(dls_config)
     check_bashrc(environment_config, dls_config)
     if is_container_running(container_config.name):

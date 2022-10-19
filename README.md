@@ -230,7 +230,7 @@ $ git push origin master
 
 
 
-## Committing a docker image (only for advanced users)
+## Committing a docker image locally (only for advanced users)
 
 You can install new packages on your docker image by accessing with the alias dock-root run in another terminal. You will have to install the packages **without** sudo. There is not password to put. 
 
@@ -261,11 +261,24 @@ Note that this will replace the previous image. In case you want to create a dif
 
 4. the next time you will start the container you will have your packages already installed.
 
-Optionally you can create a dockerhub account in https://hub.docker.com/ and  a repository to  push your image. Once you have done you can push the image:
+## Pushing a docker image to server (only for advanced users)
 
-```
-$ docker push youraccount/repo_name/:tagname
-```
+If you want to push your image on a server (e.g. to share with another computer or colleague), you need to create a  **docker hub** account in https://hub.docker.com/ . Once done that:
 
-in my case is mfocchi/trento_lab_framework:introrob but I am the only one allowed to push there.
+1. click on create (public) repository (for private you need to pay). 
 
+2. To be able to push to any repository you will first need to **login** your machine (only once for each computer) on docker hub. To do so click on your avatar on docker hub account and select "AccountSettings/Security/New Access Token". Copy the generated token ans use it as a password (when requested) after calling the following command:
+
+   ```
+   $ docker login -u your_account_name   
+   ```
+
+3. Finally you can push your image
+
+   ```
+   docker push your_account_name/repo_name/:tagname
+   ```
+
+   in my case is mfocchi/trento_lab_framework:introrob but I am the only one allowed to push there.
+
+   

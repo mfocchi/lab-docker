@@ -34,14 +34,11 @@ class EnvironmentConfig:
         self.shell = os.environ['SHELL']
         self.dns_servers = []
         self.dns_searches = []
-        if use_iit_dns:
-            self.dns_servers = ['10.255.8.30', '10.255.8.31']  # IIT
-            self.dns_searches = ['dls.local', 'iit.local']
-        else:
-            for conn in NetworkManager.NetworkManager.ActiveConnections:
-                for dev in conn.Devices:
-                    self.dns_servers = self.dns_servers+dev.Ip4Config.Nameservers
-                    self.dns_searches = self.dns_searches+dev.Ip4Config.Searches
+
+        for conn in NetworkManager.NetworkManager.ActiveConnections:
+            for dev in conn.Devices:
+                self.dns_servers = self.dns_servers+dev.Ip4Config.Nameservers
+                self.dns_searches = self.dns_searches+dev.Ip4Config.Searches
 
         result = subprocess.run(['whoami'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         self.user = result.stdout.decode('utf-8').strip()
@@ -92,20 +89,6 @@ class ContainerConfig:
         self.security_opt = ['apparmor:unconfined']
 
 
-class Dls1Images:
-    images = ['dls-env', 'dls-dev']
-    project = 'dls'
-    server = 'server-harbor'
-    port = '80'
-    tag = 'latest'
-
-
-class Dls2Images:
-    images = ['dls2-env', 'dls2-dev', 'dls2-operator']
-    project = 'dls2'
-    server = 'server-harbor'
-    port = '80'
-    tag = 'latest'
 
 
 def disable_access_control():
@@ -153,30 +136,6 @@ def is_container_running(container_name):
 def stop_container(container_name):
     subprocess.run(['docker', 'rm', '-f', container_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-
-def pull_base(image):
-    client = docker.from_env()
-    print(image)
-    try:
-        prev = {'status': '', 'id': ''}
-        for line in client.api.pull(image, stream=True, decode=True, tag='latest'):
-            if prev["status"] == line["status"] and prev["id"] == line["id"]:
-                sys.stdout.write("\033[F")  # Cursor up one line
-                sys.stdout.write("\033[K")  # Clear to the end of line
-            if (
-                line["status"] == 'Downloading' or
-                line["status"] == 'Extracting'
-            ):
-                print('   '+line['id']+': '+line["status"]+' '+str(line['progressDetail']['current'])+'/' +
-                      str(line['progressDetail']['total'])+' '+line['progress'])
-            else:
-                if(bool(line.get('id'))):
-                    print('   '+line['id']+': '+line["status"])
-                else:
-                    print('   '+line["status"])
-            prev = line
-    except docker.errors.APIError as err:
-        print(err)
 
 
 def run_container_high_level_api(client, container_config, environment_config, dls_config, no_attach=True):
@@ -297,8 +256,7 @@ def run_container(args, image):
             print(container_config.name+' already running')
             sys.exit()
     client = docker.from_env()
-    if not check_exists(image):
-        pull_base(image)
+
     if args.api:
         run_container_low_level_api(client, container_config, environment_config, dls_config, args.noattach)
     else:
@@ -311,11 +269,6 @@ def combine_image_name(server, port, project, image, nvidia, tag):
         image += '-nvidia'
     image += ':'+tag
     return image
-
-
-def run2(args):
-    image = combine_image_name(args.server, args.port, args.project, args.image, args.nvidia, args.tag)
-    run_container(args, image)
 
 
 def run(args):
@@ -349,24 +302,6 @@ def attach(args):
                 dockerpty.pty.PseudoTerminal(client.api, operation).start()
 
 
-def pull2(args):
-    image = combine_image_name(args.server, args.port, args.project, args.image, args.nvidia, args.tag)
-    pull_base(image)
-
-
-def pull(args):
-    pull_base(args.name)
-
-
-def pull_all(args):
-    if args.dls1 or not args.dls2:
-        for image in Dls1Images.images:
-            name = combine_image_name(Dls1Images.server, Dls1Images.port, Dls1Images.project, image, args.nvidia, Dls1Images.tag)  # noqa: E501
-            pull_base(name)
-    if args.dls2 or not args.dls1:
-        for image in Dls2Images.images:
-            name = combine_image_name(Dls2Images.server, Dls2Images.port, Dls2Images.project, image, args.nvidia, Dls2Images.tag)  # noqa: E501
-            pull_base(name)
 
 
 def make_parser():
@@ -375,40 +310,19 @@ def make_parser():
     subs = parser.add_subparsers(title='Commands')
 
     parser_run      = subs.add_parser('run',      help='run docker image with single arguments')  # noqa: E221
-    parser_run2     = subs.add_parser('run2',     help='run docker image with server, port, project, image, and tag arguments')  # noqa: E221
     parser_stop     = subs.add_parser('stop',     help='Stop container')  # noqa: E221
     parser_kill     = subs.add_parser('kill',     help='Kill container')  # noqa: E221
     parser_rm       = subs.add_parser('rm',       help='Remove container')  # noqa: E221
     parser_attach   = subs.add_parser('attach',   help='Attach a terminal to container')  # noqa: E221
-    parser_pull     = subs.add_parser('pull',     help='pull a docker image')  # noqa: E221
-    parser_pull2    = subs.add_parser('pull2',    help='pull docker image with server, port, project, image, and tag arguments')  # noqa: E221
-    parser_pull_all = subs.add_parser('pull_all', help='pull all of the dls1 and dls2 images')
-
+ 
     parser_run.set_defaults(func=run)
-    parser_run2.set_defaults(func=run2)
     parser_stop.set_defaults(func=stop)
     parser_kill.set_defaults(func=kill)
     parser_attach.set_defaults(func=attach)
     parser_rm.set_defaults(func=rm)
-    parser_pull.set_defaults(func=pull)
-    parser_pull2.set_defaults(func=pull2)
-    parser_pull_all.set_defaults(func=pull_all)
-
+ 
     parser.add_argument('-a', '--api', action='store_true', help='use the python docker sdk low level api')
     parser.add_argument('-d', '--debug', action='store_true', help='to debug this python script')
-
-    parser_run2.add_argument('-i', '--image', default='dls2-operator', help='docker image to run')
-    parser_run2.add_argument('-j', '--project', default='dls2', help='docker image repo project')
-    parser_run2.add_argument('-s', '--server', default='server-harbor', help='image repo server')
-    parser_run2.add_argument('-p', '--port', default='80', help='image repo port')
-    parser_run2.add_argument('-t', '--tag', default='latest', help='docker image tag')
-    parser_run2.add_argument('-nv', '--nvidia', action='store_true', help='use the nvidia driver')
-    parser_run2.add_argument('-qt', '--qtcreator', action='store_true', help='start qt creator')
-    parser_run2.add_argument('-f', '--force', action='store_true', help='start container even if another container with the same name exists (it will be deleted)')  # noqa: E501
-    parser_run2.add_argument('-e', '--env', default=[], action='append', help='extra environment to pass to the container')  # noqa: E501
-    parser_run2.add_argument('-d', '--dns', action='store_true', help='use host dns instead of iit dns')  # noqa: E501
-    parser_run2.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
-    parser_run2.add_argument('-codedir', '--codedir', default='home', help='specify home folder in trento_lab_')
 
     parser_run.add_argument('name', default='ubuntu:16.04', nargs='?', help='docker image to run')
     parser_run.add_argument('-nv', '--nvidia', action='store_true', help='use the nvidia driver')
@@ -424,22 +338,6 @@ def make_parser():
     parser_rm.add_argument('name', default='docker_container', nargs='?', help='docker container to remove')
     parser_attach.add_argument('name', default='docker_container', nargs='?', help='docker container to attach')
     parser_attach.add_argument('-r', '--root', action='store_true', help='attach the root user to the container')
-
-    parser_pull.add_argument('-a', '--all', action='store_true', help='pull all docker images currently on localhost')
-    parser_pull.add_argument('name', nargs='?', help='name of the image to pull')
-
-    parser_pull2.add_argument('-i', '--image', default='dls2-operator', help='docker image to run')
-    parser_pull2.add_argument('-j', '--project', default='dls2', help='docker image repo project')
-    parser_pull2.add_argument('-s', '--server', default='server-harbor', help='image repo server')
-    parser_pull2.add_argument('-p', '--port', default='80', help='image repo port')
-    parser_pull2.add_argument('-t', '--tag', default='latest', help='docker image tag')
-    parser_pull2.add_argument('-nv', '--nvidia', action='store_true', help='use the nvidia driver')
-
-    parser_pull_all.add_argument('-nv', '--nvidia', action='store_true', help='pull the images with the nvidia driver')
-   
-    pull_all_group = parser_pull_all.add_mutually_exclusive_group()
-    pull_all_group.add_argument('-d1', '--dls1', action='store_true', help='just pull the dls1 images')
-    pull_all_group.add_argument('-d2', '--dls2', action='store_true', help='just pull the dls2 images')
 
     return parser
 

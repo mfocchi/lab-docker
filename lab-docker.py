@@ -18,9 +18,6 @@ try:
     import shutil
     import docker
     import dockerpty
-    from dbus.mainloop.glib import DBusGMainLoop
-    DBusGMainLoop(set_as_default=True)
-    import NetworkManager
     import argcomplete
 except ImportError as e:
     print(e)
@@ -28,17 +25,11 @@ except ImportError as e:
 
 
 class EnvironmentConfig:
-    def __init__(self, use_iit_dns=True):
+    def __init__(self):
         self.home = os.environ['HOME']
         self.display = os.environ['DISPLAY']
         self.shell = os.environ['SHELL']
-        self.dns_servers = []
-        self.dns_searches = []
 
-        for conn in NetworkManager.NetworkManager.ActiveConnections:
-            for dev in conn.Devices:
-                self.dns_servers = self.dns_servers+dev.Ip4Config.Nameservers
-                self.dns_searches = self.dns_searches+dev.Ip4Config.Searches
 
         result = subprocess.run(['whoami'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         self.user = result.stdout.decode('utf-8').strip()
@@ -67,8 +58,7 @@ class ContainerConfig:
         self.name = 'docker_container'
         self.devices = ['/dev/dri:/dev/dri', '/dev/input:/dev/input']
         self.network_mode = 'host'
-        self.dns = environment_config.dns_servers
-        self.dns_search = environment_config.dns_searches
+
         self.runtime = 'runc'
         self.device_requests = []
         self.user = environment_config.id+':users'
@@ -154,8 +144,7 @@ def run_container_high_level_api(client, container_config, environment_config, d
         working_dir=container_config.working_dir,
         runtime=container_config.runtime,
         stdin_open=True,
-        dns=container_config.dns,
-        dns_search=container_config.dns_search,
+
         tty=True,
         security_opt=container_config.security_opt,
         )
@@ -190,8 +179,6 @@ def run_container_low_level_api(client, container_config, environment_config, dl
             binds=container_config.volumes,
             devices=container_config.devices,
             device_requests=container_config.device_requests,
-            dns=container_config.dns,
-            dns_search=container_config.dns_search,
             security_opt=container_config.security_opt,
             group_add=['plugdev'],
         ),
@@ -231,7 +218,7 @@ def check_exists(image):
 
 
 def run_container(args, image):
-    environment_config = EnvironmentConfig(use_iit_dns=not args.dns)
+    environment_config = EnvironmentConfig()
     dls_config = DlsConfig(environment_config, run_qt=args.qtcreator, code_dir_name=args.codedir)
 
     container_config = ContainerConfig(environment_config, dls_config, image)
@@ -245,7 +232,8 @@ def run_container(args, image):
             'Count': -1,  # enable all gpus
         }]
     disable_access_control()
-    ensure_docker_is_running()
+    # TODO find an alternative of   systemctl that works for MAC  
+    # ensure_docker_is_running()
     mount_systemd(environment_config)  # Need to use non-privileged containers
     check_dls_home(dls_config)
     check_bashrc(environment_config, dls_config)
@@ -329,7 +317,6 @@ def make_parser():
     parser_run.add_argument('-qt', '--qtcreator', action='store_true', help='start qt creator')
     parser_run.add_argument('-f', '--force', action='store_true', help='start container even if another container with the same name exists (it will be deleted)')  # noqa: E501
     parser_run.add_argument('-e', '--env', default=[], action='append', help='extra environment to pass to the container')  # noqa: E501
-    parser_run.add_argument('-d', '--dns', action='store_true', help='use host dns instead of iit dns')
     parser_run.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
     parser_run.add_argument('-codedir', '--codedir', default='home', help='specify home folder in dls_ws_*')
 

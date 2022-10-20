@@ -56,7 +56,7 @@ class ContainerConfig:
     def __init__(self, environment_config, dls_config, image):
         self.hostname = 'docker'
         self.name = 'docker_container'
-        self.devices = []
+        self.devices = ['/dev/dri:/dev/dri', '/dev/input:/dev/input'] if 'linux' in sys.platform else []
         self.network_mode = 'host'
 
         self.runtime = 'runc'
@@ -70,15 +70,30 @@ class ContainerConfig:
         ]
         self.volumes = [
             '/tmp/.X11-unix:/tmp/.X11-unix:rw',
-            '/etc/passwd:/etc/passwd',
             environment_config.home+'/.ssh:'+environment_config.home+'/.ssh:rw',
             dls_config.dls_dir+':'+environment_config.home
         ]
+        if "linux" in sys.platform: # I cannot find a way to replace /etc/passwd in Mac 
+            self.volumes.append('/etc/passwd:/etc/passwd:ro')
+        elif "darwin" in sys.platform:
+            shutil.copy('/etc/passwd', './passwd')
+            import pwd
+            with open('./passwd', "a") as F:
+                F.write("{}:{}:{}:{}:{}:{}:{}".format(
+                    environment_config.user,
+                    pwd.getpwnam(environment_config.user).pw_passwd,
+                    pwd.getpwnam(environment_config.user).pw_uid,
+                    pwd.getpwnam(environment_config.user).pw_gid,
+                    pwd.getpwnam(environment_config.user).pw_gecos,
+                    pwd.getpwnam(environment_config.user).pw_dir,
+                    pwd.getpwnam(environment_config.user).pw_shell
+                ))
+            self.volumes.append(os.path.join(os.path.dirname(os.path.realpath(__file__)),'passwd')+':/etc/passwd:ro')
+
+
         self.working_dir = environment_config.home
         self.image = image
         self.security_opt = ['apparmor:unconfined']
-
-
 
 
 def disable_access_control():
@@ -89,11 +104,13 @@ def disable_access_control():
 
 
 def ensure_docker_is_running():
-    result = subprocess.run(['systemctl', 'is-active', 'docker'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    docker_inactive = (result.stdout.decode('utf-8').find('inactive')) == 1
-    if docker_inactive:
-        result = subprocess.run(['sudo', 'systemctl', 'status', 'docker'],
-                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if "linux" in sys.platform:
+        result = subprocess.run(['systemctl', 'is-active', 'docker'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        docker_inactive = (result.stdout.decode('utf-8').find('inactive')) == 1
+        if docker_inactive:
+            result = subprocess.run(['sudo', 'systemctl', 'status', 'docker'],
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # No need to check if Docker is running under Mac has it raises an exception before reaching this check    
 
 
 def mount_systemd(environment_config):
@@ -232,8 +249,7 @@ def run_container(args, image):
             'Count': -1,  # enable all gpus
         }]
     disable_access_control()
-    # TODO find an alternative of   systemctl that works for MAC  
-    # ensure_docker_is_running()
+    ensure_docker_is_running()
     # Not working for MAC
     #mount_systemd(environment_config)  # Need to use non-privileged containers
     check_dls_home(dls_config)

@@ -1,9 +1,12 @@
 ## Installation Instructions
 
 This guide allows you to configure the lab docker images and to download the Gazebo models for properly running the robots simulations.
-- First, make sure you have installed Docker, and the  SSH keys in your Github account and the Nvidia drivers. The procedures are described  [here](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
 
-  **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.  
+**COMPATIBILITY ISSUES:** This procedure works only for users that have a Linux operating system or an old x86-64 based MAC, for the new MAC M1/M2 that employ ARM processors, docker does not work anymore! The only solution is to install a  [parallel/multipass](https://github.com/mfocchi/lab-docker/blob/master/multipass.md) virtual machine and install natively all the [dependencies](https://github.com/mfocchi/locosim)  inside there. Remember that on MAC you need to replace "sudo apt install package_name" with "brew install package_name"
+
+ First, make sure you have installed Docker, and the  SSH keys in your Github account and the Nvidia drivers. The procedures are described  [here](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
+
+- **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.  
 
 - Download the docker image from here: 
 
@@ -189,9 +192,51 @@ to exit from python3 console type CTRL+Z
 
 ### Committing your software changes in a repository
 
-To keep memory of changes to your newly developed code (i.e. track code changes) you can employ a popular version control system called **git** (www.w3schools.com/git/git_intro.asp?remote=github). To efficiently deal with git repositories I suggest to use **git-cola** (to make commits) and **gitg** (to inspect the branches'tree). You should run these commands in the folder you want to manage version control **outside** the docker terminal.
+To keep memory of changes to your newly developed code (i.e. track code changes) you can employ a popular version control system called **git** (www.w3schools.com/git/git_intro.asp?remote=github). The first time (only) you use git you need to configure your name an email address as follows: 
 
-Let's assume we want to create a new repository for our developed code called "my_planner" (i.e. you created a ros package for planning). 
+```csharp
+git config --global user.name "your name"
+```
+
+```csharp
+git config --global user.email "youremail@yourdomain.com"
+```
+
+To efficiently deal with git repositories I suggest to use **git-cola** (to make commits) and **gitg** (to inspect the branches'tree). You should run these commands in the folder you want to manage version control **outside** the docker terminal.
+
+Since Locosim is working with git submodules (i.e. locosim repository points like an octopus to all the commits in the submodules that are compatible) when you do "git submodule update" the submodule repository go in "detached head" state. This means that when you check the branch you are with:
+
+```
+$ git branch
+```
+
+you will get something like this:
+
+```
+$ (HEAD detached at d413b08)
+```
+
+This means you are not in any specific branch. Then you have two options: 1) create a local branch or checkout to another branch (typically master). In the first case  type:
+
+```
+$ git checkout -b new_branch_name
+```
+
+in the second case:
+
+```
+$ git checkout existing_branch_name
+```
+
+you can check existing branches with "gitg" GUI. Remember that, in this case,  you might need to update your local copy of the branch with the changes that might be occurred on the server (typically called "origin").
+
+```
+$ git pull origin existing_branch_name
+```
+
+To push the changes (e.g. done in step 2.) on the  server origin jump to step 5. 
+
+Now, let's assume we want to create a new repository for our developed code called "my_planner" (i.e. you created a ros package for planning). 
 
 1. You go in the folder you have the code and initialize  an empty repository;
 
@@ -199,7 +244,7 @@ Let's assume we want to create a new repository for our developed code called "m
 $ git init
 ```
 
-2. You can do you first commit staging the required files you want to add running:
+2. You can do you first commit staging the required files you want to add, by running:
 
 ```
 $ git cola
@@ -227,6 +272,8 @@ $ git remote add git@github.com:mfocchi/ros_impedance_controller.git
 ```
 $ git push origin master
 ```
+
+**NOTE!** If you any issue with git do all git operations outside the docker.
 
 
 

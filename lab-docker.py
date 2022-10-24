@@ -352,7 +352,8 @@ def main():
     argcomplete.autocomplete(parser)
     try:
         args = parser.parse_args()
-        debug = args.debug
+	# ALWAYS IN DEBUG MODE
+        #debug = args.debug	
         args.func(args)
     except:
         if debug:

@@ -63,6 +63,7 @@ class ContainerConfig:
         self.device_requests = []
         self.user = environment_config.id+':users'
         self.environment = [
+	    'USER='+ environment_config.user,
             'QT_X11_NO_MITSHM=1',
             'SHELL=' + environment_config.shell,
             'DISPLAY=:0.0',

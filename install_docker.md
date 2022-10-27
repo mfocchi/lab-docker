@@ -104,10 +104,12 @@ $ ./install_docker.sh
 ```
 $ sudo gedit /etc/hosts 
 ```
-and add the following line:
+add the following line (same as localhost):
 ```
 127.0.0.1	docker
 ```
+if you have troubles using **gedit** use other editors like  **vim** or **nano** in place of gedit
+
 - Before pulling the docker images you have to download some dependencies (if you have :
 ```
 $ pip3 install argcomplete argparse docker dockerpty

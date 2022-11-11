@@ -28,7 +28,7 @@ class EnvironmentConfig:
     def __init__(self):
         self.home = os.environ['HOME']
         self.display = os.environ['DISPLAY']
-        self.shell = os.environ['SHELL']
+        self.shell = '/bin/bash'
 
 
         result = subprocess.run(['whoami'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -99,9 +99,9 @@ class ContainerConfig:
 
 def disable_access_control():
     result = subprocess.run(['xhost'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    access_control_enabled = (result.stdout.decode('utf-8').find('access control enabled')) == 1
+    access_control_enabled = (result.stdout.decode('utf-8').find('access control enabled')) == 0
     if access_control_enabled:
-        subprocess.run(['xhost +'])
+        subprocess.run(['xhost','+'])
 
 
 def ensure_docker_is_running():

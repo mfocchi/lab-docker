@@ -47,6 +47,7 @@ Make sure to edit the `LAB_DOCKER_PATH` variable with the path to where you clon
 - the `lab-docker.py` script will create the folder `~/trento_lab_home` on your host computer. Inside of all of the docker images this folder is mapped to `$HOME`.\
   This means that any files you place in your home folder will survive the stop/starting of a new docker container. All other files and installed programs will disappear on the next run.
 - **IMPORTANT!** If you are running in issues ([see docker issues](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md)) with your Nvidia card or your computer **does not** have an Nvidia card,  you can run **without** the Nvidia drivers removing the tag **-nv** from the lab alias. 
+- The alias **lab** needs to be called only ONCE and opens the image. To link other terminals to the same image you should run **dock-other**, this second command will "attach" to the image opened by calling the lab alias.  
 
 
 

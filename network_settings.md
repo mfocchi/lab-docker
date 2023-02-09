@@ -11,7 +11,7 @@ export ROS_MASTER_URI=http://localhost:11311
 In all the other machines that variable should be set with the IP of the machine where the roscore is running, (e.g. in our example 10.196.80.36):
 
 ```
-export ROS_MASTER_URI=http://IP_OF_ROSCORE_MACHINE:11311
+export ROS_IP=http://IP_OF_ROSCORE_MACHINE:11311
 ```
 
 This tells everbody where the rosmaster is running. Additionally, for all the machines, you need to set the variable ROS_IP to the IP of that specific machine:

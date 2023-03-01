@@ -58,7 +58,7 @@ class ContainerConfig:
         self.name = 'docker_container'
         self.devices = ['/dev/dri:/dev/dri', '/dev/input:/dev/input'] if 'linux' in sys.platform else []
         self.network_mode = 'host'
-
+        self.ulimits = [docker.types.Ulimit(name='nofile', soft=1024, hard=524288)]
         self.runtime = 'runc'
         self.device_requests = []
         self.user = environment_config.id+':users'
@@ -194,6 +194,7 @@ def run_container_low_level_api(client, container_config, environment_config, dl
         host_config=client.api.create_host_config
         (
             network_mode='host',
+            ulimits=container_config.ulimits,
             binds=container_config.volumes,
             devices=container_config.devices,
             device_requests=container_config.device_requests,

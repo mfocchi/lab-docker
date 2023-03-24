@@ -32,7 +32,7 @@ sudo apt-get update
 Install the driver, note that for Ubuntu 16.04 is recommended the 430 version (X=410) while for Ubuntu 20.04 the 515 version is ok but you can use also other versions:
 
 ```
-sudo apt-get install nvidia-X
+sudo apt-get install nvidia-driver-X
 ```
 
 The reboot the system

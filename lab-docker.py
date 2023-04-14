@@ -46,8 +46,8 @@ class EnvironmentConfig:
 
 
 class DlsConfig:
-    def __init__(self, environment_config, run_qt=False, code_dir_name='home'):
-        self.dls_dir = environment_config.home + '/trento_lab_'+code_dir_name
+    def __init__(self, environment_config, run_qt=False, code_dir_name='trento_lab_home'):
+        self.dls_dir = environment_config.home + '/'+code_dir_name
         self.bashrc = self.dls_dir+'/.bashrc'
         self.run_qt = run_qt
 
@@ -337,7 +337,7 @@ def make_parser():
     parser_run.add_argument('-f', '--force', action='store_true', help='start container even if another container with the same name exists (it will be deleted)')  # noqa: E501
     parser_run.add_argument('-e', '--env', default=[], action='append', help='extra environment to pass to the container')  # noqa: E501
     parser_run.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
-    parser_run.add_argument('-codedir', '--codedir', default='home', help='specify home folder in dls_ws_*')
+    parser_run.add_argument('-codedir', '--codedir', default='trento_lab_home', help='specify home folder in dls_ws_*')
 
     parser_kill.add_argument('name', default='docker_container', nargs='?', help='docker container to kill')
     parser_stop.add_argument('name', default='docker_container', nargs='?', help='docker container to stop')

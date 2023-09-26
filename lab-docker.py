@@ -46,8 +46,9 @@ class EnvironmentConfig:
 
 
 class DlsConfig:
-    def __init__(self, environment_config, run_qt=False, code_dir_name='trento_lab_home'):
+    def __init__(self, environment_config, run_qt=False, code_dir_name='trento_lab_home', mount_custom_folder=None):
         self.dls_dir = environment_config.home + '/'+code_dir_name
+        self.mount_custom_folder =  mount_custom_folder
         self.bashrc = self.dls_dir+'/.bashrc'
         self.run_qt = run_qt
 
@@ -72,8 +73,12 @@ class ContainerConfig:
         self.volumes = [
             '/tmp/.X11-unix:/tmp/.X11-unix:rw',
             environment_config.home+'/.ssh:'+environment_config.home+'/.ssh:rw',
-            dls_config.dls_dir+':'+environment_config.home
+            dls_config.dls_dir+':'+environment_config.home	    
         ]
+
+        if dls_config.mount_custom_folder is not None:
+            self.volumes.append(dls_config.mount_custom_folder+':'+environment_config.home+'/custom_folder')
+
         if "linux" in sys.platform: # I cannot find a way to replace /etc/passwd in Mac 
             self.volumes.append('/etc/passwd:/etc/passwd:ro')
         elif "darwin" in sys.platform:
@@ -238,7 +243,7 @@ def check_exists(image):
 
 def run_container(args, image):
     environment_config = EnvironmentConfig()
-    dls_config = DlsConfig(environment_config, run_qt=args.qtcreator, code_dir_name=args.codedir)
+    dls_config = DlsConfig(environment_config, run_qt=args.qtcreator, code_dir_name=args.codedir, mount_custom_folder=args.mount_folder)
 
     container_config = ContainerConfig(environment_config, dls_config, image)
     if len(args.env) > 0:
@@ -338,12 +343,16 @@ def make_parser():
     parser_run.add_argument('-e', '--env', default=[], action='append', help='extra environment to pass to the container')  # noqa: E501
     parser_run.add_argument('-na', '--noattach', action='store_true', help='Run container but do not attach a terminal')  # noqa: E501
     parser_run.add_argument('-codedir', '--codedir', default='trento_lab_home', help='specify home folder in dls_ws_*')
+    parser_run.add_argument('-mount_folder', '--mount_folder', default=None, help='additional folder to mount')
+
 
     parser_kill.add_argument('name', default='docker_container', nargs='?', help='docker container to kill')
     parser_stop.add_argument('name', default='docker_container', nargs='?', help='docker container to stop')
     parser_rm.add_argument('name', default='docker_container', nargs='?', help='docker container to remove')
     parser_attach.add_argument('name', default='docker_container', nargs='?', help='docker container to attach')
     parser_attach.add_argument('-r', '--root', action='store_true', help='attach the root user to the container')
+
+
 
     return parser
 

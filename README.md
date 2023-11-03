@@ -2,35 +2,32 @@
 
 This guide allows you to configure the lab docker images and to download the Gazebo models for properly running the robots simulations.
 
-**COMPATIBILITY ISSUES:** This procedure works only for users that have a Linux operating systems or old x86-64 based MACs, for the new MAC M1/M2 that employ ARM processors, docker does not work anymore! The only solution is to install a  [parallel/multipass](https://github.com/mfocchi/lab-docker/blob/master/multipass.md) virtual machine and install natively all the [dependencies](https://github.com/mfocchi/locosim)  inside there. Remember that on MAC you need to replace "sudo apt install package_name" with "brew install package_name". In this case you can follow a detailed wiki [here](https://github.com/NatFederico/roboticsVM), made by Federico Natali. For windows based systems instead the following [procedure](https://github.com/mfocchi/lab-docker/blob/master/install_docker_windows.md) should work.
+**COMPATIBILITY ISSUES:** This procedure works only for users that have a **Linux operating** systems and **old** **x86-64 based MACs**, for the new MAC M1/M2 that employ ARM processors, docker does not work anymore! The only solution is to install a  [parallel/multipass](https://github.com/mfocchi/lab-docker/blob/master/multipass.md) virtual machine and install natively all the [dependencies](https://github.com/mfocchi/locosim)  inside there. Remember that on MAC you need to replace "sudo apt install package_name" with "brew install package_name". In this case you can follow a detailed wiki [here](https://github.com/NatFederico/roboticsVM), made by Federico Natali. For **Windows based** systems instead follow this [procedure](https://github.com/mfocchi/lab-docker/blob/master/install_docker_windows.md).
 
- First, make sure you have installed Docker, and the  SSH keys in your Github account and the Nvidia drivers. The procedures are described  [here](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
+-  First, make sure you have installed Docker, and the  SSH keys in your Github account and the Nvidia drivers. The procedures are described  [here](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
 
-- **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.  
+  **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.  
 
-- Download the docker image from here: 
+- In newer versions of Ubuntu the installation of the following dependencies is required:
 
-```
-$ docker pull mfocchi/trento_lab_framework:introrob
-```
-In newer versions of Ubuntu the installation of the following dependencies is required
-
-- Open a terminal and run the following command
+  1. Open a terminal and run the following command
 
 ```
 $ sudo apt-get install python3-argcomplete libglib2.0-dev libdbus-1-dev build-essential cmake
 ```
-- Using pip to install the required package
+​		  2. Open a terminal and run the following command
+
 ```
 $ pip3 install -r requirements.txt
 ```
-Once the dependencies are satisfied, the bash environment can be configured
+- Once the dependencies are satisfied, the bash environment can be configured, open the `bashrc` file from your home folder:
 
-- Open the `bashrc` file from your home folder:
+
 ```
 $ gedit ~/.bashrc
 ```
-and add the following lines at the bottom of the file:
+-  and add the following lines at the bottom of the file:
+
 ```bash
 LAB_DOCKER_PATH="/home/USER/PATH/lab-docker"
 eval "$(register-python-argcomplete3 lab-docker.py)"
@@ -39,9 +36,14 @@ alias lab='lab-docker.py --api run   -f -nv  mfocchi/trento_lab_framework:intror
 alias dock-other='lab-docker.py attach'
 alias dock-root='lab-docker.py attach --root'
 ```
-where "/home/USER/PATH" is the folder you cloned the lab-docker repository.
 
-Make sure to edit the `LAB_DOCKER_PATH` variable with the path to where you cloned the `lab_docker` repository.
+- Finally, download the docker image from here: 
+
+```
+$ docker pull mfocchi/trento_lab_framework:introrob
+```
+
+where "/home/USER/PATH" is the folder you cloned the lab-docker repository. Make sure to edit the `LAB_DOCKER_PATH` variable with the path to where you cloned the `lab_docker` repository.
 
 - `lab-docker.py` is a wrapper around docker to make it easier to use the trentolab environment.
 - the `lab-docker.py` script will create the folder `~/trento_lab_home` on your host computer. Inside of all of the docker images this folder is mapped to `$HOME`.\

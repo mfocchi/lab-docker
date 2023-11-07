@@ -5,12 +5,36 @@ Docker Wiki
 
 This section of the wiki gives information on how to use the docker.
 
-1. [Docker Install](#docker_install)
+1. [Installing Git and SSH key](#Installing Git and SSH key)
+2. [Installing NVIDIA drivers](#Installing NVIDIA drivers) 
+3. [Docker Install](#Docker Install) 
+4. [Common Docker Install Issues](#docker_issues)
+5. [Committing a docker image (Making changes permanent)](#docker_commit)
 
-2. [Common Docker Install Issues](#docker_issues)
 
-3. [Committing a docker image (Making changes permanent)](#docker_commit)
 
+Installing Git and SSH key
+--------------
+
+To install Git you can open a terminal and run:
+```
+sudo apt install git
+```
+After that, you can check the version installed and configure the credentials with:
+```
+$ git --version
+$ git config --global user.name <"name surnace">
+$ git config --global user.email <"youremail@yourdomain.it">
+```
+After this, if you don't have an SSH key for your Github account, you need to create a new one to use the repositories:
+* go to Settings/SSH  and GPG Keys
+* open a terminal and run these commands:
+  ```
+  $ ssh-keygen 
+  $ cd ~/.ssh/
+  $ cat <new_ssh_key>.pub
+  ```
+  Copy the content of your public SSH into the box at the link before and press "New SSH key". You can now clone the  repositories with SSH.
 
 Installing NVIDIA drivers
 --------------
@@ -48,37 +72,16 @@ Now tell the system to use that driver:
 * press on "Apply Changes".
 
 You can verify if the drivers are installed by opening a terminal and running:
+
 ```
 nvidia-smi
 ```
+
 If this does not work, and you are sure you correctly installed the drivers, you might need to deactivate the "safe boot" feature from your BIOS, that usually prevents to load the driver. 
-
-Installing Git and SSH key
---------------
-
-To install Git you can open a terminal and run:
-```
-sudo apt install git
-```
-After that, you can check the version installed and configure the credentials with:
-```
-$ git --version
-$ git config --global user.name <"name surnace">
-$ git config --global user.email <"youremail@yourdomain.it">
-```
-After this, if you don't have an SSH key for your Github account, you need to create a new one to use the repositories:
-* go to Settings/SSH  and GPG Keys
-* open a terminal and run these commands:
-  ```
-  $ ssh-keygen 
-  $ cd ~/.ssh/
-  $ cat <new_ssh_key>.pub
-  ```
-Copy the content of your public SSH into the box at the link before and press "New SSH key". You can now clone the  repositories with SSH.
-
 
 Docker Install
 --------------------------------------------------------------------------------
+
 <a name="docker_install"></a>
 Instructions:
 

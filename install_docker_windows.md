@@ -3,13 +3,13 @@
 Install Docker on Windows 
 ================================================================================
 
-1. Install  Windows Subsystem for Linux (WSL). Open a command prompt with **administration** privileges and type. Unfortunately WSL installs the ubuntu 22 version, that is incompatible with ROS (only supports ROS2). Hence, we are forced to use Docker (Ubuntu 20 image)
+1. First Install  Windows Subsystem for Linux (WSL). Open a command prompt with **administration** privileges and type. 
 
 ```powershell
 wsl --install
 ```
 
-New Linux installations, installed using the `wsl --install` command, will be set to WSL 2 by default.
+New Linux installations, installed using the `wsl --install` command, will be set to WSL 2 by default. Unfortunately WSL/WSL2 installs the ubuntu 22 version, that is incompatible with ROS (only supports ROS2). Hence, we are forced to use Docker (Ubuntu 20 image).
 
 2. install ubuntu terminal from Microsoft Store
 3. launch ubuntu terminal from start to open a terminal

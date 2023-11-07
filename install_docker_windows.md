@@ -13,7 +13,7 @@ New Linux installations, installed using the `wsl --install` command, will be se
 
 2. install ubuntu terminal from Microsoft Store
 3. launch ubuntu terminal from start to open a terminal
-4. Download [Docker Desktop for Windows following this procedure: https://docs.docker.com/desktop/windows/wsl/
+4. Download Docker Desktop for Windows following this procedure: https://docs.docker.com/desktop/windows/wsl/ and start it.
 
 5. open an ubuntu terminal and type:
 
@@ -58,10 +58,8 @@ alias dock-root='docker exec -it --user root docker_container /bin/bash'
     $ docker ps 
     ```
 
-14.  Commit the docker image:
+14. Commit the docker image (next time you will open an new container it will retain the changes done to the image without loosing them):
 
     ```powershell
     $ docker commit ASH mfocchi/trento_lab_framework:introrob
     ```
-
-    Next time it will retain the changes done to the image

@@ -2,15 +2,19 @@
 
 This guide allows you to configure the lab docker images and to download the Gazebo models for properly running the robots simulations.
 
-**COMPATIBILITY ISSUES:** This procedure works only for users that have a **Linux operating** systems and **old** **x86-64 based MACs**, for the new MAC M1/M2 that employ ARM processors, docker does not work anymore! The only solution is to install a  [parallel/multipass](https://github.com/mfocchi/lab-docker/blob/master/multipass.md) virtual machine and install natively all the [dependencies](https://github.com/mfocchi/locosim)  inside there. Remember that on MAC you need to replace "sudo apt install package_name" with "brew install package_name". In this case you can follow a detailed wiki [here](https://github.com/NatFederico/roboticsVM), made by Federico Natali. For **Windows based** systems instead follow this [procedure](https://github.com/mfocchi/lab-docker/blob/master/install_docker_windows.md).
+**WINDOWS:** follow this [procedure](https://github.com/mfocchi/lab-docker/blob/master/install_docker_windows.md).
+
+**MAC:** follow the procedure detailed next, just replace **"sudo apt install package_name"** with **"brew install package_name"**.
+
+**LINUX:** follow the procedure detailed next.
 
 -  First, make sure you have installed Docker, and the  SSH keys in your Github account and the Nvidia drivers. The procedures are described  [here](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
 
-  **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.  
+  **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.
 
-- In newer versions of Ubuntu the installation of the following dependencies is required:
+-   Install these dependencies to be able to use the lab-docker.py script:
 
-  1. Open a terminal and run the following command
+   1. Open a terminal and run the following command
 
 ```
 $ sudo apt-get install python3-argcomplete libglib2.0-dev libdbus-1-dev build-essential cmake

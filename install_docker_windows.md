@@ -5,17 +5,16 @@ Install Docker on Windows
 
 1. First Install  Windows Subsystem for Linux (WSL). Open a command prompt with **administration** privileges and type. 
 
-```powershell
+``` powershell
 wsl --install
 ```
 
-New Linux installations, installed using the `wsl --install` command, will be set to WSL 2 by default. Unfortunately WSL/WSL2 installs the ubuntu 22 version, that is incompatible with ROS (only supports ROS2). Hence, we are forced to use Docker (Ubuntu 20 image).
+2. install Ubuntu 20.04.06 LTS from Microsoft Store. All the procedure is explained in detail here:
 
-2. install ubuntu terminal from Microsoft Store
-3. launch ubuntu terminal from start to open a terminal
-4. Download Docker Desktop for Windows following this procedure: https://docs.docker.com/desktop/windows/wsl/ and start it.
+   https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-11-with-gui-support#1-overv
 
-5. open an ubuntu terminal and type:
+2. Download Docker Desktop for Windows following this procedure: https://docs.docker.com/desktop/windows/wsl/ and start it.
+3. Open an Ubuntu terminal from start and type:
 
 ```powershell
 $ docker pull mfocchi/trento_lab_framework:introrob

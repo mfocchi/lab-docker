@@ -5,9 +5,9 @@ Docker Wiki
 
 This section of the wiki gives information on how to use the docker.
 
-1. [Installing Git and SSH key](#Installing Git and SSH key)
-2. [Installing NVIDIA drivers](#Installing NVIDIA drivers) 
-3. [Docker Install](#Docker Install) 
+1. [Installing Git and SSH key](#installing-git-and-ssh-key)
+2. [Installing NVIDIA drivers](#installing-nvidia-drivers) 
+3. [Docker Install](#docker-install) 
 4. [Common Docker Install Issues](#docker_issues)
 5. [Committing a docker image (Making changes permanent)](#docker_commit)
 
@@ -32,7 +32,7 @@ After this, if you don't have an SSH key for your Github account, you need to cr
   ```
   $ ssh-keygen 
   $ cd ~/.ssh/
-  $ cat <new_ssh_key>.pub
+  $ cat id_rsa.pub
   ```
   Copy the content of your public SSH into the box at the link before and press "New SSH key". You can now clone the  repositories with SSH.
 

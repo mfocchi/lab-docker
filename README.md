@@ -15,11 +15,12 @@ This guide allows you to configure the lab docker images and to download the Gaz
 -   Install these dependencies to be able to use the lab-docker.py script:
 
    1. Open a terminal and run the following command
+   
 
 ```
 $ sudo apt-get install python3-argcomplete libglib2.0-dev libdbus-1-dev build-essential cmake
 ```
-​		  2. Open a terminal and run the following command
+   	2. Open a terminal and run the following command
 
 ```
 $ pip3 install -r requirements.txt

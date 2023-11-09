@@ -45,13 +45,11 @@ alias dock-root='docker exec -it --user root docker_container /bin/bash'
 
 10. Open a new docker container running the alias "lab"
 
-11. "Configure Code" section: https://github.com/mfocchi/lab-docker#configure-code . Then, in the .bashrc **inside** docker, add also  the following line:
+11. "Configure Code" section: https://github.com/mfocchi/lab-docker#configure-code . 
 
-    ```powershell
-    $ export ROS_MASTER_URI=http://master:11311 
-    ```
+12. Using the alias **dock-attach** you can open other terminals and link them to the image already open without killing it.
 
-12. Using the alias dock-attach you can open another terminal and link to the image already open without killing it.
+    
 
     (Optional steps)
 

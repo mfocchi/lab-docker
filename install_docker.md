@@ -113,11 +113,6 @@ add the following line (same as localhost):
 ```
 if you have troubles using **gedit** use other editors like  **vim** or **nano** in place of gedit
 
-- Before pulling the docker images you have to download some dependencies (if you have :
-```
-$ pip3 install argcomplete argparse docker dockerpty
-$ sudo apt install python3-argcomplete python3-networkmanager (or python-networkmanager)
-```
 Docker Issues
 --------------------------------------------------------------------------------
 <a name="docker_issues"></a>

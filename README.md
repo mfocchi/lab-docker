@@ -12,20 +12,8 @@ This guide allows you to configure the lab docker images and to download the Gaz
 
   **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.
 
--   Install these dependencies to be able to use the lab-docker.py script:
+-   After installing docker you need to configure the bash environment as follows. Open the `bashrc` file from your home folder:
 
-   1. Open a terminal and run the following command
-   
-
-```
-$ sudo apt-get install python3-argcomplete libglib2.0-dev libdbus-1-dev build-essential cmake
-```
-   	2. Open a terminal and run the following command
-
-```
-$ pip3 install -r requirements.txt
-```
-- Once the dependencies are satisfied, the bash environment can be configured, open the `bashrc` file from your home folder:
 
 
 ```

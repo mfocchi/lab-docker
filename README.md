@@ -4,7 +4,9 @@ This guide allows you to configure the lab docker images and to download the Gaz
 
 **WINDOWS:** follow this [procedure](https://github.com/mfocchi/lab-docker/blob/master/install_docker_windows.md).
 
-**MAC:** follow the procedure detailed next, just replace **"sudo apt install package_name"** with **"brew install package_name"**.
+**MAC:** follow the procedure detailed next, just replace **"sudo apt install package_name"** with **"brew install package_name"**. 
+
+
 
 **LINUX:** follow the procedure detailed next.
 
@@ -12,8 +14,14 @@ This guide allows you to configure the lab docker images and to download the Gaz
 
   **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.
 
--   After installing docker you need to configure the bash environment as follows. Open the `bashrc` file from your home folder:
+-  We created a user friendly script called lab_docker.py to do docker management, that require some additional dependencies 
 
+
+```
+$ ./lab-docker-script-dependencies.sh
+```
+
+-  Now, you need to configure the bash environment as follows. Open the `bashrc` file from your home folder:
 
 
 ```
@@ -28,6 +36,14 @@ export PATH=$LAB_DOCKER_PATH:$PATH
 alias lab='lab-docker.py --api run   -f -nv  mfocchi/trento_lab_framework:introrob'
 alias dock-other='lab-docker.py attach'
 alias dock-root='lab-docker.py attach --root'
+```
+
+ **IMPORTANT**: If  you have any issue in installing dependencies in **lab-docker-script-dependencies.sh** or running the script **lab**, replace the previous lines in the .bashrc with the following (not elegant) alias that explicitly call docker APIs:
+
+```powershell
+alias lab='docker rm -f docker_container || true; docker run --name docker_container   --user $(id -u):$(id -g)  --workdir="/home/$USER" --volume="/etc/group:/etc/group:ro"   --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/passwd:/etc/passwd:ro" --device=/dev/dri:/dev/dri  -e "QT_X11_NO_MITSHM=1" --network=host -it  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume $HOME/trento_lab_home:$HOME --env=HOME --env=USER  --privileged  -e SHELL -e "DISPLAY=:0.0" -e DOCKER=1  --entrypoint /bin/bash mfocchi/trento_lab_framework:introrob'
+alias dock-other='docker exec -it docker_container /bin/bash'
+alias dock-root='docker exec -it --user root docker_container /bin/bash'
 ```
 
 - Finally, download the docker image from here: 

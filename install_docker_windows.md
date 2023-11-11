@@ -30,7 +30,7 @@ $ sudo chown -R $USER:$USER $HOME
 
 ```powershell
 $ cd $HOME
-$ nano .bash_aliases
+$ nano .bashrc
 ```
 
   8 . copy the following alias inside the .bash_aliases and save. Next time you will open a terminal this will be automatically loaded. 

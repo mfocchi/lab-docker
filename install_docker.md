@@ -34,7 +34,7 @@ After this, if you don't have an SSH key for your Github account, you need to cr
   $ cd ~/.ssh/
   $ cat id_rsa.pub
   ```
-  Copy the content of your public SSH into the box at the link before and press "New SSH key". You can now clone the  repositories with SSH.
+  Copy the content of your public SSH into the box at the link before and press "New SSH key". You can now clone the  repositories with SSH without having to issue the password every time (I suggest to do not set any passphrase).
 
 Installing NVIDIA drivers (optional)
 --------------
@@ -99,11 +99,10 @@ $ ./install_docker.sh
 - if you have troubles using **gedit** use other editors like  **vim** or **nano** in place of gedit
 
   
+## Docker Issues (optional)
 
-  
-
-  ## Docker Issues (optional)
 --------------------------------------------------------------------------------
+
 <a name="docker_issues"></a>
 
 Check this section only if you had any issues in running the docker!

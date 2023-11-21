@@ -124,7 +124,7 @@ When you have finished exit from the container typing:
 $ exit
 ```
 
-
+To improve the speed of the simulation you can follow the following  [tricks](https://github.com/mfocchi/locosim#tips-and-tricks).
 
 ### **Running the software** from Python IDE: Pycharm  
 

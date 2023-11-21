@@ -14,9 +14,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
 	# Add user to docker's group
 	sudo usermod -aG docker ${USER}
-	# Add the server-gitlab-runner as registry
-	sudo sh -c 'echo { \"insecure-registries\":[\"server-harbor:80\", \"server-harbor:443\"] } > /etc/docker/daemon.json'
-
+	
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
@@ -29,10 +27,40 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
 	# Add user to docker's group
 	sudo usermod -aG docker ${USER}
-	# Add the server-gitlab-runner as registry
-	sudo sh -c 'echo { \"insecure-registries\":[\"server-harbor:80\", \"server-harbor:443\"] } > /etc/docker/daemon.json'
+	
+
+fi
+
+# insert/update hosts entry
+ip_address="127.0.0.1"
+host_name="docker"
+# find existing instances in the host file and save the line numbers
+matches_in_hosts="$(grep -n $host_name /etc/hosts | cut -f1 -d:)"
+host_entry="${ip_address} ${host_name}"
+
+echo "Please enter your password if requested."
+
+if [ ! -z "$matches_in_hosts" ]
+then
+    echo "Docker entry already existing in etc/hosts."
+else
+    echo "Adding new hosts entry."
+    echo "$host_entry" | sudo tee -a /etc/hosts > /dev/null
+fi
 
 
+if [ -d "${HOME}/trento_lab_home" ]; then
+  echo "Directory trento_lab_home exists."
+else
+    echo "Creating trento_lab_home dir."
+    mkdir -p ${HOME}/trento_lab_home
+fi
+
+if [ -f "${HOME}/trento_lab_home/.bashrc" ]; then
+    echo ".bashrc inside trento_lab_home exists."
+else 
+echo "Copying .bashrc"
+    cp .bashrc ${HOME}/trento_lab_home/.bashrc 
 fi
 
 

@@ -275,13 +275,6 @@ def run_container(args, image):
         run_container_high_level_api(client, container_config, environment_config, dls_config, args.noattach)
 
 
-def combine_image_name(server, port, project, image, nvidia, tag):
-    image = server+':'+port+'/'+project+'/'+image
-    if nvidia:
-        image += '-nvidia'
-    image += ':'+tag
-    return image
-
 
 def run(args):
     image = args.name

@@ -36,7 +36,7 @@ After this, if you don't have an SSH key for your Github account, you need to cr
   ```
   Copy the content of your public SSH into the box at the link before and press "New SSH key". You can now clone the  repositories with SSH.
 
-Installing NVIDIA drivers
+Installing NVIDIA drivers (optional)
 --------------
 
 If your PC is provided with an NVIDIA graphics card, you can install its drivers in Ubuntu by following these steps:
@@ -53,7 +53,7 @@ update the repository list:
 sudo apt-get update
 ```
 
-Install the driver, note that for Ubuntu 16.04 is recommended the 430 version (X=410) while for Ubuntu 20.04 the 515 version is ok but you can use also other versions:
+Install the driver, note that for Ubuntu 20.04 the 515 version is ok, for Ubuntu 22.04 the 535 is ok, but you can use also other versions:
 
 ```
 sudo apt-get install nvidia-driver-X
@@ -83,37 +83,26 @@ Docker Install
 --------------------------------------------------------------------------------
 
 <a name="docker_install"></a>
-Instructions:
+Clone in the $HOME folder (usually is "home/USERNAME") the lab-docker repository:
 
-- Make sure you have:
-  - configured Git and SSH key
-  - configured the NVIDIA drivers
-
-Then you can run:
-```
-$ sudo apt install mesa-utils
-$ glxinfo | grep NVIDIA
-```
-- Clone in the $HOME folder (that is "home/USERNAME") the lab-docker repository:
 ```
 $ git clone git@github.com:mfocchi/lab-docker.git
 ```
-- Run the script install_docker.sh:
+- Run the script install_docker.sh. This script is important because it installs the docker client on your machine and adds to your user the privileges to run the docker images.
 ```
 $ ./install_docker.sh
 ```
-- You can now restart the PC so that all changes made can be applied.
-- When the PC has restarted, open the `/etc/hosts` file with permissions from the home folder:
-```
-$ sudo gedit /etc/hosts 
-```
-add the following line (same as localhost):
-```
-127.0.0.1	docker
-```
-if you have troubles using **gedit** use other editors like  **vim** or **nano** in place of gedit
+- If everything went smooth you should read: **To start docker, reboot the system!** You can now restart the PC so that all changes made can be applied.
 
-Docker Issues
+- If you look into your **host** Ubuntu home directory, you will see that the **trento_lab_home** directory has been created.
+
+- if you have troubles using **gedit** use other editors like  **vim** or **nano** in place of gedit
+
+  
+
+  
+
+  ## Docker Issues (optional)
 --------------------------------------------------------------------------------
 <a name="docker_issues"></a>
 
@@ -150,6 +139,12 @@ python3 get-pip.py
 rm get-pip.py
 ```
 
+- If you do not have Nvidia drivers installed, then make sure you are not using the `-nv` option when launching `lab-docker.py`. You may get a message in the terminal that looks like this:
+
+  ![nvidia_issue](uploads/cd09602de0f7edd1e0432359754f495c/nvidia_issue.jpeg)
+
+  
+
 - Nvidia error: could not select device driver “” with capabilities:
 
 You can solve this way:
@@ -160,30 +155,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
-- If the docker installer retrieved using wget produces the following error
-```
-./install_docker.sh: line 1: syntax error near unexpected token 'newline'
-./install_docker.sh: line 1: `<!DOCTYPE html>'
-```
-- You may need the '-api' option in lab-docker.py
-- If you do not have nvidia drivers installed, then make sure you are not using the `-nv` option when launching `lab-docker.py`. You may get a message in the terminal that looks like
 
-
-![Screenshot_from_2021-02-03_17-15-50](uploads/959899d54f494f3820e5b8b9210a2dd7/Screenshot_from_2021-02-03_17-15-50.png)
-
-![nvidia_issue](uploads/cd09602de0f7edd1e0432359754f495c/nvidia_issue.jpeg)
-
-
-
-- If you are getting the error `[Err] [WindowManager.cc:121] Unable to create the rendering window`, you need to update the Nvidea driver to 430. To do this, go to Software & Updates -> Additional Drivers in Ubuntu and choose the driver. Then install nvidia-driver-toolkit (in case you do not have it) and restart the Docker daemon `sudo systemctl restart docker`.
-
-In this case, the message shown in the terminal when launching the simulation will look like
-
-![model_gazebo_missing](uploads/2895e3900d60de8b82cb6fa0196a2207/model_gazebo_missing.jpeg)
-
-
-
-- Ubuntu 18 has install problems of python-networkmanager with a weird dbus error.  Installing libdbus-1-dev libdbus-glib-1-dev seemed to be the fix.
 
 
 

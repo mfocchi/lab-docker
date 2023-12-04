@@ -63,7 +63,15 @@ alias dock-root='docker exec -it --user root docker_container /bin/bash'
 
 **NOTE!:** To perform git commands, be sure you have added an SSH key to your Github account (create one if you don't have it) following the procedure described   [here](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
 
+**NOTE:**
 
+If you experiment any issue in using the Nvidia with OpenGL rendering (the symptom is that you cannot visualize STL meshes in RVIZ) then you should update to he latest mesa-driver:
+
+```
+sudo add-apt-repository ppa:kisak/kisak-mesa
+sudo apt update
+sudo apt upgrade
+```
 
 
 

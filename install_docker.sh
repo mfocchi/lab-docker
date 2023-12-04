@@ -63,5 +63,11 @@ echo "Copying .bashrc"
     cp .bashrc ${HOME}/trento_lab_home/.bashrc 
 fi
 
+echo "Copying .ssh folder with user permissions"
+    sudo cp -r ${HOME}/.ssh ${HOME}/trento_lab_home/.ssh 
+    sudo chown -R $USER:$USER ${HOME}/.ssh ${HOME}/trento_lab_home/.ssh 
+fi
+
+
 
 echo -e "${COLOR_BOLD}To start docker, reboot the system!${COLOR_RESET}"

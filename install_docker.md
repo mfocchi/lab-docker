@@ -6,10 +6,9 @@ Docker Wiki
 This section of the wiki gives information on how to use the docker.
 
 1. [Installing Git and SSH key](#installing-git-and-ssh-key)
-2. [Installing NVIDIA drivers](#installing-nvidia-drivers) 
 3. [Docker Install](#docker-install) 
+3. [Installing NVIDIA drivers](#installing-nvidia-drivers) 
 4. [Common Docker Install Issues](#docker_issues)
-5. [Committing a docker image (Making changes permanent)](#docker_commit)
 
 
 
@@ -36,6 +35,30 @@ After this, if you don't have an SSH key for your Github account, you need to cr
   ```
   Copy the content of your public SSH into the box at the link before and press "New SSH key". You can now clone the  repositories with SSH without having to issue the password every time (I suggest to do not set any passphrase).
 
+
+
+Docker Install
+--------------------------------------------------------------------------------
+
+<a name="docker_install"></a>
+Clone in the $HOME folder (usually is "home/USERNAME") the lab-docker repository:
+
+```
+$ git clone git@github.com:mfocchi/lab-docker.git
+```
+- Run the script install_docker.sh. This script is important because it installs the docker client on your machine and adds to your user the privileges to run the docker images.
+```
+$ ./install_docker.sh
+```
+- If everything went smooth you should read: **To start docker, reboot the system!** You can now restart the PC so that all changes made can be applied.
+
+- If you look into your **host** Ubuntu home directory, you will see that the **trento_lab_home** directory has been created.
+
+- if you have troubles using **gedit** use other editors like  **vim** or **nano** in place of gedit
+
+  
+  
+  
 Installing NVIDIA drivers (optional)
 --------------
 
@@ -79,26 +102,8 @@ nvidia-smi
 
 If this does not work, and you are sure you correctly installed the drivers, you might need to deactivate the "safe boot" feature from your BIOS, that usually prevents to load the driver. 
 
-Docker Install
---------------------------------------------------------------------------------
 
-<a name="docker_install"></a>
-Clone in the $HOME folder (usually is "home/USERNAME") the lab-docker repository:
 
-```
-$ git clone git@github.com:mfocchi/lab-docker.git
-```
-- Run the script install_docker.sh. This script is important because it installs the docker client on your machine and adds to your user the privileges to run the docker images.
-```
-$ ./install_docker.sh
-```
-- If everything went smooth you should read: **To start docker, reboot the system!** You can now restart the PC so that all changes made can be applied.
-
-- If you look into your **host** Ubuntu home directory, you will see that the **trento_lab_home** directory has been created.
-
-- if you have troubles using **gedit** use other editors like  **vim** or **nano** in place of gedit
-
-  
 ## Docker Issues (optional)
 
 --------------------------------------------------------------------------------

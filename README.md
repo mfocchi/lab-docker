@@ -98,6 +98,8 @@ $ catkin_make install
 $ source .bashrc
 ```
 
+**NOTE:**  when you clone the code, be sure to have a stable and fast connection. Before continuing, be sure you properly checked out **all** the submodules without any error.
+
 **NOTE:**  when you run the code, if an error pops-up that tells you a recently compiled package cannot be found you need to run:
 
 ```

@@ -27,9 +27,6 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/r
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-
-
-
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y keyboard-configuration
 RUN apt-get install -y xserver-xorg-video-intel libgl1-mesa-glx libgl1-mesa-dri xserver-xorg-core #Needed by Gazebo
 RUN apt-get install -y mesa-utils
@@ -40,10 +37,10 @@ RUN apt-get install -y gedit
 RUN apt-get install -y git-cola
 RUN apt-get install -y gitg
 
-# install ROS2
-
+# install ROS
 RUN apt-get update && apt install -y ros-$ROS_VERSION-desktop python3-argcomplete ros-dev-tools
 
+# install ADDITIONAL ROS PACKAGES
 RUN apt-get install -y ros-$ROS_VERSION-urdfdom-py
 RUN apt-get install -y ros-$ROS_VERSION-srdfdom
 RUN apt-get install -y ros-$ROS_VERSION-joint-state-publisher

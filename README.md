@@ -7,20 +7,13 @@ This guide allows you to configure the lab docker images and to download the Gaz
 **MAC/LINUX:** follow the procedure detailed next:
 
 -  First, make sure you have installed the docker client in your machine. The procedure is described  [here](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
--  Download the docker image from here. It will be slow (12.4 Gbytes): 
+-  Download the docker image from here. It will be slow (more than 12 Gbytes): 
 
 ```
 $ docker pull mfocchi/trento_lab_framework:introrob
 ```
 
-- I created a user friendly script called **lab_docker.py** to simplify docker management, that require some additional dependencies 
-
-
-```
-$ ./lab-docker-script-dependencies.sh
-```
-
--  Now, you need to configure the bash environment of your Ubuntu machine as follows. Open the `bashrc` file from your home folder:
+- Now, you need to configure the bash environment of your Ubuntu machine as follows. Open the `bashrc` file from your home folder:
 
 
 ```
@@ -29,17 +22,12 @@ $ gedit ~/.bashrc
 -  and add the following lines at the bottom of the file:
 
 ```bash
-LAB_DOCKER_PATH="/home/USER/PATH/lab-docker"
-eval "$(register-python-argcomplete3 lab-docker.py)"
-export PATH=$LAB_DOCKER_PATH:$PATH
-alias lab='lab-docker.py --api run   -f -nv  mfocchi/trento_lab_framework:introrob'
-alias dock-other='lab-docker.py attach'
-alias dock-root='lab-docker.py attach --root'
+alias lab='docker rm -f docker_container || true; docker run --name docker_container --gpus all  --user $(id -u):$(id -g)  --workdir="/home/$USER" --volume="/etc/group:/etc/group:ro"   --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/passwd:/etc/passwd:ro" --device=/dev/dri:/dev/dri  -e "QT_X11_NO_MITSHM=1" --network=host --hostname=docker -it  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume $HOME/trento_lab_home:$HOME --env=HOME --env=USER  --privileged  -e SHELL --env="DISPLAY=$DISPLAY" --shm-size 2g --rm  --entrypoint /bin/bash mfocchi/trento_lab_framework:introrob'
+alias dock-other='docker exec -it docker_container /bin/bash'
+alias dock-root='docker exec -it --user root docker_container /bin/bash'
 ```
 
-where "/home/USER/PATH" is the folder you cloned the lab-docker repository. Make sure to edit the `LAB_DOCKER_PATH` variable with the path to where you cloned the `lab_docker` repository.
-
-**NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **-nv** flag in the **lab** alias.
+**NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **--gpus all** in the **lab** alias.
 
 - Open a terminal and run the "lab" alias:
 
@@ -49,18 +37,10 @@ $ lab
 
 - You should see your terminal change from `user@hostname` to `user@docker`. 
 
- **IMPORTANT!**: If  you have any issue in installing dependencies in **lab-docker-script-dependencies.sh** or running the script **lab**, replace the previous lines in the .bashrc with the following (not elegant) alias that explicitly call docker APIs:
-
-```powershell
-alias lab='docker rm -f docker_container || true; docker run --name docker_container --gpus all  --user $(id -u):$(id -g)  --workdir="/home/$USER" --volume="/etc/group:/etc/group:ro"   --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/passwd:/etc/passwd:ro" --device=/dev/dri:/dev/dri  -e "QT_X11_NO_MITSHM=1" --network=host --hostname=docker -it  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume $HOME/trento_lab_home:$HOME --env=HOME --env=USER  --privileged  -e SHELL --env="DISPLAY=$DISPLAY" --shm-size 2g --rm  --entrypoint /bin/bash mfocchi/trento_lab_framework:introrob'
-alias dock-other='docker exec -it docker_container /bin/bash'
-alias dock-root='docker exec -it --user root docker_container /bin/bash'
-```
-
-- both versions of the **lab** script will mount the folder `~/trento_lab_home` on your **host** computer. Inside of all of the docker images this folder is mapped to `$HOME`.This means that any files you place   in your docker $HOME folder will survive the stop/starting of a new docker container. All other files and installed programs will disappear on the next run.
+-  the **lab** script will mount the folder `~/trento_lab_home` on your **host** computer. Inside of all of the docker images this folder is mapped to `$HOME`.This means that any files you place in your docker $HOME folder will survive the stop/starting of a new docker container. All other files and installed programs will disappear on the next run.
 - The alias **lab** needs to be called only ONCE and opens the image. To link other terminals to the same image you should run **dock-other**, this second command will "**attach**" to the image opened previously by calling the **lab** alias.  You can call **lab** only once and **dock-other** as many times you need to open multiple terminals.
 
-**NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **--gpus all ** flag in the **lab** alias.
+
 
 ### Configure CODE
 

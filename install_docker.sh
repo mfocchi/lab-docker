@@ -64,7 +64,7 @@ echo "Copying .bashrc"
 fi
 
 echo "Copying .ssh folder with user permissions"
-sudo cp -R $HOME/.ssh/ $HOME/trento_lab_home/.ssh/
+sudo cp -r $HOME/.ssh/ $HOME/trento_lab_home/.ssh/
 sudo chown -R $USER:$USER $HOME/trento_lab_home/.ssh 
 
 

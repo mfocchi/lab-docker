@@ -72,7 +72,7 @@ $ lab
 $ source /opt/ros/noetic/setup.bash
 $ mkdir -p ~/ros_ws/src
 $ cd ~/ros_ws/src
-$ git clone https://github.com/mfocchi/locosim  -b develop --recursive
+$ git clone https://github.com/mfocchi/locosim  -b mantis --recursive
 $ cd  ~/ros_ws/
 $ catkin_make install
 $ source .bashrc
@@ -149,59 +149,19 @@ Running pycharm from the terminal enables to use the environment variables loade
 To run from a terminal we  use the **interactive** option that allows  when you close the program (with CTRL+C) to have access to the variables:
 
 ```
-$ python3 -i $LOCOSIM_DIR/robot_control/base_controllers/ur5_generic.py
+$ python3 -i $LOCOSIM_DIR/robot_control/base_controllers/base_controller.py
 ```
 
 to exit from python3 console type CTRL+Z
 
 
 
-### Download Gazebo models (optional)
+## Running the Code
 
-To have all Gazebo models available in simulation, you need to complete a last step, that is downloading the Gazebo models. To do this, you can:
+1. in **$LOCOSIM_DIR/robot_control/base_controllers/base_controller.py**  set robotName= 'mantis'
+2. run the code either in terminal or IDE
 
-* create the Gazebo `models` folder and a script in `trento_lab_home` folder. From your home directory (outside Docker) run:
 
-```
-$ cd trento_lab_home/.gazebo
-$ mkdir models
-$ cd ..
-$ touch download_gazebo_models.sh
-$ chmod +x download_gazebo_models.sh
-```
-
-* copy these lines below in your new script:
-
-```bash
-#!/bin/sh
-
-# Download all model archive files
-wget -l 2 -nc -r "http://models.gazebosim.org/" --accept gz
-
-# This is the folder into which wget downloads the model archives
-cd "models.gazebosim.org"
-
-# Extract all model archives
-for i in *
-do
-  tar -zvxf "$i/model.tar.gz"
-done
-
-# Copy extracted files to the local model folder
-cp -vfR * "$HOME/trento_lab_home/.gazebo/models/"
-
-# Remove the folder downloaded with wget
-cd ..
-rm -rf "models.gazebosim.org"
-```
-
-* now you can run the script from `trento_lab_home`:
-
-```
-$ ./download_gazebo_models
-```
-
-Once the download is complete, you can go inside `models` folder and verify that it now contains the Gazebo models. 
 
 
 

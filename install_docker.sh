@@ -34,6 +34,7 @@ fi
 # insert/update hosts entry
 ip_address="127.0.0.1"
 host_name="docker"
+docker_folder="mantis_home"
 # find existing instances in the host file and save the line numbers
 matches_in_hosts="$(grep -n $host_name /etc/hosts | cut -f1 -d:)"
 host_entry="${ip_address} ${host_name}"
@@ -49,23 +50,23 @@ else
 fi
 
 
-if [ -d "${HOME}/trento_lab_home" ]; then
-  echo "Directory trento_lab_home exists."
+if [ -d "${HOME}/${docker_folder} " ]; then
+  echo "Directory  ${docker_folder} exists."
 else
-    echo "Creating trento_lab_home dir."
-    mkdir -p ${HOME}/trento_lab_home
+    echo "Creating ${docker_folder} dir."
+    mkdir -p ${HOME}/${docker_folder} 
 fi
 
-if [ -f "${HOME}/trento_lab_home/.bashrc" ]; then
-    echo ".bashrc inside trento_lab_home exists."
+if [ -f "${HOME}/${docker_folder}/.bashrc" ]; then
+    echo ".bashrc inside ${docker_folder} exists."
 else 
 echo "Copying .bashrc"
-    cp .bashrc ${HOME}/trento_lab_home/.bashrc 
+    cp .bashrc ${HOME}/${docker_folder}/.bashrc 
 fi
 
 echo "Copying .ssh folder with user permissions"
-sudo cp -r $HOME/.ssh/ $HOME/trento_lab_home/.ssh/
-sudo chown -R $USER:$USER $HOME/trento_lab_home/.ssh 
+sudo cp -r $HOME/.ssh/ $HOME/${docker_folder}/.ssh/
+sudo chown -R $USER:$USER $HOME/${docker_folder}/.ssh 
 
 
 

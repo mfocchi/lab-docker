@@ -68,7 +68,7 @@ $ lab_mantis
 $ source /opt/ros/noetic/setup.bash
 $ mkdir -p ~/ant_ws/src
 $ cd ~/ant_ws/src
-$ git clone https://github.com/mfocchi/dls-distro.git  
+$ git clone git@github.com:mfocchi/dls-distro.git
 $ cd  ~/ant_ws/
 $ catkin_make install
 $ source .bashrc

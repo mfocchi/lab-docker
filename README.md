@@ -18,9 +18,9 @@ $ gedit ~/.bashrc
 -  and add the following lines at the bottom of the file:
 
 ```bash
-alias lab_mantis='docker rm -f docker_container || true; docker run --name docker_container --gpus all  --user $(id -u):$(id -g)  --workdir="/home/$USER" --volume="/etc/group:/etc/group:ro"   --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/passwd:/etc/passwd:ro" --device=/dev/dri:/dev/dri  -e "QT_X11_NO_MITSHM=1" --network=host --hostname=docker -it  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume $HOME/mantis_home:$HOME --env=HOME --env=USER  --privileged  -e SHELL --env="DISPLAY=$DISPLAY" --shm-size 2g --rm  --entrypoint /bin/bash mfocchi/ant'
-alias dock-other='docker exec -it docker_container /bin/bash'
-alias dock-root='docker exec -it --user root docker_container /bin/bash'
+alias lab_mantis='docker rm -f mantis_container || true; docker run --name mantis_container --gpus all  --user $(id -u):$(id -g)  --workdir="/home/$USER" --volume="/etc/group:/etc/group:ro"   --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/passwd:/etc/passwd:ro" --device=/dev/dri:/dev/dri  -e "QT_X11_NO_MITSHM=1" --network=host --hostname=docker -it  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume $HOME/mantis_home:$HOME --env=HOME --env=USER  --privileged  -e SHELL --env="DISPLAY=$DISPLAY" --shm-size 2g --rm  --entrypoint /bin/bash mfocchi/ant'
+alias mantis-other='docker exec -it mantis_container /bin/bash'
+alias mantis-root='docker exec -it --user root mantis_container /bin/bash'
 ```
 
 **NOTE!** If you do not have an Nvidia card in your computer, you should skip the parts about the installation of the drivers, and you can still run the docker **without** the **--gpus all** in the **lab** alias.
@@ -33,7 +33,7 @@ $ lab_mantis
 
 - You should see your terminal change from `user@hostname` to `user@docker`. 
 
--  the **lab_mantis** script will mount the folder `~/trento_lab_home` on your **host** computer. Inside of all of the docker images this folder is mapped to `$HOME`.This means that any files you place in your docker $HOME folder will survive the stop/starting of a new docker container. All other files and installed programs will disappear on the next run.
+-  the **lab_mantis** script will mount the folder `~/mantis_home` on your **host** computer. Inside of all of the docker images this folder is mapped to `$HOME`.This means that any files you place in your docker $HOME folder will survive the stop/starting of a new docker container. All other files and installed programs will disappear on the next run.
 - The alias **lab_mantis** needs to be called only ONCE and opens the image. To link other terminals to the same image you should run **dock-other**, this second command will "**attach**" to the image opened previously by calling the **lab** alias.  You can call **lab** only once and **dock-other** as many times you need to open multiple terminals.
 
 
@@ -57,19 +57,19 @@ $ lab_mantis
   ```bash
   source /opt/ros/noetic/setup.bash
   source /opt/ros_utils/setup.bash
-  export ANT_PATH=ant_ws
-  source $HOME/$ANT_PATH/src/dls-distro/dls_core/scripts/dls_bashrc.sh $ANT_PATH
+  export ROS_WS=mantis_ws
+  source $HOME/$ROS_WS/src/mantis-distro/core/scripts/mantis_bashrc.sh $ROS_WS
   export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
-  alias mapper='roslaunch dls_mapper simulation.launch'
+  alias mapper='roslaunch mantis_mapper simulation.launch'
   ```
 
 - Now you can setup the workspace in the $HOME directory **inside** docker:
 ```
 $ source /opt/ros/noetic/setup.bash
 $ mkdir -p ~/ant_ws/src
-$ cd ~/ant_ws/src
-$ git clone git@github.com:mfocchi/dls-distro.git
-$ cd  ~/ant_ws/
+$ cd ~/mantis_ws/src
+$ git clone git@github.com:mfocchi/mantis-distro.git
+$ cd  ~/mantis_ws/
 $ catkin_make install
 $ source .bashrc
 ```
@@ -130,7 +130,7 @@ ANTController> startMotion
 
 starts the crawl
 
-Please refer to https://github.com/mfocchi/dls-distro/blob/master/README.md for further details
+Please refer to https://github.com/mfocchi/mantis-distro/blob/master/README.md for further details
 
 
 

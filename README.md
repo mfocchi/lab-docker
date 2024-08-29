@@ -2,8 +2,47 @@
 
 **MAC/LINUX:** follow the procedure detailed next:
 
--  First, make sure you have installed the docker client in your machine. The procedure is described  [here](https://github.com/mfocchi/lab-docker/blob/master/install_docker.md).
--  Download the docker image from here. It will be slow (more than 12 Gbytes): 
+-  First, make sure you have installed Git and SSH key
+
+   To install Git you can open a terminal and run:
+
+   ```
+   sudo apt install git
+   ```
+
+   After that, you can check the version installed and configure the credentials with:
+
+   ```
+   $ git --version
+   $ git config --global user.name <"name surnace">
+   $ git config --global user.email <"youremail@yourdomain.it">
+   ```
+
+   After this, if you don't have an SSH key for your Github account, you need to create a new one to use the repositories:
+
+   * go to Settings/SSH  and GPG Keys
+
+   * open a terminal and run these commands:
+
+     ```
+     $ ssh-keygen 
+     $ cd ~/.ssh/
+     $ cat id_rsa.pub
+     ```
+
+     Copy the content of your public SSH into the box at the link before and press "New SSH key". You can now clone the  repositories with SSH without having to issue the password every time (I suggest to do not set any passphrase).
+
+-  then, make sure you have installed the docker client in your machine. 
+
+   - Run the script **install_docker.sh.** This script is important because it installs the docker client on your machine and adds to your user the privileges to run the docker images.
+
+   ```
+   $ ./install_docker.sh
+   ```
+
+   - If everything went smooth you should read: **To start docker, reboot the system!** You can now restart the PC so that all changes made can be applied.
+
+-  Download the docker image from here:
 
 ```
 $ docker pull mfocchi/ant

@@ -57,7 +57,7 @@ $ gedit ~/.bashrc
 -  and add the following lines at the bottom of the file:
 
 ```bash
-alias lab_mantis='docker rm -f mantis_container || true; docker run --name mantis_container --gpus all  --user $(id -u):$(id -g)  --workdir="/home/$USER" --volume="/etc/group:/etc/group:ro"   --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/passwd:/etc/passwd:ro" --device=/dev/dri:/dev/dri  -e "QT_X11_NO_MITSHM=1" --network=host --hostname=docker -it  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume $HOME/mantis_home:$HOME --env=HOME --env=USER  --privileged  -e SHELL --env="DISPLAY=$DISPLAY" --shm-size 2g --rm  --entrypoint /bin/bash mfocchi/ant'
+alias lab_mantis='docker rm -f mantis_container || true; docker run --name mantis_container --gpus all  --user $(id -u):$(id -g)  --workdir="/home/$USER" --volume="/etc/group:/etc/group:ro"   --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/passwd:/etc/passwd:ro" --device=/dev/dri:/dev/dri  -e "QT_X11_NO_MITSHM=1" --network=host --hostname=docker -it  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume $HOME/mantis_home:$HOME --env=HOME --env=USER  --privileged  -e SHELL --env="DISPLAY=$DISPLAY" --shm-size 2g --rm xhost +local:root --entrypoint /bin/bash mfocchi/ant'
 alias mantis-other='docker exec -it mantis_container /bin/bash'
 alias mantis-root='docker exec -it --user root mantis_container /bin/bash'
 ```
@@ -73,7 +73,7 @@ $ lab_mantis
 - You should see your terminal change from `user@hostname` to `user@docker`. 
 
 -  the **lab_mantis** script will mount the folder `~/mantis_home` on your **host** computer. Inside of all of the docker images this folder is mapped to `$HOME`.This means that any files you place in your docker $HOME folder will survive the stop/starting of a new docker container. All other files and installed programs will disappear on the next run.
-- The alias **lab_mantis** needs to be called only ONCE and opens the image. To link other terminals to the same image you should run **dock-other**, this second command will "**attach**" to the image opened previously by calling the **lab** alias.  You can call **lab** only once and **dock-other** as many times you need to open multiple terminals.
+- The alias **lab_mantis** needs to be called only ONCE and opens the image. To link other terminals to the same image you should run **mantis-other**, this second command will "**attach**" to the image opened previously by calling the **lab** alias.  You can call **lab** only once and **mantis-other** as many times you need to open multiple terminals.
 
 
 
@@ -146,25 +146,25 @@ $ launch_aliengo_supervisor_gazebo
 in the same terminal:
 
 ```
-ANTController> startController
+Framework> startFramework
 ```
 
 starts the controller. 
 
 ```
-ANTController> stt	
+Framework> stt	
 ```
 
 toggle the gravity compensation / whole body controller
 
 ```
-ANTController> goHome
+Framework> goHome
 ```
 
 stand-up from belly down posture
 
 ```
-ANTController> startMotion		
+Framework> startMotion		
 ```
 
 starts the crawl

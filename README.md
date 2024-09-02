@@ -105,7 +105,7 @@ $ lab_mantis
 - Now you can setup the workspace in the $HOME directory **inside** docker:
 ```
 $ source /opt/ros/noetic/setup.bash
-$ mkdir -p ~/ant_ws/src
+$ mkdir -p ~/mantis_ws/src
 $ cd ~/mantis_ws/src
 $ git clone git@github.com:mfocchi/mantis-distro.git
 $ cd  ~/mantis_ws/

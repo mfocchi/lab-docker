@@ -45,7 +45,7 @@
 -  Download the docker image from here:
 
 ```
-$ docker pull mfocchi/ant
+$ docker pull mfocchi/mantis
 ```
 
 - Now, you need to configure the bash environment of your Ubuntu machine as follows. Open the `bashrc` file from your home folder:
@@ -57,7 +57,7 @@ $ gedit ~/.bashrc
 -  and add the following lines at the bottom of the file:
 
 ```bash
-alias lab_mantis='docker rm -f mantis_container || true; docker run --name mantis_container --gpus all  --user $(id -u):$(id -g)  --workdir="/home/$USER" --volume="/etc/group:/etc/group:ro"   --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/passwd:/etc/passwd:ro" --device=/dev/dri:/dev/dri  -e "QT_X11_NO_MITSHM=1" --network=host --hostname=docker -it  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume $HOME/mantis_home:$HOME --env=HOME --env=USER  --privileged  -e SHELL --env="DISPLAY=$DISPLAY" --shm-size 2g --rm xhost +local:root --entrypoint /bin/bash mfocchi/ant'
+alias lab_mantis='docker rm -f mantis_container || true; docker run --name mantis_container --gpus all  --user $(id -u):$(id -g)  --workdir="/home/$USER" --volume="/etc/group:/etc/group:ro"   --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/passwd:/etc/passwd:ro" --device=/dev/dri:/dev/dri  -e "QT_X11_NO_MITSHM=1" --network=host --hostname=docker -it  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume $HOME/mantis_home:$HOME --env=HOME --env=USER  --privileged  -e SHELL --env="DISPLAY=$DISPLAY" --shm-size 2g --rm xhost +local:root --entrypoint /bin/bash mfocchi/mantis'
 alias mantis-other='docker exec -it mantis_container /bin/bash'
 alias mantis-root='docker exec -it --user root mantis_container /bin/bash'
 ```
